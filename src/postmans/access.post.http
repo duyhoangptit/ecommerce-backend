@@ -1,0 +1,10 @@
+
+### signUp
+POST {{url}}/shop/signup
+Content-Type: application/json
+
+{
+  "name": "Ta Duy Hoang",
+  "email": "duyhoangptit@gmail.com",
+  "password": "0123456789"
+}
