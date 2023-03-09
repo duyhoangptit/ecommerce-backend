@@ -24,16 +24,16 @@ class Database {
             serverSelectionTimeoutMS: TIME_OUT_CONNECT,
             maxPoolSize: MAX_POLL_SIZE
         })
-        .then(
-            _ => {
-                try {
-                    countConnect();
-                } catch (e) {
-                    console.log(e);
+            .then(
+                _ => {
+                    try {
+                        countConnect();
+                    } catch (e) {
+                        console.log(e);
+                    }
+                    _ => console.log(`Connected mongodb success `);
                 }
-                _ => console.log(`Connected mongodb success `);
-            }
-        ).catch(
+            ).catch(
             err => console.log(`Error connect!`)
         );
 

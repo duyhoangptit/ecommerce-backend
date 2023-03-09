@@ -1,26 +1,51 @@
 {
-  "name": "ecommerce-backend-archetype",
+  "name": "ecommerce-core-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "project about ecommerce",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "mocha --recursive --exit",
+    "start": "node server.js",
+    "start:dev": "nodemon --legacy-watch server.js",
+    "start:local": "SET NODE_ENV=local nodemon --legacy-watch server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "ecommerce",
+    "fulltext search",
+    "docker",
+    "aws"
+  ],
+  "author": "tiger",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "express-winston": "^4.2.0",
     "helmet": "^6.0.1",
+    "html-to-text": "^9.0.4",
+    "i18n": "^0.15.1",
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
+    "mocha": "^10.2.0",
+    "mocha-suppress-logs": "^0.3.1",
     "mongoose": "^6.9.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.22",
+    "slugify": "^1.6.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.2",
+    "winston": "^3.8.2",
+    "winston-mongodb": "^5.1.1",
+    "yaml": "^2.2.1"
+  },
+  "devDependencies": {
+    "amqplib": "^0.10.3"
   }
 }

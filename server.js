@@ -1,8 +1,16 @@
-// Khởi động network của nodejs
-const app = require('./src/app');
+require('dotenv').config()
+const nodeEnv = process.env.NODE_ENV;
 
+// config dotenv by environment
+require('dotenv').config({
+    path: `.env.${nodeEnv}`
+})
+
+console.log(process.env.PORT)
 const PORT = process.env.PORT || 3055;
 
+// start server nodejs
+const app = require('./src/app');
 const server =  app.listen(PORT, () => {
     console.log(`eCommerce start with ${PORT}`);
 });

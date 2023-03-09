@@ -1,12 +1,11 @@
-const mongoose = require('mongoose');
-const {Schema} = require("mongoose");
+const {Schema, mongoose} = require("mongoose");
 
 const DOCUMENT_NAME = 'Shop';
 const COLLECTION_NAME = 'Shops';
 
 const shopSchema = new mongoose.Schema({
     name: {
-        type:String,
+        type: String,
         trim: true,
         maxLength: 150
     },
@@ -16,6 +15,10 @@ const shopSchema = new mongoose.Schema({
         trim: true
     },
     password: {
+        type: String,
+        required: true
+    },
+    msisdn: {
         type: String,
         required: true
     },
@@ -32,7 +35,7 @@ const shopSchema = new mongoose.Schema({
         type: Array,
         default: []
     }
-},{
+}, {
     timestamps: true,
     collection: COLLECTION_NAME
 });
