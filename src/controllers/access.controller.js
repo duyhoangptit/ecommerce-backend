@@ -1,13 +1,10 @@
 const AccessService = require('../services/access.service')
+const SuccessResponse = require("../core/success.response");
 
 class AccessController {
     signUp = async (req, res, next) => {
-        try {
-            console.log(req.body)
-            return res.status(201).json(await AccessService.signUp(req.body))
-        } catch(error) {
-            next(error)
-        }
+        console.log(req.body)
+        return SuccessResponse.successHandler(res, await AccessService.signUp(req.body), 'SignUp success', 201)
     }
 }
 

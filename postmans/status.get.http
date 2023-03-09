@@ -1,0 +1,5 @@
+
+### test status code = 404
+GET {{url}}/xxxxxx
+Content-Type: application/json
+

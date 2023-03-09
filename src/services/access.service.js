@@ -4,6 +4,7 @@ const crypto = require('crypto')
 const KeyTokenService = require('../services/keyToken.service')
 const {createTokenPair} = require('../auth/authUtils')
 const {getInfoData} = require('../utils')
+const {Api403Error, BusinessLogicError} = require("../core/error.response");
 
 const RoleShop = {
     SHOP: 'SHOP',
@@ -15,98 +16,76 @@ const RoleShop = {
 
 class AccessService {
     static signUp = async ({name, email, password}) => {
-        try {
-            // step1: check email exists?
-            const holderShop = await shopModel.findOne({email}).lean()
-            if (holderShop) {
-                return {
-                    code: 'xxxx',
-                    message: 'Shop already registered'
-                }
-            }
+        // step1: check email exists?
+        const holderShop = await shopModel.findOne({email}).lean()
+        if (holderShop) {
+            throw new Api403Error('Error: Shop already registered')
+        }
 
-            const passwordHash = await bcrypt.hash(password, 10)
+        const passwordHash = await bcrypt.hash(password, 10)
 
-            const newShop = await shopModel.create({
-                name, email, password: passwordHash, roles: [RoleShop.SHOP]
+        const newShop = await shopModel.create({
+            name, email, password: passwordHash, roles: [RoleShop.SHOP]
+        })
+
+        if (newShop) {
+            // create private key, public key
+
+            const {
+                publicKey,
+                privateKey,
+            } = crypto.generateKeyPairSync('rsa', {
+                modulusLength: 4096,
+                publicKeyEncoding: {
+                    type: 'pkcs1',
+                    format: 'pem',
+                },
+                privateKeyEncoding: {
+                    type: 'pkcs1',
+                    format: 'pem',
+                },
+            });
+            console.log(privateKey, '---', publicKey)
+
+            const publicKeyString = await KeyTokenService.createKeyToken({
+                userId: newShop._id,
+                publicKey: publicKey.toString(),
+                privateKey: privateKey.toString(),
             })
 
-            if (newShop) {
-                // create private key, public key
+            if (!publicKeyString) {
+                throw new BusinessLogicError('Error: publicKeyString error')
+            }
+            console.log('publicKeyString:: ', publicKeyString)
 
-                const {
-                    publicKey,
-                    privateKey,
-                } = crypto.generateKeyPairSync('rsa', {
-                    modulusLength: 4096,
-                    publicKeyEncoding: {
-                        type: 'pkcs1',
-                        format: 'pem',
-                    },
-                    privateKeyEncoding: {
-                        type: 'pkcs1',
-                        format: 'pem',
-                    },
-                });
-                console.log(privateKey, '---', publicKey)
+            // create pub
+            const publicKeyObject = await crypto.createPublicKey(publicKeyString)
+            console.log('publicKeyObject:: ', publicKeyObject)
 
-                const publicKeyString = await KeyTokenService.createKeyToken({
+            // created token pair
+            const tokens = await createTokenPair(
+                {
                     userId: newShop._id,
-                    publicKey: publicKey.toString(),
-                    privateKey: privateKey.toString(),
-                })
+                    email
+                },
+                publicKeyObject,
+                privateKey
+            )
 
-                if (!publicKeyString) {
-                    return {
-                        code: 'xxx',
-                        message: 'publicKeyString error'
-                    }
-                }
-                console.log('publicKeyString:: ', publicKeyString)
+            console.log('Created token success:: ', tokens)
 
-                // create pub
-                const publicKeyObject  = await crypto.createPublicKey(publicKeyString)
-                console.log('publicKeyObject:: ', publicKeyObject)
-
-                // created token pair
-                const tokens = await createTokenPair(
+            return {
+                shop: getInfoData(
                     {
-                        userId: newShop._id,
-                        email
-                    },
-                    publicKeyObject,
-                    privateKey
-                )
-
-                console.log('Created token success:: ', tokens)
-
-                return {
-                    code: 201,
-                    metaData: {
-                        shop: getInfoData(
-                            {
-                                fields: ['_id', 'name', 'email'],
-                                object: newShop
-                            }
-                        ),
-                        tokens
+                        fields: ['_id', 'name', 'email'],
+                        object: newShop
                     }
-                }
-
-            }
-
-            return {
-                code: 200,
-                metaData: null
-            }
-        } catch(error) {
-            console.error(`signUp:: `, error)
-            return {
-                code: '',
-                message: error.message,
-                status: 'error'
+                ),
+                tokens
             }
         }
+
+        return null
     }
 }
 
