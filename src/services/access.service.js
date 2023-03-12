@@ -15,7 +15,7 @@ const RoleShop = {
 }
 
 class AccessService {
-    static signUp = async ({name, email, password}) => {
+    signUp = async ({name, email, password}) => {
         // step1: check email exists?
         const holderShop = await shopModel.findOne({email}).lean()
         if (holderShop) {
@@ -28,65 +28,64 @@ class AccessService {
             name, email, password: passwordHash, roles: [RoleShop.SHOP]
         })
 
-        if (newShop) {
-            // create private key, public key
-
-            const {
-                publicKey,
-                privateKey,
-            } = crypto.generateKeyPairSync('rsa', {
-                modulusLength: 4096,
-                publicKeyEncoding: {
-                    type: 'pkcs1',
-                    format: 'pem',
-                },
-                privateKeyEncoding: {
-                    type: 'pkcs1',
-                    format: 'pem',
-                },
-            });
-            console.log(privateKey, '---', publicKey)
-
-            const publicKeyString = await KeyTokenService.createKeyToken({
-                userId: newShop._id,
-                publicKey: publicKey.toString(),
-                privateKey: privateKey.toString(),
-            })
-
-            if (!publicKeyString) {
-                throw new BusinessLogicError('Error: publicKeyString error')
-            }
-            console.log('publicKeyString:: ', publicKeyString)
-
-            // create pub
-            const publicKeyObject = await crypto.createPublicKey(publicKeyString)
-            console.log('publicKeyObject:: ', publicKeyObject)
-
-            // created token pair
-            const tokens = await createTokenPair(
-                {
-                    userId: newShop._id,
-                    email
-                },
-                publicKeyObject,
-                privateKey
-            )
-
-            console.log('Created token success:: ', tokens)
-
-            return {
-                shop: getInfoData(
-                    {
-                        fields: ['_id', 'name', 'email'],
-                        object: newShop
-                    }
-                ),
-                tokens
-            }
+        if (!newShop) {
+            return null
         }
 
-        return null
+        // create private key, public key
+        const {
+            publicKey,
+            privateKey,
+        } = crypto.generateKeyPairSync('rsa', {
+            modulusLength: 4096,
+            publicKeyEncoding: {
+                type: 'pkcs1',
+                format: 'pem',
+            },
+            privateKeyEncoding: {
+                type: 'pkcs1',
+                format: 'pem',
+            },
+        });
+        console.log(privateKey, '---', publicKey)
+
+        const publicKeyString = await KeyTokenService.createKeyToken({
+            userId: newShop._id,
+            publicKey: publicKey.toString(),
+            privateKey: privateKey.toString(),
+        })
+
+        if (!publicKeyString) {
+            throw new BusinessLogicError('Error: publicKeyString error')
+        }
+        console.log('publicKeyString:: ', publicKeyString)
+
+        // create pub
+        const publicKeyObject = await crypto.createPublicKey(publicKeyString)
+        console.log('publicKeyObject:: ', publicKeyObject)
+
+        // created token pair
+        const tokens = await createTokenPair(
+            {
+                userId: newShop._id,
+                email
+            },
+            publicKeyObject,
+            privateKey
+        )
+
+        console.log('Created token success:: ', tokens)
+
+        return {
+            shop: getInfoData(
+                {
+                    fields: ['_id', 'name', 'email'],
+                    object: newShop
+                }
+            ),
+            tokens
+        }
     }
 }
 
-module.exports = AccessService
+module.exports = new AccessService()

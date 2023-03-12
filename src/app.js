@@ -61,10 +61,10 @@ checkOverload();
 app.use('', require('./routes'))
 
 // handling errors
-const {logError, returnError, is404Handler, isOperationalError} = require("./middleware/errorHandler");
+const {logErrorMiddleware, returnError, is404Handler, isOperationalError} = require("./middleware/errorHandler");
 const {exit} = require("./middleware/common");
 app.use(is404Handler)
-app.use(logError)
+app.use(logErrorMiddleware)
 app.use(returnError)
 
 // if the Promise is rejected this will catch it
@@ -87,8 +87,6 @@ process.on('unhandledRejection', error => {
 })
 
 process.on('uncaughtException', error => {
-   logError(error)
-
    // if isOperational is false -> exit service
    if (!isOperationalError(error)) {
        exit()

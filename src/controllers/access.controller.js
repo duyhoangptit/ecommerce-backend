@@ -1,11 +1,11 @@
-const AccessService = require('../services/access.service')
-const SuccessResponse = require("../core/success.response");
+const accessService = require('../services/access.service')
+const catchAsync = require('../utils/catch.async')
+const {CREATED} = require("../core/success.response");
 
 class AccessController {
-    signUp = async (req, res, next) => {
-        console.log(req.body)
-        return SuccessResponse.successHandler(res, await AccessService.signUp(req.body), 'SignUp success', 201)
-    }
+    signUp = catchAsync(async (req, res, next) => {
+        next(CREATED(res, "Register success", await accessService.signUp(req.body)))
+    })
 }
 
 module.exports = new AccessController()
