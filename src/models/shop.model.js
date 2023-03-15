@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const {Schema} = require("mongoose");
+const {Schema, mongoose} = require("mongoose");
 
 const DOCUMENT_NAME = 'Shop';
 const COLLECTION_NAME = 'Shops';

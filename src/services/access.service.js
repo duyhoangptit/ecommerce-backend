@@ -5,6 +5,8 @@ const KeyTokenService = require('../services/keyToken.service')
 const {createTokenPair} = require('../auth/authUtils')
 const {getInfoData} = require('../utils')
 const {Api403Error, BusinessLogicError} = require("../core/error.response");
+const { findByEmail } = require('./shop.service')
+const apiKeyModel = require('../models/apikey.model')
 
 const RoleShop = {
     SHOP: 'SHOP',
@@ -15,6 +17,68 @@ const RoleShop = {
 }
 
 class AccessService {
+
+    /**
+     * 1 - Check email in dbs
+     * 2 - Match password
+     * 3 - Create AT vs RT and save
+     * 4 - Generate tokens
+     * 5 - Get data return login
+     *
+     * @param email
+     * @param password
+     * @param refreshToken
+     * @returns {Promise<void>}
+     */
+    singIn = async ({email, password, refreshToken = null}) => {
+        // 1.
+        const foundShop = await findByEmail({email})
+        if (!foundShop) throw new Api403Error('Shop is not registered')
+
+        // 2.
+        const match = bcrypt.compare(password, foundShop.password)
+        if (!match) throw new BusinessLogicError('Login error')
+
+        // 3. create private key, public key
+        const {
+            publicKey,
+            privateKey,
+        } = crypto.generateKeyPairSync('rsa', {
+            modulusLength: 4096,
+            publicKeyEncoding: {
+                type: 'pkcs1',
+                format: 'pem',
+            },
+            privateKeyEncoding: {
+                type: 'pkcs1',
+                format: 'pem',
+            },
+        });
+
+        // 4. generate tokens
+        const {_id: userId}  = foundShop
+        const tokens =  await createTokenPair({
+            userId: userId.toString(),
+            email
+        }, publicKey, privateKey)
+
+        await KeyTokenService.createKeyToken({
+            userId: userId.toString(),
+            privateKey,
+            publicKey,
+            refreshToken: tokens.refreshToken,
+        })
+
+        //
+        return {
+            shop: getInfoData({
+                fields: ['_id', 'name', 'email'],
+                object: foundShop
+            }),
+            tokens
+        }
+    }
+
     signUp = async ({name, email, password}) => {
         // step1: check email exists?
         const holderShop = await shopModel.findOne({email}).lean()
@@ -75,6 +139,10 @@ class AccessService {
         )
 
         console.log('Created token success:: ', tokens)
+        // apiKey
+        const newKey = await apiKeyModel.create({
+            key: crypto.randomBytes(64).toString('hex'), permission: ['0000']
+        })
 
         return {
             shop: getInfoData(
@@ -83,7 +151,8 @@ class AccessService {
                     object: newShop
                 }
             ),
-            tokens
+            tokens,
+            key: newKey
         }
     }
 }

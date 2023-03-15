@@ -28,17 +28,19 @@ class Create extends SuccessResponse {
     }
 }
 
-const CREATED = (res, message, data) => {
+const CREATED = (res, message, data, options = {}) => {
     new Create({
         message,
-        data
+        data,
+        options
     }).send(res)
 }
 
-const OK = (res, message, data) => {
+const OK = (res, message, data, options = {}) => {
     new Ok({
         message,
-        data
+        data,
+        options
     }).send(res)
 }
 

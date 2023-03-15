@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const {Schema} = require("mongoose");
+const {Schema, mongoose} = require("mongoose");
 
 const DOCUMENT_NAME = 'Key';
 const COLLECTION_NAME = 'Keys';
@@ -18,9 +17,14 @@ const keyTokenSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    refreshToken: {
+    refreshTokensUsed: {
         type: Array,
         default: []
+    }
+    ,
+    refreshToken: {
+        type: String,
+        required: true
     }
 },{
     timestamps: true,

@@ -1,7 +1,19 @@
 
+### signIn
+POST {{url}}/shop/signin
+Content-Type: application/json
+x-api-key: 6d4c353bcc717668a33749991c5340bbc9485b51fb555f7629b0a97dc4655dc8cb2e703d88170e9a3bf2861b2f94abbdb015bfc40ef87a62b9381e209183a8e7
+
+{
+  "email": "duyhoangptit@gmail.com",
+  "password": "0123456789"
+}
+
+
 ### signUp
 POST {{url}}/shop/signup
 Content-Type: application/json
+x-api-key: 6d4c353bcc717668a33749991c5340bbc9485b51fb555f7629b0a97dc4655dc8cb2e703d88170e9a3bf2861b2f94abbdb015bfc40ef87a62b9381e209183a8e7
 
 {
   "name": "Ta Duy Hoang",
