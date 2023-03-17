@@ -11,7 +11,7 @@ const apiKey = async (req, res, next) => {
         const key = req.headers[HEADER.API_KEY]?.toString();
         if (!key) {
             return res.status(403).json({
-               message: 'Forbidden Error'
+                message: 'Forbidden Error'
             });
         }
         // check objKey

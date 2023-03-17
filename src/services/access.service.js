@@ -5,7 +5,7 @@ const KeyTokenService = require('../services/keyToken.service')
 const {createTokenPair} = require('../auth/authUtils')
 const {getInfoData} = require('../utils')
 const {Api403Error, BusinessLogicError} = require("../core/error.response");
-const { findByEmail } = require('./shop.service')
+const {findByEmail} = require('./shop.service')
 const apiKeyModel = require('../models/apikey.model')
 
 const RoleShop = {
@@ -17,6 +17,18 @@ const RoleShop = {
 }
 
 class AccessService {
+
+    /**
+     * Action logout
+     *
+     * @param keyStore
+     * @returns {Promise<*>}
+     */
+    logout = async ({keyStore}) => {
+        const delKey = await KeyTokenService.removeKeyById(keyStore._id)
+        console.debug(delKey)
+        return delKey;
+    }
 
     /**
      * 1 - Check email in dbs
@@ -56,8 +68,8 @@ class AccessService {
         });
 
         // 4. generate tokens
-        const {_id: userId}  = foundShop
-        const tokens =  await createTokenPair({
+        const {_id: userId} = foundShop
+        const tokens = await createTokenPair({
             userId: userId.toString(),
             email
         }, publicKey, privateKey)

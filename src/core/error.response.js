@@ -23,6 +23,12 @@ class Api403Error extends BaseError {
     }
 }
 
+class Api401Error extends BaseError {
+    constructor(message = STATUS.UN_AUTHORIZATION.reason, errors = [], status = STATUS.UN_AUTHORIZATION.status, isOperational = true) {
+        super(message, status, errors, isOperational);
+    }
+}
+
 class BusinessLogicError extends BaseError {
     constructor(message = STATUS.SERVER.reason, errors = [], status = STATUS.SERVER.status, isOperational = true) {
         super(message, status, errors, isOperational);
@@ -36,6 +42,7 @@ class Api404Error extends BaseError {
 }
 
 module.exports = {
+    Api401Error,
     Api403Error,
     Api404Error,
     Api409Error,

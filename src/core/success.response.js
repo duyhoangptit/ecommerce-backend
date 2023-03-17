@@ -17,7 +17,7 @@ class SuccessResponse {
 
 class Ok extends SuccessResponse {
     constructor({message, data = {}, options = {}}) {
-       super({message, data, options})
+        super({message, data, options})
     }
 }
 

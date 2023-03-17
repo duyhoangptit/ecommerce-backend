@@ -5,7 +5,7 @@ const COLLECTION_NAME = 'Shops';
 
 const shopSchema = new mongoose.Schema({
     name: {
-        type:String,
+        type: String,
         trim: true,
         maxLength: 150
     },
@@ -31,7 +31,7 @@ const shopSchema = new mongoose.Schema({
         type: Array,
         default: []
     }
-},{
+}, {
     timestamps: true,
     collection: COLLECTION_NAME
 });

@@ -1,4 +1,4 @@
-const {model, Schema}  = require("mongoose");
+const {model, Schema} = require("mongoose");
 
 const DOCUMENT_NAME = 'ApiKey';
 const COLLECTION_NAME = 'ApiKeys';

@@ -26,7 +26,7 @@ const keyTokenSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-},{
+}, {
     timestamps: true,
     collection: COLLECTION_NAME
 });

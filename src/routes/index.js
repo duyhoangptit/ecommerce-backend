@@ -8,7 +8,7 @@ router.use(apiKey)
 // check permission
 router.use(permission('0000'))
 
- // init routes
+// init routes
 router.use('/v1/api', require('./access'))
 
 module.exports = router

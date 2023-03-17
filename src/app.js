@@ -40,7 +40,7 @@ app.use(helmet.noSniff());
 // x xss protection
 app.use(helmet.xssFilter())
 // referrer policy
-app.use( helmet.referrerPolicy({
+app.use(helmet.referrerPolicy({
     policy: "no-referrer",
 }))
 
@@ -48,8 +48,8 @@ app.use( helmet.referrerPolicy({
 app.use(compression());
 
 // setting body parser, cookie parser
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(express.json({limit: '10kb'}));
+app.use(express.urlencoded({extended: true, limit: '10kb'}));
 app.use(cookieParser());
 
 // init db
@@ -87,10 +87,10 @@ process.on('unhandledRejection', error => {
 })
 
 process.on('uncaughtException', error => {
-   // if isOperational is false -> exit service
-   if (!isOperationalError(error)) {
-       exit()
-   }
+    // if isOperational is false -> exit service
+    if (!isOperationalError(error)) {
+        exit()
+    }
 })
 
 module.exports = app;
