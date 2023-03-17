@@ -9,6 +9,10 @@ const HEADER = {
     AUTHORIZATION: 'authorization'
 }
 
+const API_WHITELIST = [
+    "/shop/refresh-token"
+]
+
 const createTokenPair = async (payload, publicKey, privateKey) => {
     try {
         // access token
@@ -24,7 +28,7 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
         })
 
         // verify key
-        JWT.verify(accessToken, publicKey, (err, decode) => {
+        verifyJwt(accessToken, publicKey, (err, decode) => {
             if (err) {
                 console.error(`error verify:: `, err)
             } else {
@@ -50,6 +54,7 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
  * @type {(function(*, *, *): void)|*}
  */
 const authentication = catchAsync(async (req, res, next) => {
+
     // 1. check user id
     const userId = req.headers[HEADER.CLIENT_ID]
     if (!userId) throw new Api403Error('Invalid request')
@@ -58,13 +63,19 @@ const authentication = catchAsync(async (req, res, next) => {
     const keyStore = await KeyTokenService.findByUserId(userId)
     if (!keyStore) throw new Api404Error('Resource not found')
 
+    // 0. If url in whitelist, not check authen
+    if (API_WHITELIST.includes(req.url)) {
+        next()
+        return
+    }
+
     // 3. get access token
     const accessToken = req.headers[HEADER.AUTHORIZATION]
     if (!accessToken) throw new Api401Error('Invalid request')
 
     // 4.
     try {
-        const decodeUser = JWT.verify(accessToken, keyStore.publicKey);
+        const decodeUser = verifyJwt(accessToken, keyStore.publicKey);
         if (userId !== decodeUser.userId) throw new Api401Error('Invalid userId')
 
         req.keyStore = keyStore
@@ -74,7 +85,12 @@ const authentication = catchAsync(async (req, res, next) => {
     }
 })
 
+const verifyJwt = (token, keySecret) => {
+    return JWT.verify(token, keySecret);
+}
+
 module.exports = {
     createTokenPair,
     authentication,
+    verifyJwt,
 }

@@ -41,3 +41,5 @@
 ### Handler authen
     https://github.com/madhums/node-express-mongoose-demo.git
 
+### Api key
+    `Lưu trữ key cung cấp cho các đối tác được truy cập vào hệ thống`

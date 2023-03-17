@@ -2,9 +2,9 @@ const shopModel = require("../models/shop.model")
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const KeyTokenService = require('../services/keyToken.service')
-const {createTokenPair} = require('../auth/authUtils')
+const {createTokenPair, verifyJwt} = require('../auth/authUtils')
 const {getInfoData} = require('../utils')
-const {Api403Error, BusinessLogicError} = require("../core/error.response");
+const {Api403Error, BusinessLogicError, Api401Error} = require("../core/error.response");
 const {findByEmail} = require('./shop.service')
 const apiKeyModel = require('../models/apikey.model')
 
@@ -17,6 +17,56 @@ const RoleShop = {
 }
 
 class AccessService {
+
+    /**
+     * Check this token used?
+     * @param refreshToken
+     * @returns {Promise<void>}
+     */
+    refreshToken = async (refreshToken) => {
+        const foundToken = await KeyTokenService.findByRefreshTokenUsed(refreshToken)
+        // check token used?
+        if (foundToken) {
+            // decode user
+            const {userId, email} = await verifyJwt(refreshToken, foundToken.privateKey)
+            console.log({userId, email})
+            // notify send email error
+
+            // delete token in keyStore
+            await KeyTokenService.deleteKeyById(userId)
+            throw new Api403Error('Something wrong happend')
+        }
+
+        // refreshToken invalid
+        const holderToken = await KeyTokenService.findByRefreshToken(refreshToken)
+        // check token exists
+        if (!holderToken) throw new Api401Error('Token invalid')
+
+        // verify token
+        const {userId, email} = await verifyJwt(refreshToken, holderToken.privateKey)
+        // check userId
+        const foundShop = await findByEmail({email})
+        if (!foundShop) throw new Api401Error('Token invalid')
+
+        // create accessToken, refreshToken
+        const tokens = await createTokenPair({userId, email}, holderToken.publicKey, holderToken.privateKey)
+
+        // update token
+        await holderToken.update({
+            $set: {
+                refreshToken: tokens.refreshToken
+            },
+            $addToSet: {
+                refreshTokensUsed: refreshToken
+            }
+        })
+
+        // return new tokens
+        return {
+            user: {userId, email},
+            tokens
+        }
+    }
 
     /**
      * Action logout

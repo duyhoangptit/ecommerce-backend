@@ -8,6 +8,10 @@ class AccessController {
         OK(res, "Login success", await accessService.singIn(req.body))
     })
 
+    refreshToken = catchAsync(async (req, res, next) => {
+        OK(res, "Get token success", await accessService.refreshToken(req.body.refreshToken))
+    })
+
     logout = catchAsync(async (req, res, next) => {
         OK(res, "Logout success", await accessService.logout(req.keyStore))
     })
