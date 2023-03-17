@@ -24,7 +24,7 @@ class AccessService {
      * @param keyStore
      * @returns {Promise<*>}
      */
-    logout = async ({keyStore}) => {
+    logout = async (keyStore) => {
         const delKey = await KeyTokenService.removeKeyById(keyStore._id)
         console.debug(delKey)
         return delKey;

@@ -65,9 +65,10 @@ const authentication = catchAsync(async (req, res, next) => {
     // 4.
     try {
         const decodeUser = JWT.verify(accessToken, keyStore.publicKey);
-        if (!userId !== decodeUser.userId) throw new Api401Error('Invalid userId')
+        if (userId !== decodeUser.userId) throw new Api401Error('Invalid userId')
 
         req.keyStore = keyStore
+        next()
     } catch (error) {
         throw error
     }
