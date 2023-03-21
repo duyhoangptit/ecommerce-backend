@@ -1,8 +1,8 @@
-const {STATUS} = require("./status");
+const { StatusCodes } = require("./httpStatusCode");
 
 class SuccessResponse {
 
-    constructor({message, status = STATUS.OK.status, data = {}, options = {}}) {
+    constructor({message, status = StatusCodes.OK, data = {}, options = {}}) {
         this.message = message;
         this.status = status;
         this.data = data;
@@ -24,7 +24,7 @@ class Ok extends SuccessResponse {
 
 class Create extends SuccessResponse {
     constructor({message, data = {}, options = {}}) {
-        super({message, status: STATUS.CREATED.status, data, options})
+        super({message, status: StatusCodes.CREATED, data, options})
     }
 }
 

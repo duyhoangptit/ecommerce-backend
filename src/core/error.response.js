@@ -1,4 +1,4 @@
-const {STATUS} = require("./status");
+const { StatusCodes, ReasonPhrases } = require("./httpStatusCode");
 
 class BaseError extends Error {
     constructor(message, status, errors, isOperational) {
@@ -12,31 +12,31 @@ class BaseError extends Error {
 }
 
 class Api409Error extends BaseError {
-    constructor(message = STATUS.CONFLICT.reason, errors = [], status = STATUS.CONFLICT.status, isOperational = true) {
+    constructor(message = ReasonPhrases.CONFLICT, errors = [], status = StatusCodes.CONFLICT, isOperational = true) {
         super(message, status, errors, isOperational);
     }
 }
 
 class Api403Error extends BaseError {
-    constructor(message = STATUS.FORBIDDEN.reason, errors = [], status = STATUS.FORBIDDEN.status, isOperational = true) {
+    constructor(message = ReasonPhrases.FORBIDDEN, errors = [], status = StatusCodes.FORBIDDEN, isOperational = true) {
         super(message, status, errors, isOperational);
     }
 }
 
 class Api401Error extends BaseError {
-    constructor(message = STATUS.UN_AUTHORIZATION.reason, errors = [], status = STATUS.UN_AUTHORIZATION.status, isOperational = true) {
+    constructor(message = ReasonPhrases.UNAUTHORIZED, errors = [], status = StatusCodes.UNAUTHORIZED, isOperational = true) {
         super(message, status, errors, isOperational);
     }
 }
 
 class BusinessLogicError extends BaseError {
-    constructor(message = STATUS.SERVER.reason, errors = [], status = STATUS.SERVER.status, isOperational = true) {
+    constructor(message = ReasonPhrases.INTERNAL_SERVER_ERROR, errors = [], status = StatusCodes.INTERNAL_SERVER_ERROR, isOperational = true) {
         super(message, status, errors, isOperational);
     }
 }
 
 class Api404Error extends BaseError {
-    constructor(message = STATUS.NOT_FOUND.reason, errors = [], status = STATUS.NOT_FOUND.status, isOperational = true) {
+    constructor(message = ReasonPhrases.NOT_FOUND, errors = [], status = StatusCodes.NOT_FOUND, isOperational = true) {
         super(message, status, errors, isOperational);
     }
 }
@@ -48,5 +48,4 @@ module.exports = {
     Api409Error,
     BusinessLogicError,
     BaseError,
-    STATUS
 }

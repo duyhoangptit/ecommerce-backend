@@ -67,6 +67,14 @@ app.use(is404Handler)
 app.use(logErrorMiddleware)
 app.use(returnError)
 
+// config i18n
+const {i18n} = require('./configs/config.i18n')
+app.use(i18n.init)
+app.use((req, res, next) => {
+    i18n.setLocale(req, req.headers["ACCEPT-LANGUAGE"])
+    next()
+})
+
 // if the Promise is rejected this will catch it
 process.on('SIGINT', () => {
     console.log('Ctrl + C:: Service stop!!!')
