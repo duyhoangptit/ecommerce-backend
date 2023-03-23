@@ -43,3 +43,6 @@
 
 ### Api key
     `Lưu trữ key cung cấp cho các đối tác được truy cập vào hệ thống`
+
+### Design Schema MongooDB - Polymorphic Pattern
+    - 1document 1kb -> 50tr = 50gb

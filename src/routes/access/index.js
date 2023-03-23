@@ -9,6 +9,7 @@ router.post('/shop/signup', accessController.signUp)
 
 // authentication
 router.use(authentication)
+
 // logout
 router.post('/shop/logout', accessController.logout)
 router.post('/shop/refresh-token', accessController.refreshToken)
