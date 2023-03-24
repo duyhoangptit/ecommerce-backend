@@ -46,7 +46,11 @@ const productSchema = new mongoose.Schema({
 const electronicsSchema = new Schema({
     manufacturer: { type: String, required: true},
     model: String,
-    color: String
+    color: String,
+    product_shop: {
+        type: Schema.Types.ObjectId,
+        ref: 'Shop'
+    }
 }, {
     collection: "electronics",
     timestamps: true
@@ -55,7 +59,11 @@ const electronicsSchema = new Schema({
 const clothingSchema = new Schema({
     brand: { type: String, required: true},
     size: String,
-    material: String
+    material: String,
+    product_shop: {
+        type: Schema.Types.ObjectId,
+        ref: 'Shop'
+    }
 }, {
     collection: "clothes",
     timestamps: true
@@ -64,7 +72,11 @@ const clothingSchema = new Schema({
 const furnitureSchema  = new Schema({
     brand: { type: String, required: true},
     size: String,
-    material: String
+    material: String,
+    product_shop: {
+        type: Schema.Types.ObjectId,
+        ref: 'Shop'
+    }
 }, {
     collection: "furniture",
     timestamps: true
