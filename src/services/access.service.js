@@ -2,7 +2,7 @@ const shopModel = require("../models/shop.model")
 const bcrypt = require('bcrypt')
 const crypto = require('crypto')
 const KeyTokenService = require('../services/keyToken.service')
-const {createTokenPair, verifyJwt} = require('../auth/authUtils')
+const {createTokenPair} = require('../auth/authUtils')
 const {getInfoData} = require('../utils')
 const {Api403Error, BusinessLogicError, Api401Error} = require("../core/error.response");
 const {findByEmail} = require('./shop.service')
@@ -23,36 +23,33 @@ class AccessService {
      * @param refreshToken
      * @returns {Promise<void>}
      */
-    refreshToken = async (refreshToken) => {
-        const foundToken = await KeyTokenService.findByRefreshTokenUsed(refreshToken)
-        // check token used?
-        if (foundToken) {
-            // decode user
-            const {userId, email} = await verifyJwt(refreshToken, foundToken.privateKey)
-            console.log({userId, email})
-            // notify send email error
+    refreshToken = async ({
+                            refreshToken,
+                            user,
+                            keyStore
+                          }) => {
+        const { userId, email } = user
+        console.log({userId, email})
+
+        if (keyStore.refreshTokensUsed.includes(refreshToken)) {
+            // notify send email error...
 
             // delete token in keyStore
             await KeyTokenService.deleteKeyById(userId)
-            throw new Api403Error('Something wrong happend')
+            throw new Api403Error('Something wrong happend!! Pls relogin')
         }
 
-        // refreshToken invalid
-        const holderToken = await KeyTokenService.findByRefreshToken(refreshToken)
-        // check token exists
-        if (!holderToken) throw new Api401Error('Token invalid')
+        if (refreshToken !== keyStore.refreshToken) throw Api401Error('Shop not registeted')
 
-        // verify token
-        const {userId, email} = await verifyJwt(refreshToken, holderToken.privateKey)
         // check userId
         const foundShop = await findByEmail({email})
         if (!foundShop) throw new Api401Error('Token invalid')
 
         // create accessToken, refreshToken
-        const tokens = await createTokenPair({userId, email}, holderToken.publicKey, holderToken.privateKey)
+        const tokens = await createTokenPair({userId, email}, keyStore.publicKey, keyStore.privateKey)
 
         // update token
-        await holderToken.update({
+        await keyStore.update({
             $set: {
                 refreshToken: tokens.refreshToken
             },
@@ -63,7 +60,7 @@ class AccessService {
 
         // return new tokens
         return {
-            user: {userId, email},
+            user,
             tokens
         }
     }
@@ -89,10 +86,9 @@ class AccessService {
      *
      * @param email
      * @param password
-     * @param refreshToken
      * @returns {Promise<void>}
      */
-    singIn = async ({email, password, refreshToken = null}) => {
+    singIn = async ({email, password}) => {
         // 1.
         const foundShop = await findByEmail({email})
         if (!foundShop) throw new Api403Error('Shop is not registered')

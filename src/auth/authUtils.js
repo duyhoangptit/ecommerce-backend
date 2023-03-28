@@ -6,12 +6,9 @@ const KeyTokenService = require('../services/keyToken.service')
 const HEADER = {
     API_KEY: 'x-api-key',
     CLIENT_ID: 'x-client-id',
-    AUTHORIZATION: 'authorization'
+    AUTHORIZATION: 'authorization',
+    REFRESH_TOKEN: 'refresh-token'
 }
-
-const API_WHITELIST = [
-    "/shop/refresh-token"
-]
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
     try {
@@ -54,7 +51,6 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
  * @type {(function(*, *, *): void)|*}
  */
 const authentication = catchAsync(async (req, res, next) => {
-
     // 1. check user id
     const userId = req.headers[HEADER.CLIENT_ID]
     if (!userId) throw new Api403Error('Invalid request')
@@ -62,12 +58,6 @@ const authentication = catchAsync(async (req, res, next) => {
     // 2. check keyStore by userId
     const keyStore = await KeyTokenService.findByUserId(userId)
     if (!keyStore) throw new Api404Error('Resource not found')
-
-    // 0. If url in whitelist, not check authen
-    if (API_WHITELIST.includes(req.url)) {
-        next()
-        return
-    }
 
     // 3. get access token
     const accessToken = req.headers[HEADER.AUTHORIZATION]
@@ -85,6 +75,48 @@ const authentication = catchAsync(async (req, res, next) => {
     }
 })
 
+const authenticationV2 = catchAsync(async (req, res, next) => {
+    // 1. check user id
+    const userId = req.headers[HEADER.CLIENT_ID]
+    if (!userId) throw new Api403Error('Invalid request')
+
+    // 2. check keyStore by userId
+    const keyStore = await KeyTokenService.findByUserId(userId)
+    if (!keyStore) throw new Api404Error('Resource not found')
+
+    // 3. get refreshToken
+    const refreshToken = req.headers[HEADER.REFRESH_TOKEN]
+    if (refreshToken) {
+        try {
+            const decodeUser = verifyJwt(refreshToken, keyStore.privateKey);
+            if (userId !== decodeUser.userId) throw new Api401Error('Invalid userId')
+
+            req.user = decodeUser
+            req.keyStore = keyStore
+            req.refreshToken = refreshToken
+
+            return next()
+        }  catch (error) {
+            throw error
+        }
+    }
+
+    // 3. get access token
+    const accessToken = req.headers[HEADER.AUTHORIZATION]
+    if (!accessToken) throw new Api401Error('Invalid request')
+
+    // 4.
+    try {
+        const decodeUser = verifyJwt(accessToken, keyStore.publicKey);
+        if (userId !== decodeUser.userId) throw new Api401Error('Invalid userId')
+
+        req.keyStore = keyStore
+        return next()
+    } catch (error) {
+        throw error
+    }
+})
+
 const verifyJwt = (token, keySecret) => {
     return JWT.verify(token, keySecret);
 }
@@ -92,5 +124,6 @@ const verifyJwt = (token, keySecret) => {
 module.exports = {
     createTokenPair,
     authentication,
+    authenticationV2,
     verifyJwt,
 }

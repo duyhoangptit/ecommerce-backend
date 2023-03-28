@@ -9,7 +9,11 @@ class AccessController {
     })
 
     refreshToken = catchAsync(async (req, res, next) => {
-        OK(res, "Get token success", await accessService.refreshToken(req.body.refreshToken))
+        OK(res, "Get token success", await accessService.refreshToken({
+            refreshToken: req.refreshToken,
+            user: req.user,
+            keyStore: req.keyStore
+        }))
     })
 
     logout = catchAsync(async (req, res, next) => {
