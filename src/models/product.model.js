@@ -2,6 +2,9 @@ const {Schema, mongoose} = require("mongoose");
 
 const DOCUMENT_NAME = 'Product';
 const COLLECTION_NAME = 'Products';
+const COLLECTION_CLOTHING_NAME = 'Clothings';
+const COLLECTION_ELECTRON_NAME = 'Electrons';
+const COLLECTION_FURNITURE_NAME = 'Furnitures';
 
 const productSchema = new mongoose.Schema({
     product_name: {
@@ -52,7 +55,7 @@ const electronicsSchema = new Schema({
         ref: 'Shop'
     }
 }, {
-    collection: "electronics",
+    collection: COLLECTION_ELECTRON_NAME,
     timestamps: true
 })
 
@@ -65,7 +68,7 @@ const clothingSchema = new Schema({
         ref: 'Shop'
     }
 }, {
-    collection: "clothes",
+    collection: COLLECTION_CLOTHING_NAME,
     timestamps: true
 })
 
@@ -78,13 +81,13 @@ const furnitureSchema  = new Schema({
         ref: 'Shop'
     }
 }, {
-    collection: "furniture",
+    collection: COLLECTION_FURNITURE_NAME,
     timestamps: true
 })
 
 module.exports = {
     product: mongoose.model(DOCUMENT_NAME, productSchema),
-    electronic: mongoose.model("Electronics", electronicsSchema),
+    electronic: mongoose.model("Electronic", electronicsSchema),
     clothing: mongoose.model("Clothing", clothingSchema),
     furniture: mongoose.model("Furniture", furnitureSchema)
 }

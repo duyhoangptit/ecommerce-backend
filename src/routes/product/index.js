@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const productController = require('../../controllers/product.controller')
-const {authentication} = require("../../auth/authUtils");
+const {authenticationV2} = require("../../auth/authUtils");
 
 // authentication
-router.use(authentication)
+router.use(authenticationV2)
 
 // product
 router.post('', productController.createProduct)

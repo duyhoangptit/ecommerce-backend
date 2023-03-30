@@ -1,16 +1,19 @@
-const {product, clothing, electronic} = require('../models/product.model')
+const {product, clothing, electronic, furniture} = require('../models/product.model')
 const {BusinessLogicError} = require("../core/error.response");
 
-class ProductFactory {
+class ProductFactoryV2 {
+
+    static productRegistry = {}
+
+    static registerProductType( type, classRef) {
+        ProductFactoryV2.productRegistry[type] = classRef
+    }
+
     static async createProduct(type, payload) {
-        switch (type) {
-            case 'Electronic':
-                return new Electronic(payload)
-            case 'Clothing':
-                return new Clothing(payload)
-            default:
-                throw new BusinessLogicError(`Invalid product types ${type}`)
-        }
+        const productClass = ProductFactoryV2.productRegistry[type]
+        if (!productClass) throw new BusinessLogicError(`Invalid product Types ${type}`)
+
+        return new productClass(payload).createProduct()
     }
 }
 
@@ -70,6 +73,33 @@ class Electronic extends Product {
     }
 }
 
+class Furniture extends Product {
+    async createProduct() {
+        const newFurniture = await furniture.create(
+            {
+                ...this.product_attributes,
+                product_shop: this.product_shop
+            }
+        )
+        if (!newFurniture) {
+            throw new BusinessLogicError('Create new Furniture error')
+        }
+
+        const newProduct = await super.createProduct()
+        if (!newProduct) {
+            throw new BusinessLogicError('Create new product error')
+        }
+
+        return newProduct
+    }
+}
+
+// register product type
+ProductFactoryV2.registerProductType('Electronic', Electronic)
+ProductFactoryV2.registerProductType('Clothing', Clothing)
+ProductFactoryV2.registerProductType('Furniture', Furniture)
+//... add product other here
+
 module.exports = {
-    ProductFactory
+    ProductFactoryV2
 }
