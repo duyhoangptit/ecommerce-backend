@@ -5,7 +5,6 @@ const KeyTokenService = require('../services/keyToken.service')
 
 const HEADER = {
     API_KEY: 'x-api-key',
-    CLIENT_ID: 'x-client-id',
     AUTHORIZATION: 'authorization',
     REFRESH_TOKEN: 'refresh-token'
 }
@@ -51,17 +50,18 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
  * @type {(function(*, *, *): void)|*}
  */
 const authentication = catchAsync(async (req, res, next) => {
-    // 1. check user id
-    const userId = req.headers[HEADER.CLIENT_ID]
-    if (!userId) throw new Api403Error('Invalid request')
-
-    // 2. check keyStore by userId
-    const keyStore = await KeyTokenService.findByUserId(userId)
-    if (!keyStore) throw new Api404Error('Resource not found')
-
-    // 3. get access token
+    // 1. get access token
     const accessToken = req.headers[HEADER.AUTHORIZATION]
     if (!accessToken) throw new Api401Error('Invalid request')
+
+    // 2. check user id
+    const obj = parseJwt(accessToken)
+    if (!obj.userId) throw new Api403Error('Invalid request')
+
+    // 2. check keyStore by userId
+    const userId = obj.userId
+    const keyStore = await KeyTokenService.findByUserId(userId)
+    if (!keyStore) throw new Api404Error('Resource not found')
 
     // 4.
     try {
@@ -75,9 +75,20 @@ const authentication = catchAsync(async (req, res, next) => {
     }
 })
 
+const parseJwt = (token) => {
+    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+}
+
 const authenticationV2 = catchAsync(async (req, res, next) => {
+    const refreshToken = req.headers[HEADER.REFRESH_TOKEN]
+    const accessToken = req.headers[HEADER.AUTHORIZATION]
+
     // 1. check user id
-    const userId = req.headers[HEADER.CLIENT_ID]
+    const obj = parseJwt(accessToken || refreshToken)
+    if (!obj.userId) throw new Api403Error('Invalid request')
+
+    // 2. check user id
+    const userId = obj.userId
     if (!userId) throw new Api403Error('Invalid request')
 
     // 2. check keyStore by userId
@@ -85,7 +96,6 @@ const authenticationV2 = catchAsync(async (req, res, next) => {
     if (!keyStore) throw new Api404Error('Resource not found')
 
     // 3. get refreshToken
-    const refreshToken = req.headers[HEADER.REFRESH_TOKEN]
     if (refreshToken) {
         try {
             const decodeUser = verifyJwt(refreshToken, keyStore.privateKey);
@@ -102,7 +112,6 @@ const authenticationV2 = catchAsync(async (req, res, next) => {
     }
 
     // 3. get access token
-    const accessToken = req.headers[HEADER.AUTHORIZATION]
     if (!accessToken) throw new Api401Error('Invalid request')
 
     // 4.

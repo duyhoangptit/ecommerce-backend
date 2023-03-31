@@ -1,5 +1,5 @@
 {
-  "name": "ecommerce-backend-archetype",
+  "name": "ecommerce-core-service",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -25,5 +25,8 @@
     "mongoose": "^6.9.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.1"
+  },
+  "devDependencies": {
+    "amqplib": "^0.10.3"
   }
 }
