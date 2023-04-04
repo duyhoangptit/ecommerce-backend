@@ -38,11 +38,11 @@
     7 - Xử lý ErrorHandler trong API -
     
     • Section 7: Xử lý ...
-### Handler authen
+### Handler auth
     https://github.com/madhums/node-express-mongoose-demo.git
 
 ### Api key
     `Lưu trữ key cung cấp cho các đối tác được truy cập vào hệ thống`
 
-### Design Schema MongooDB - Polymorphic Pattern
+### Design Schema MongoDB - Polymorphic Pattern
     - 1document 1kb -> 50tr = 50gb

@@ -1,0 +1,43 @@
+version: "3.4"
+
+services:
+  app:
+    image: ecommerce-core-service:deploy-node
+    volumes:
+      - ./public/images:/app/public/images
+    environment:
+      - DB_HOST:${DB_HOST}
+      - DB_PORT:${DB_PORT}
+      - REDIS_HOST:${REDIS_HOST}
+      - REDIS_PORT:${REDIS_PORT}
+      - RABBIT_URI:${RABBIT_URI}
+    ports:
+      - "${PORT}:${PORT}"
+    restart: unless-stopped
+    depends_on:
+      - redis
+      - db
+
+  db:
+    image: mongo
+    volumes:
+      - .docker/data/db:/data/db
+    restart: unless-stopped
+    user: "1000:1000"
+
+  rabbit:
+    image: rabbitmq
+    volumes:
+      - .docker/data/rabbit:/data/rabbit
+    restart: unless-stopped
+    user: "1000:1000"
+    ports:
+      - "5672:5672"
+      - "1936:1936"
+
+  redis:
+    image: bitnami/rabbitmq:latest
+    volumes:
+      - .docker/data/redis:/data/redis
+    restart: unless-stopped
+    user: "1000:1000"
