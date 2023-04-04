@@ -46,3 +46,6 @@
 
 ### Design Schema MongoDB - Polymorphic Pattern
     - 1document 1kb -> 50tr = 50gb
+
+### Fulltext search in mongoDB
+    [https://anonystick.com/blog-developer/full-text-search-mongodb-chi-mot-bai-viet-khong-can-nhieu-2022012063033379]

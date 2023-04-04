@@ -58,15 +58,15 @@ class Electronic extends Product {
                 product_shop: this.product_shop
             }
         )
-        if (!newElectronic) {
+        if (newElectronic) {
+            const newProduct = await super.createProduct()
+            if (!newProduct) {
+                throw new BusinessLogicError('Create new product error')
+            }
+            return newProduct
+        } else {
             throw new BusinessLogicError('Create new electronic error')
         }
-
-        const newProduct = await super.createProduct()
-        if (!newProduct) {
-            throw new BusinessLogicError('Create new product error')
-        }
-        return newProduct
     }
 }
 
