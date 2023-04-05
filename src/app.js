@@ -57,6 +57,10 @@ require('./dbs/init.mongodb.lv0');
 const {checkOverload} = require('./helpers/check.connect');
 checkOverload();
 
+// init swagger
+const {configSwagger} = require('./configs/config.swagger')
+configSwagger(app)
+
 // init routes
 app.use('', require('./routes'))
 
@@ -79,15 +83,18 @@ app.use((req, res, next) => {
 process.on('SIGINT', () => {
     console.log('Ctrl + C:: Service stop!!!')
     exit()
-});  // CTRL+C
+});
+// CTRL+C
 process.on('SIGQUIT', () => {
     console.log('Keyboard quit:: Service stop!!!')
     exit()
-}); // Keyboard quit
+});
+// Keyboard quit
 process.on('SIGTERM', () => {
     console.log('Kill command:: Service stop!!!')
     exit()
-}); // `kill` command
+});
+// `kill` command
 
 // catch all uncaught exceptions
 process.on('unhandledRejection', error => {

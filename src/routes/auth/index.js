@@ -4,14 +4,14 @@ const accessController = require('../../controllers/access.controller')
 const {authenticationV2} = require("../../auth/authUtils");
 
 // init routes
-router.post('/shop/signin', accessController.login)
-router.post('/shop/signup', accessController.signUp)
+router.post('/signin', accessController.login)
+router.post('/signup', accessController.signUp)
 
 // authentication
 router.use(authenticationV2)
 
 // logout
-router.post('/shop/logout', accessController.logout)
-router.post('/shop/refresh-token', accessController.refreshToken)
+router.post('/logout', accessController.logout)
+router.post('/refresh-token', accessController.refreshToken)
 
 module.exports = router

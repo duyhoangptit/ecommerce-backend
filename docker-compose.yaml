@@ -21,14 +21,14 @@ services:
   db:
     image: mongo
     volumes:
-      - .docker/data/db:/data/db
+      - .docker/guide/db:/guide/db
     restart: unless-stopped
     user: "1000:1000"
 
   rabbit:
     image: rabbitmq
     volumes:
-      - .docker/data/rabbit:/data/rabbit
+      - .docker/guide/rabbit:/guide/rabbit
     restart: unless-stopped
     user: "1000:1000"
     ports:
@@ -38,6 +38,6 @@ services:
   redis:
     image: bitnami/rabbitmq:latest
     volumes:
-      - .docker/data/redis:/data/redis
+      - .docker/guide/redis:/guide/redis
     restart: unless-stopped
     user: "1000:1000"

@@ -10,6 +10,6 @@ router.use(permission('0000'))
 
 // init routes
 router.use('/v1/api/product', require('./product'))
-router.use('/v1/api', require('./access'))
+router.use('/v1/api/auth', require('./auth'))
 
 module.exports = router

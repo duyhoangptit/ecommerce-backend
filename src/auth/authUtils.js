@@ -2,16 +2,19 @@ const JWT = require('jsonwebtoken')
 const catchAsync = require('../helpers/catch.async')
 const {Api403Error, Api404Error, Api401Error} = require("../core/error.response");
 const KeyTokenService = require('../services/keyToken.service')
+const {ignoreWhiteList} = require('./checkAuth')
 
 const HEADER = {
     API_KEY: 'x-api-key',
-    AUTHORIZATION: 'Authorization',
-    REFRESH_TOKEN: 'refresh-token'
+    AUTHORIZATION: 'authorization',
+    REFRESH_TOKEN: 'refresh-token',
+    X_CLIENT_ID: 'x-client-id',
+    BEARER: 'Bearer '
 }
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
     try {
-        // access token
+        // auth token
         const accessToken = await JWT.sign(payload, privateKey, {
             algorithm: 'RS256',
             expiresIn: '1 days'
@@ -50,7 +53,10 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
  * @type {(function(*, *, *): void)|*}
  */
 const authentication = catchAsync(async (req, res, next) => {
-    // 1. get access token
+    if (ignoreWhiteList(req)) return next()
+
+    // 1. get auth token
+    const clientId = req.headers[HEADER.X_CLIENT_ID]
     const accessToken = extractToken(req.headers[HEADER.AUTHORIZATION])
     if (!accessToken) throw new Api401Error('Invalid request')
 
@@ -80,6 +86,9 @@ const parseJwt = (token) => {
 }
 
 const authenticationV2 = catchAsync(async (req, res, next) => {
+    if (ignoreWhiteList(req)) return next()
+
+    const clientId = req.headers[HEADER.X_CLIENT_ID]
     const refreshToken = extractToken(req.headers[HEADER.REFRESH_TOKEN])
     const accessToken = extractToken(req.headers[HEADER.AUTHORIZATION])
 
@@ -111,7 +120,7 @@ const authenticationV2 = catchAsync(async (req, res, next) => {
         }
     }
 
-    // 3. get access token
+    // 3. get auth token
     if (!accessToken) throw new Api401Error('Invalid request')
 
     // 4.
@@ -133,7 +142,7 @@ const verifyJwt = (token, keySecret) => {
 
 const extractToken = (tokenHeader) => {
     if (!tokenHeader) return "";
-    return tokenHeader.replace("Bearer ", '')
+    return tokenHeader.replace(HEADER.BEARER, '')
 }
 
 module.exports = {

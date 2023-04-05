@@ -82,7 +82,7 @@ class AccessService {
      * 2 - Match password
      * 3 - Create AT vs RT and save
      * 4 - Generate tokens
-     * 5 - Get data return login
+     * 5 - Get guide return login
      *
      * @param email
      * @param password

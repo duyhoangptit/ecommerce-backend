@@ -50,7 +50,7 @@ module.exports = {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.5.3
      *
-     * The client does not have access rights to the content, i.e. they are unauthorized, so server is rejecting to give proper response. Unlike 401, the client's identity is known to the server.
+     * The client does not have auth rights to the content, i.e. they are unauthorized, so server is rejecting to give proper response. Unlike 401, the client's identity is known to the server.
      */
     FORBIDDEN: "Forbidden",
     /**
@@ -147,7 +147,7 @@ module.exports = {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc6585#section-6
      *
-     * The 511 status code indicates that the client needs to authenticate to gain network access.
+     * The 511 status code indicates that the client needs to authenticate to gain network auth.
      */
     NETWORK_AUTHENTICATION_REQUIRED: "Network Authentication Required",
     /**
@@ -265,7 +265,7 @@ module.exports = {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7233#section-4.4
      *
-     * The range specified by the Range header field in the request can't be fulfilled; it's possible that the range is outside the size of the target URI's data.
+     * The range specified by the Range header field in the request can't be fulfilled; it's possible that the range is outside the size of the target URI's guide.
      */
     REQUESTED_RANGE_NOT_SATISFIABLE: "Requested Range Not Satisfiable",
     /**
@@ -325,7 +325,7 @@ module.exports = {
     /**
      * Official Documentation @ https://tools.ietf.org/html/rfc7231#section-6.5.13
      *
-     * The media format of the requested data is not supported by the server, so the server is rejecting the request.
+     * The media format of the requested guide is not supported by the server, so the server is rejecting the request.
      */
     UNSUPPORTED_MEDIA_TYPE: "Unsupported Media Type",
     /**
