@@ -5,7 +5,7 @@ const KeyTokenService = require('../services/keyToken.service')
 
 const HEADER = {
     API_KEY: 'x-api-key',
-    AUTHORIZATION: 'authorization',
+    AUTHORIZATION: 'Authorization',
     REFRESH_TOKEN: 'refresh-token'
 }
 
@@ -51,7 +51,7 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
  */
 const authentication = catchAsync(async (req, res, next) => {
     // 1. get access token
-    const accessToken = req.headers[HEADER.AUTHORIZATION]
+    const accessToken = extractToken(req.headers[HEADER.AUTHORIZATION])
     if (!accessToken) throw new Api401Error('Invalid request')
 
     // 2. check user id
@@ -80,8 +80,8 @@ const parseJwt = (token) => {
 }
 
 const authenticationV2 = catchAsync(async (req, res, next) => {
-    const refreshToken = req.headers[HEADER.REFRESH_TOKEN]
-    const accessToken = req.headers[HEADER.AUTHORIZATION]
+    const refreshToken = extractToken(req.headers[HEADER.REFRESH_TOKEN])
+    const accessToken = extractToken(req.headers[HEADER.AUTHORIZATION])
 
     // 1. check user id
     const obj = parseJwt(accessToken || refreshToken)
@@ -129,6 +129,11 @@ const authenticationV2 = catchAsync(async (req, res, next) => {
 
 const verifyJwt = (token, keySecret) => {
     return JWT.verify(token, keySecret);
+}
+
+const extractToken = (tokenHeader) => {
+    if (!tokenHeader) return "";
+    return tokenHeader.replace("Bearer ", '')
 }
 
 module.exports = {
