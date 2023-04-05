@@ -79,11 +79,15 @@ app.use((req, res, next) => {
     next()
 })
 
+// init factory
+const configFactories = require('./factories')
+
 // if the Promise is rejected this will catch it
 process.on('SIGINT', () => {
     console.log('Ctrl + C:: Service stop!!!')
     exit()
 });
+
 // CTRL+C
 process.on('SIGQUIT', () => {
     console.log('Keyboard quit:: Service stop!!!')
