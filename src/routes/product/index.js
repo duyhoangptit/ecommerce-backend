@@ -5,6 +5,9 @@ const {authenticationV2} = require("../../auth/authUtils");
 
 // before auth
 router.get('/search/:keySearch', productController.searchProducts)
+router.get('/', productController.findAllProducts)
+router.get('/:product_id', productController.findProduct)
+
 
 // authentication
 router.use(authenticationV2)

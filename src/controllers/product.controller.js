@@ -59,6 +59,16 @@ class ProductController {
             await ProductService.searchProducts(req.params))
     })
 
+    findAllProducts = catchAsync(async (req, res, next) => {
+        OK(res, "find all product success",
+            await ProductService.findAllProducts(req.params))
+    })
+
+    findProduct = catchAsync(async (req, res, next) => {
+        OK(res, "find product success",
+            await ProductService.findOneProduct(req.params.product_id))
+    })
+
 }
 
 module.exports = new ProductController()
