@@ -1,14 +1,15 @@
 {
   "name": "ecommerce-core-service",
   "version": "1.0.0",
-  "description": "",
+  "description": "project about ecommerce",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "start:local": "SET NODE_ENV=local node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["ecommerce", "fulltext search", "docker", "aws"],
+  "author": "tiger",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",

@@ -1,6 +1,3 @@
-// config env
-require('dotenv').config()
-
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
@@ -81,6 +78,7 @@ app.use((req, res, next) => {
 
 // init factory
 const configFactories = require('./factories')
+console.log(configFactories)
 
 // if the Promise is rejected this will catch it
 process.on('SIGINT', () => {
