@@ -58,6 +58,15 @@ checkOverload();
 const {configSwagger} = require('./configs/config.swagger')
 configSwagger(app)
 
+// init logger
+const expressWinston = require('express-winston')
+const {logger} = require('./configs/config.logger')
+
+app.use(expressWinston.logger({
+    winstonInstance: logger,
+    statusLevels: true
+}))
+
 // init routes
 app.use('', require('./routes'))
 
@@ -100,6 +109,7 @@ process.on('SIGTERM', () => {
 
 // catch all uncaught exceptions
 process.on('unhandledRejection', error => {
+    logger.error(error)
     throw error
 })
 

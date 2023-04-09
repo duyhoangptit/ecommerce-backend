@@ -103,3 +103,6 @@
 ### S3
 
 ### Message broker - ActiveMQ
+
+### Logger
+    npm i winston express-winston winston-mongodb
