@@ -38,6 +38,7 @@
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
     "slugify": "^1.6.6",
+    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.2",
     "winston": "^3.8.2",
     "winston-mongodb": "^5.1.1",

@@ -55,8 +55,8 @@ const {checkOverload} = require('./helpers/check.connect');
 checkOverload();
 
 // init swagger
-const {configSwagger} = require('./configs/config.swagger')
-configSwagger(app)
+const {openApi, configSwagger} = require('./configs/config.swagger')
+openApi(app)
 
 // init logger
 const expressWinston = require('express-winston')

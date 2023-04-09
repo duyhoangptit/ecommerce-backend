@@ -81,7 +81,7 @@
     [https://anonystick.com/blog-developer/full-text-search-mongodb-chi-mot-bai-viet-khong-can-nhieu-2022012063033379]
 
 ### Implement Swagger
-    npm install swagger-ui-express --save
+    npm install swagger-ui-express swagger-jsdoc --save
 
 ### Cron job
     npm install node-cron
