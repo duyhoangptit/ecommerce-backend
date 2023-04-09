@@ -110,4 +110,5 @@
     npm i winston express-winston winston-mongodb
 
 
-### Unit test with chai
+### Unit test with chai + mocha
+    npm i chai chai-http mocha mocha-suppress-logs --save

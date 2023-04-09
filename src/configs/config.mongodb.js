@@ -25,6 +25,6 @@ const uat = {
 }
 
 const config = {local, uat}
-const env = process.env.NODE_ENV || 'dev'
+const env = process.env.NODE_ENV || 'local'
 
 module.exports = config[env]
