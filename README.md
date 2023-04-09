@@ -17,6 +17,8 @@
     - slugify": "^1.6.6",: convert text to slug, example: ao khoac nam -> ao-khoac-nam
     - swagger-ui-express": "^4.6.2": config swagger
     - yaml": "^2.2.1": config swagger
+    - chai
+    - nodemon
 
 ## Mongodb
     - Nhược điểm của cách connect cũ
@@ -106,3 +108,6 @@
 
 ### Logger
     npm i winston express-winston winston-mongodb
+
+
+### Unit test with chai

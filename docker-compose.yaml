@@ -23,14 +23,12 @@ services:
     volumes:
       - .docker/guide/db:/guide/db
     restart: unless-stopped
-    user: "1000:1000"
 
   rabbit:
     image: rabbitmq
     volumes:
       - .docker/guide/rabbit:/guide/rabbit
     restart: unless-stopped
-    user: "1000:1000"
     ports:
       - "5672:5672"
       - "1936:1936"
@@ -40,4 +38,3 @@ services:
     volumes:
       - .docker/guide/redis:/guide/redis
     restart: unless-stopped
-    user: "1000:1000"
