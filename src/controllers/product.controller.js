@@ -1,4 +1,4 @@
-const {ProductService} = require('../factories/produc.service')
+const {ProductService} = require('../factories/product.service')
 const catchAsync = require('../helpers/catch.async')
 const {CREATED, OK} = require("../core/success.response");
 

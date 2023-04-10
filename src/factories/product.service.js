@@ -1,6 +1,7 @@
 const {BusinessLogicError} = require("../core/error.response");
 const {findAllDraftsForShop, findAllPublishForShop, publishProductByShop, searchProductByUser, findAllProducts, findById} = require("../repositories/product.repo")
 const {getSelectData, unGetSelectData} = require("../utils");
+const {i18n}= require('../configs/config.i18n')
 
 class ProductService {
 
@@ -12,7 +13,7 @@ class ProductService {
 
     static async createProduct(type, payload) {
         const productClass = ProductService.productRegistry[type]
-        if (!productClass) throw new BusinessLogicError(`Invalid product Types ${type}`)
+        if (!productClass) throw new BusinessLogicError(i18n.__('messages.error006', type))
 
         return new productClass(payload).createProduct()
     }
