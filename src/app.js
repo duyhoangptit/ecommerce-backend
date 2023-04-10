@@ -41,7 +41,7 @@ app.use(helmet.referrerPolicy({
     policy: "no-referrer",
 }))
 
-// down size response
+// downsize response
 app.use(compression());
 
 // setting body parser, cookie parser
@@ -67,6 +67,11 @@ app.use(expressWinston.logger({
     statusLevels: true
 }))
 
+// config i18n
+const i18n = require('./configs/config.i18n')
+app.use(i18n.init)
+
+
 // init routes
 app.use('', require('./routes'))
 
@@ -76,14 +81,6 @@ const {exit} = require("./middleware/common");
 app.use(is404Handler)
 app.use(logErrorMiddleware)
 app.use(returnError)
-
-// config i18n
-const {i18n} = require('./configs/config.i18n')
-app.use(i18n.init)
-app.use((req, res, next) => {
-    i18n.setLocale(req, req.headers["ACCEPT-LANGUAGE"])
-    next()
-})
 
 // init factory
 const configFactories = require('./factories')

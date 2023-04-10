@@ -18,8 +18,8 @@ const checkOverload = () => {
         // server chiu dk 5 connect
         const maxConnections = numCores * 5;
 
-        console.log(`Active connections: ${numConnection}`);
-        console.log(`Memory usage:: ${memoryUse / 1024 / 1024} MB`);
+        // console.log(`Active connections: ${numConnection}`);
+        // console.log(`Memory usage:: ${memoryUse / 1024 / 1024} MB`);
 
         if (numConnection > maxConnections) {
             console.log(`Connection overload detected!`);

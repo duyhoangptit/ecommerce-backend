@@ -1,15 +1,21 @@
 const {I18n} = require('i18n')
 const path = require("path");
+const anyObject = {}
 
 const i18n = new I18n({
     // setup some locales - other locales default to en silently
-    locales: ['en', 'de'],
+    locales: ['en', 'vi'],
+
+    fallbackLanguage: 'en',
 
     // fallback from Dutch to German and from any localized German (de-at, de-li etc.) to German
-    fallbacks: { nl: 'de', 'de-*': 'de' },
+    fallbacks: {
+        'en-nz': 'en',
+        'vi-vi': 'vi'
+    },
 
     // you may alter a site wide default locale
-    defaultLocale: 'en',
+    // defaultLocale: 'en',
 
     // will return translation from defaultLocale in case current locale doesn't provide it
     retryInDefaultLocale: false,
@@ -41,8 +47,8 @@ const i18n = new I18n({
     // setting extension of json files - defaults to '.json' (you might want to set this to '.js' according to webtranslateit)
     extension: '.json',
 
-    // setting prefix of json files name - default to none '' (in case you use different locale files naming scheme (webapp-en.json), rather then just en.json)
-    prefix: 'webapp-',
+    // setting prefix of json files name - default to none '' (in case you use different locale files naming scheme (webapp-ecommerce-en.json), rather then just ecommerce-en.json)
+    prefix: 'ecommerce-',
 
     // enable object notation
     objectNotation: false,
@@ -68,7 +74,7 @@ const i18n = new I18n({
     },
 
     // object or [obj1, obj2] to bind the i18n api and current locale to - defaults to null
-    register: global,
+    register: anyObject,
 
     // hash to specify different aliases for i18n's internal methods to apply on the request/response objects (method -> alias).
     // note that this will *not* overwrite existing properties with the same name
@@ -84,11 +90,14 @@ const i18n = new I18n({
 
     // set the language catalog statically
     // also overrides locales
-    staticCatalog: {
-        de: {
-            /* require('de.json') */
-        }
-    },
+    // staticCatalog: {
+    //     en: {
+    //         /* require('en.json') */
+    //     },
+    //     vi: {
+    //         /* require('vi.json') */
+    //     }
+    // },
 
     // use mustache with customTags (https://www.npmjs.com/package/mustache#custom-delimiters) or disable mustache entirely
     mustacheConfig: {
@@ -99,9 +108,9 @@ const i18n = new I18n({
     // Parser can be any object that responds to .parse & .stringify
     parser: JSON,
 
-    directory: path.join(__dirname, 'locales')
+    directory: path.join(__dirname, "locales")
 })
 
-module.exports = {
-    i18n
-}
+i18n.translate = (text, ...parameters) => i18n.__(text, ...parameters)
+
+module.exports = i18n

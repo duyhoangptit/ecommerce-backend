@@ -7,6 +7,7 @@ const {getInfoData} = require('../utils')
 const {Api403Error, BusinessLogicError, Api401Error} = require("../core/error.response");
 const {findByEmail} = require('./shop.service')
 const apiKeyModel = require('../models/apikey.model')
+const i18n = require('../configs/config.i18n')
 
 const RoleShop = {
     SHOP: 'SHOP',
@@ -36,14 +37,14 @@ class AccessService {
 
             // delete token in keyStore
             await KeyTokenService.deleteKeyById(userId)
-            throw new Api403Error('Something wrong happend!! Pls relogin')
+            throw new Api403Error(i18n.translate('messages.error001'))
         }
 
-        if (refreshToken !== keyStore.refreshToken) throw Api401Error('Shop not registeted')
+        if (refreshToken !== keyStore.refreshToken) throw Api401Error(i18n.t('messages.error002'))
 
         // check userId
         const foundShop = await findByEmail({email})
-        if (!foundShop) throw new Api401Error('Token invalid')
+        if (!foundShop) throw new Api401Error(i18n.translate('messages.error000'))
 
         // create accessToken, refreshToken
         const tokens = await createTokenPair({userId, email}, keyStore.publicKey, keyStore.privateKey)
@@ -91,11 +92,11 @@ class AccessService {
     singIn = async ({email, password}) => {
         // 1.
         const foundShop = await findByEmail({email})
-        if (!foundShop) throw new Api403Error('Shop is not registered')
+        if (!foundShop) throw new Api403Error(i18n.translate('messages.error002'))
 
         // 2.
         const match = bcrypt.compare(password, foundShop.password)
-        if (!match) throw new BusinessLogicError('Login error')
+        if (!match) throw new BusinessLogicError(i18n.translate('messages.error003'))
 
         // 3. create private key, public key
         const {
@@ -140,8 +141,9 @@ class AccessService {
     signUp = async ({name, email, password, msisdn}) => {
         // step1: check email exists?
         const holderShop = await shopModel.findOne({email}).lean()
+        console.log('locale:::', i18n.getLocale())
         if (holderShop) {
-            throw new Api403Error('Error: Shop already registered')
+            throw new Api403Error(i18n.translate('messages.error004'))
         }
 
         const passwordHash = await bcrypt.hash(password, 10)
@@ -178,7 +180,7 @@ class AccessService {
         })
 
         if (!publicKeyString) {
-            throw new BusinessLogicError('Error: publicKeyString error')
+            throw new BusinessLogicError(i18n.translate('messages.error005'))
         }
         console.log('publicKeyString:: ', publicKeyString)
 
