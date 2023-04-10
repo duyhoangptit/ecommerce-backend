@@ -65,7 +65,7 @@ const authentication = catchAsync(async (req, res, next) => {
     if (!obj.userId) throw new Api403Error('Invalid request')
 
     // 2. check keyStore by userId
-    const userId = obj.userId
+    const userId = clientId || obj.userId
     const keyStore = await KeyTokenService.findByUserId(userId)
     if (!keyStore) throw new Api404Error('Resource not found')
 
@@ -97,7 +97,7 @@ const authenticationV2 = catchAsync(async (req, res, next) => {
     if (!obj.userId) throw new Api403Error('Invalid request')
 
     // 2. check user id
-    const userId = obj.userId
+    const userId = clientId || obj.userId
     if (!userId) throw new Api403Error('Invalid request')
 
     // 2. check keyStore by userId
