@@ -5,7 +5,7 @@ const {authenticationV2} = require("../../auth/authUtils");
 
 /**
  * @swagger
- *   /v1/api/product/search/:{keySearch}:
+ *   /v1/api/product/search/{keySearch}:
  *     get:
  *       summary: Search product by key
  *       tags: [Products]
@@ -55,7 +55,7 @@ router.get('/search/:keySearch', productController.searchProducts)
 router.get('/', productController.findAllProducts)
 /**
  * @swagger
- *   /v1/api/product/:{product_id}:
+ *   /v1/api/product/{product_id}:
  *     get:
  *       summary: Search product by product_id
  *       tags: [Products]
@@ -104,7 +104,7 @@ router.use(authenticationV2)
 router.post('', productController.createProduct)
 /**
  * @swagger
- *   /v1/api/product/publish/:{id}:
+ *   /v1/api/product/publish/{id}:
  *     put:
  *       summary: Update publish product
  *       tags: [Products]

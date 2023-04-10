@@ -3,10 +3,9 @@ const router = express.Router()
 const accessController = require('../../controllers/access.controller')
 const {authenticationV2} = require("../../auth/authUtils");
 
-// init routes
 /**
  * @swagger
- *   /v1/api/auth/signin:
+ *   /v1/api/auth/login:
  *     post:
  *       summary: Shop login
  *       tags: [Auth]
@@ -21,10 +20,10 @@ const {authenticationV2} = require("../../auth/authUtils");
  *           contents:
  *             application/json
  */
-router.post('/signin', accessController.login)
+router.post('/login', accessController.login)
 /**
  * @swagger
- *   /v1/api/auth/signup:
+ *   /v1/api/auth/register:
  *     post:
  *       summary: Register shop
  *       tags: [Auth]
@@ -39,19 +38,17 @@ router.post('/signin', accessController.login)
  *           contents:
  *             application/json
  */
-router.post('/signup', accessController.signUp)
+router.post('/register', accessController.signUp)
 
 // authentication
 router.use(authenticationV2)
 
-// logout
 /**
  * @swagger
  *   /v1/api/auth/logout:
  *     post:
  *       summary: Shop logout
  *       tags: [Auth]
- *       security: []
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'

@@ -137,7 +137,7 @@ class AccessService {
         }
     }
 
-    signUp = async ({name, email, password}) => {
+    signUp = async ({name, email, password, msisdn}) => {
         // step1: check email exists?
         const holderShop = await shopModel.findOne({email}).lean()
         if (holderShop) {
@@ -147,7 +147,7 @@ class AccessService {
         const passwordHash = await bcrypt.hash(password, 10)
 
         const newShop = await shopModel.create({
-            name, email, password: passwordHash, roles: [RoleShop.SHOP]
+            name, email, password: passwordHash, msisdn, roles: [RoleShop.SHOP]
         })
 
         if (!newShop) {
@@ -205,12 +205,16 @@ class AccessService {
         return {
             shop: getInfoData(
                 {
-                    fields: ['_id', 'name', 'email'],
+                    fields: ['_id', 'name', 'email', 'msisdn'],
                     object: newShop
                 }
             ),
             tokens,
-            key: newKey
+            key: getInfoData(
+                {
+                    fields: ['key'],
+                    object: newKey
+                })
         }
     }
 }

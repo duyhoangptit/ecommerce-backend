@@ -29,27 +29,27 @@ const options = {
                     properties: {
                         product_name: {
                             type: 'string',
-                            description: 'The author of the book'
+                            description: 'The name of the product'
                         },
                         product_thumb: {
                             type: 'string',
-                            description: 'The price of the book'
+                            description: 'The thumb of the product'
                         },
                         product_price: {
                             type: 'integer',
-                            description: 'The description of the book'
+                            description: 'The price of the product'
                         },
                         product_quality: {
                             type: 'integer',
-                            description: 'The year the book was published'
+                            description: 'The quality of the product'
                         },
                         product_type: {
                             type: 'string',
-                            description: 'The year the book was published'
+                            description: 'The type of the product'
                         },
                         product_attributes: {
                             type: 'Array',
-                            description: 'The year the book was published'
+                            description: 'The attributes of the product'
                         }
                     },
                     example: {
@@ -65,7 +65,30 @@ const options = {
                             material: "Thun"
                         }
                     }
-                }
+                },
+                Shop: {
+                    type: 'object',
+                    required: ['name', 'email', 'password', 'msisdn'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+                        email: {
+                            type: 'string',
+                            description: 'The email of the shop'
+                        },
+                        password: {
+                            type: 'string',
+                            description: 'The password of the shop'
+                        },
+                        msisdn: {
+                            type: 'string',
+                            description: 'The msisdn of the shop'
+                        }
+                    },
+                    example: {}
+                },
             },
             responses : {
                 400: {

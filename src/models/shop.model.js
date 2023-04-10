@@ -18,6 +18,10 @@ const shopSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    msisdn: {
+        type: String,
+        required: true
+    },
     status: {
         type: String,
         enum: ['active', 'inactive'],
