@@ -18,6 +18,13 @@ class ProductService {
         return new productClass(payload).createProduct()
     }
 
+    static async updateProduct(type, productId, payload) {
+        const productClass = ProductService.productRegistry[type]
+        if (!productClass) throw new BusinessLogicError(i18n.__('messages.error006', type))
+
+        return new productClass(payload).updateProduct(productId)
+    }
+
     // PUT
     static async publishProductByShop({product_shop, product_id}) {
         // find one

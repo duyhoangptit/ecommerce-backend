@@ -30,27 +30,23 @@ const findAllPublishForShop = async({query, limit, skip}) => {
 // search full text
 const searchProductByUser = async({keySearch}) => {
     const regexSearch = new RegExp(keySearch)
-    const results = await product.find({
+    return await product.find({
         isPublished: true,
         $text: {$search: regexSearch}
     }, {score: {$meta: 'textScore'}})
         .sort({score: {$meta: 'textScore'}})
         .lean()
-
-    return results
 }
 
 const findAllProducts = async({limit, sort, page, filter, select}) => {
     const skip = (page - 1) * limit
     const sortBy = sort === 'ctime' ? {_id: -1} : {_id: 1}
-    const products = await product.find(filter)
+    return await product.find(filter)
         .sort(sortBy)
         .skip(skip)
         .limit(limit)
         .select(select)
-        .lean()
-
-    return products;
+        .lean();
 }
 
 const findById = async(product_id, unSelect) => {
@@ -67,11 +63,23 @@ const queryProduct = async({query, limit, skip}) => {
         .exec()
 }
 
+const updateProductById = async ({
+    productId,
+    bodyUpdate,
+    model,
+    isNew = true
+}) => {
+    return await model.findByIdAndUpdate(productId, bodyUpdate, {
+        new: isNew
+    })
+}
+
 module.exports = {
     findAllDraftsForShop,
     findAllPublishForShop,
     publishProductByShop,
     searchProductByUser,
     findAllProducts,
-    findById
+    findById,
+    updateProductById
 }

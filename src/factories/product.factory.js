@@ -19,6 +19,13 @@ class Product {
     async createProduct() {
         return await product.create(this)
     }
+
+    // update product
+    async updateProduct(productId, bodyUpdate) {
+        return await product.findByIdAndUpdate(productId, bodyUpdate, {
+            new: true
+        })
+    }
 }
 
 module.exports = {

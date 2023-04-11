@@ -57,7 +57,7 @@ router.get('/', productController.findAllProducts)
  * @swagger
  *   /api/v1/product/{product_id}:
  *     get:
- *       summary: Search product by product_id
+ *       summary: Search one product by product_id
  *       tags: [Products]
  *       security: []
  *       parameters:
@@ -89,7 +89,7 @@ router.use(authenticationV2)
  * @swagger
  *   /api/v1/product:
  *     post:
- *       summary: Search product by key
+ *       summary: Create product
  *       tags: [Products]
  *       responses:
  *         "400":
@@ -97,11 +97,37 @@ router.use(authenticationV2)
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: Product info
  *           contents:
  *             application/json
  */
 router.post('', productController.createProduct)
+
+/**
+ * @swagger
+ *   /api/v1/product/{productId}:
+ *     patch:
+ *       summary: Update product
+ *       tags: [Products]
+ *       parameters:
+ *         - in: path
+ *           name: productId
+ *           schema:
+ *             type: string
+ *           required: true
+ *           description: productId value
+ *       responses:
+ *         "400":
+ *           $ref: '#/components/responses/400'
+ *         "401":
+ *           $ref: '#/components/responses/401'
+ *         "200":
+ *           description: Product info
+ *           contents:
+ *             application/json
+ */
+router.patch('/:productId', productController.updateProduct)
+
 /**
  * @swagger
  *   /api/v1/product/publish/{id}:
@@ -121,7 +147,7 @@ router.post('', productController.createProduct)
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: Product info after update
  *           contents:
  *             application/json
  */
@@ -132,7 +158,7 @@ router.put('/publish/:id', productController.publishProductByShop)
  * @swagger
  *   /api/v1/product/drafts/all:
  *     post:
- *       summary: Search product by key
+ *       summary: Search product drafts by key
  *       tags: [Products]
  *       responses:
  *         "400":
@@ -140,7 +166,7 @@ router.put('/publish/:id', productController.publishProductByShop)
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: List product draft contains key search
  *           contents:
  *             application/json
  */
@@ -149,7 +175,7 @@ router.get('/drafts/all', productController.getAllDraftsForShop)
  * @swagger
  *   /api/v1/product/published/all:
  *     post:
- *       summary: Search product by key
+ *       summary: Search product published by key
  *       tags: [Products]
  *       responses:
  *         "400":
@@ -157,7 +183,7 @@ router.get('/drafts/all', productController.getAllDraftsForShop)
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: List product publish contains key search
  *           contents:
  *             application/json
  */
