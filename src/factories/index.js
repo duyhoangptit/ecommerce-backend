@@ -1,6 +1,6 @@
 const fs = require('fs')
 const files = fs.readdirSync('./src/factories')
-const {ProductService} = require('./product.service')
+const {ProductService} = require('../services/product.service')
 
 const SUB_FIX_FACTORIES = '.factory.js'
 const DOT_SLASH = "./"
