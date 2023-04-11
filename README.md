@@ -87,7 +87,7 @@
     npm install swagger-ui-express swagger-jsdoc --save
 
 ### Cron job
-    npm install node-cron
+    npm install node-cron --save
 ![img.png](img.png)
 
     const cron = require("node-cron");

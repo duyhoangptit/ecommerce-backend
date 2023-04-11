@@ -89,6 +89,10 @@ app.use(returnError)
 const configFactories = require('./factories')
 console.log(configFactories)
 
+// init cron job
+const task = require('./tasks/collect-issue.task')
+task.execute().start();
+
 // if the Promise is rejected this will catch it
 process.on('SIGINT', () => {
     console.log('Ctrl + C:: Service stop!!!')
