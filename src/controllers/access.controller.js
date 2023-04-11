@@ -23,6 +23,7 @@ class AccessController {
     signUp = catchAsync(async (req, res) => {
         CREATED(res, "Register success", await accessService.signUp(req.body))
     })
+
 }
 
 module.exports = new AccessController()

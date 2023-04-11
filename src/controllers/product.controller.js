@@ -1,4 +1,4 @@
-const {ProductService} = require('../factories/product.service')
+const {ProductService} = require('../services/product.service')
 const catchAsync = require('../helpers/catch.async')
 const {CREATED, OK} = require("../core/success.response");
 
@@ -19,6 +19,14 @@ class ProductController {
             await ProductService.publishProductByShop({
                 product_shop: req.user.userId,
                 product_id: req.params.id
+            }))
+    })
+
+    updateProduct = catchAsync(async (req, res) => {
+        OK(res, "Update product success",
+            await ProductService.updateProduct(req.body.product_type, req.params.productId, {
+                ...req.body,
+                product_shop: req.user.userId
             }))
     })
 
@@ -48,12 +56,6 @@ class ProductController {
             }))
     })
 
-    /**
-     * @desc search product by key
-     * @param {Number} limit
-     * @param {Number} skip
-     * @return { JSON }
-     */
     searchProducts = catchAsync(async (req, res) => {
         OK(res, "Search product success",
             await ProductService.searchProducts(req.params))
@@ -67,6 +69,11 @@ class ProductController {
     findProduct = catchAsync(async (req, res) => {
         OK(res, "find product success",
             await ProductService.findOneProduct(req.params.product_id))
+    })
+
+    advancedSearch = catchAsync(async (req, res) => {
+        OK(res, "advanced search product success",
+            await ProductService.advancedSearch(req.params.query))
     })
 
 }

@@ -2,31 +2,44 @@ const express = require('express')
 const router = express.Router()
 const accessController = require('../../controllers/access.controller')
 const {authenticationV2} = require("../../auth/authUtils");
+const validation = require('../../middleware/validators/access.validator')
 
 /**
  * @swagger
- *   /v1/api/auth/login:
+ *   /api/v1/auth/login:
  *     post:
  *       summary: Shop login
  *       tags: [Auth]
- *       security: []
+ *       security: [{apiKey: []}]
+ *       requestBody:
+ *          description: Request login info
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/RequestLogin'
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: Login response info
  *           contents:
  *             application/json
  */
-router.post('/login', accessController.login)
+router.post('/login', validation.validateLoginRequest, accessController.login)
 /**
  * @swagger
- *   /v1/api/auth/register:
+ *   /api/v1/auth/register:
  *     post:
  *       summary: Register shop
  *       tags: [Auth]
+ *       requestBody:
+ *          description: Request login info
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/RequestRegister'
  *       security: []
  *       responses:
  *         "400":
@@ -38,14 +51,14 @@ router.post('/login', accessController.login)
  *           contents:
  *             application/json
  */
-router.post('/register', accessController.signUp)
+router.post('/register', validation.validateRegister, accessController.signUp)
 
 // authentication
 router.use(authenticationV2)
 
 /**
  * @swagger
- *   /v1/api/auth/logout:
+ *   /api/v1/auth/logout:
  *     post:
  *       summary: Shop logout
  *       tags: [Auth]
@@ -62,7 +75,7 @@ router.use(authenticationV2)
 router.post('/logout', accessController.logout)
 /**
  * @swagger
- *   /v1/api/auth/refresh-token:
+ *   /api/v1/auth/refresh-token:
  *     post:
  *       summary: Register shop
  *       tags: [Auth]
@@ -72,7 +85,7 @@ router.post('/logout', accessController.logout)
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: Response refresh token info
  *           contents:
  *             application/json
  */

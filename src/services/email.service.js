@@ -28,7 +28,7 @@ module.exports = class Email {
 
     async send(template, subject) {
         // 1 Render html base on a bug template
-        const html = pug.renderFile(`${__dirname}/../views//emails/${template}.pug`, {
+        const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`, {
             firstName: this.firstName,
             url: this.url,
             subject
@@ -51,5 +51,23 @@ module.exports = class Email {
     async sendWelcome() {
         const template = ""
         await this.send(template, "welcome to the natours family")
+    }
+
+    async sendEmailLinkVerify({
+        html,
+        toEmail,
+        subject
+                              }) {
+        const mailOptions = {
+            from: this.from,
+            to: toEmail,
+            subject: subject,
+            text: htmlToText.fromString(html),
+            html: html
+        }
+
+        // 3. Create a transport and send mail
+        const transport = this.newTransport()
+        await transport.sendMail(mailOptions)
     }
 }

@@ -1,6 +1,14 @@
-FROM node:16-alpine
+FROM node:latest
+LABEL authors="taduyhoang"
 
-COPY package-lock.json package.json ./
-RUN npm install
+WORKDIR /app
 
-CMD ["npm", "run", "dev"]
+RUN npm install -g pm2
+
+COPY ["package.json", "package-lock.json*", "./"]
+
+RUN npm install --production --silent
+
+COPY . .
+
+CMD ["npm", "run", "start"]

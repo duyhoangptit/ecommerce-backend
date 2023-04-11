@@ -1,5 +1,5 @@
 const amqplib = require('amqplib')
-const amqpUri = "amqps://diixysgr:LDKqOg4aSoXp1WgfbZna-nEo-eItaiRz@armadillo.rmq.cloudamqp.com/diixysgr";
+const amqpUri = "amqp://guest:guest@localhost:5672";
 
 const receiveQueue = async ({address}) => {
     try {
@@ -28,4 +28,4 @@ const receiveQueue = async ({address}) => {
     }
 }
 
-receiveQueue({address: 'mq-test'})
+receiveQueue({address: 'send-otp-sms'})

@@ -10,8 +10,8 @@ services:
       - ./ddl:/ddl
   app:
     build:
-      context: .
-      dockerfile: Dockerfile.test
+      context: ..
+      dockerfile: ../Dockerfiletest
     volumes:
       - ./app:/app
       - ./test:/test

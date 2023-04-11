@@ -6,13 +6,13 @@ require('dotenv').config({
     path: `.env.${nodeEnv}`
 })
 
-console.log(process.env.PORT)
+console.log('ENV:::', nodeEnv, ' PORT:::', process.env.PORT)
 const PORT = process.env.PORT || 3055;
 
 // start server nodejs
 const app = require('./src/app');
 const server =  app.listen(PORT, () => {
-    console.log(`eCommerce start with ${PORT}`);
+    console.log(`------::----${process.env.SERVICE_NAME} start with port ${PORT}`);
 });
 
 process.on('SIGINT', () => {

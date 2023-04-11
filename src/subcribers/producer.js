@@ -1,5 +1,5 @@
 const amqplib = require('amqplib')
-const amqpUri = "amqps://diixysgr:LDKqOg4aSoXp1WgfbZna-nEo-eItaiRz@armadillo.rmq.cloudamqp.com/diixysgr";
+const amqpUri = "amqp://guest:guest@localhost:5672";
 
 const sendMessage = async ({msg, address}) => {
     try {
@@ -26,4 +26,4 @@ const sendMessage = async ({msg, address}) => {
 }
 
 const msg = process.argv.slice(2).join(' ') || 'Hello'
-sendMessage({msg: msg, address: 'mq-test'})
+sendMessage({msg: msg, address: 'send-otp-sms'})
