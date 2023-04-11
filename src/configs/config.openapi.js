@@ -23,6 +23,94 @@ const options = {
         ],
         components: {
             schemas: {
+                RequestCreateCart: {
+                    type: 'object',
+                    required: ['name'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+
+                    },
+                    example: {
+                        "name": "Ta Duy Hoang",
+                    }
+                },
+                RequestUpdateCart: {
+                    type: 'object',
+                    required: ['name'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+
+                    },
+                    example: {
+                        "name": "Ta Duy Hoang",
+                    }
+                },
+                RequestDeleteCart: {
+                    type: 'object',
+                    required: ['name'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+
+                    },
+                    example: {
+                        "name": "Ta Duy Hoang",
+                    }
+                },
+                RequestRegister: {
+                    type: 'object',
+                    required: ['name', 'email', 'password', 'msisdn'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+                        email: {
+                            type: 'string',
+                            description: 'The email of the shop'
+                        },
+                        password: {
+                            type: 'string',
+                            description: 'The password of the shop'
+                        },
+                        msisdn: {
+                            type: 'string',
+                            description: 'The msisdn of the shop'
+                        }
+                    },
+                    example: {
+                        "name": "Ta Duy Hoang",
+                        "email": "duyhoangaws@gmail.com",
+                        "password": "123123a@",
+                        "msisdn": "0948291994"
+                    }
+                },
+                RequestLogin: {
+                    type: 'object',
+                    required: ['email', 'password'],
+                    properties: {
+                        email: {
+                            type: 'string',
+                            description: 'The email of the shop'
+                        },
+                        password: {
+                            type: 'string',
+                            description: 'The password of the shop'
+                        },
+                    },
+                    example: {
+                        "email": "duyhoangaws@gmail.com",
+                        "password": "123123a@"
+                    }
+                },
                 Product: {
                     type: 'object',
                     required: ['product_name', 'product_thumb', 'product_price', 'product_quality', 'product_type', 'product_attributes'],
@@ -89,6 +177,21 @@ const options = {
                     },
                     example: {}
                 },
+                Discount: {
+                    type: 'object',
+                    required: ['discount_code', 'discount_amount'],
+                    properties: {
+                        discount_code: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+                        discount_amount: {
+                            type: 'string',
+                            description: 'The email of the shop'
+                        }
+                    },
+                    example: {}
+                },
             },
             responses : {
                 400: {
@@ -105,23 +208,31 @@ const options = {
                 }
             },
             securitySchemes: {
-                ApiKeyAuth: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+                apiKey: {
                     type: 'apiKey',
                     in: 'header',
-                    name: 'Authorization'
+                    name: 'x-api-key'
                 }
             }
         },
-        security: [{
-            ApiKeyAuth: []
-        }]
+        security: [
+            {
+                "apiKey": [],
+                "bearerAuth": [],
+            },
+            {
+                "apiKey": [],
+            }
+        ]
 
     },
     apis: [
-        "./src/routes/index.js",
-        "./src/routes/auth/index.js",
-        "./src/routes/product/index.js",
-        "./src/routes/shop/index.js",
+        "./src/routes/*/*.js",
     ],
     swaggerOptions: {
         urls: [

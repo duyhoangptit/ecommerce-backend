@@ -5,10 +5,10 @@ const {authenticationV2} = require("../../auth/authUtils");
 
 /**
  * @swagger
- *   /v1/api/product/search/{keySearch}:
+ *   /api/v1/product/search/{keySearch}:
  *     get:
  *       summary: Search product by key
- *       tags: [Products]
+ *       tags: [Product]
  *       security: []
  *       parameters:
  *         - in: path
@@ -28,12 +28,24 @@ const {authenticationV2} = require("../../auth/authUtils");
  *             application/json
  */
 router.get('/search/:keySearch', productController.searchProducts)
+
+const aliasSearch = (req, res, next) => {
+    req.query.page = '1'
+    req.query.limit = '5'
+    req.query.sort = '-name'
+    req.query.fields = 'name, price'
+    next()
+}
+
+
+router.get('/advanced-search', aliasSearch, productController.advancedSearch)
+
 /**
  * @swagger
- *   /v1/api/product/:
+ *   /api/v1/product/:
  *     get:
  *       summary: Search product by key
- *       tags: [Products]
+ *       tags: [Product]
  *       security: []
  *       parameters:
  *         - in: path
@@ -55,10 +67,10 @@ router.get('/search/:keySearch', productController.searchProducts)
 router.get('/', productController.findAllProducts)
 /**
  * @swagger
- *   /v1/api/product/{product_id}:
+ *   /api/v1/product/{product_id}:
  *     get:
- *       summary: Search product by product_id
- *       tags: [Products]
+ *       summary: Search one product by product_id
+ *       tags: [Product]
  *       security: []
  *       parameters:
  *         - in: path
@@ -87,27 +99,53 @@ router.use(authenticationV2)
 // product
 /**
  * @swagger
- *   /v1/api/product:
+ *   /api/v1/product:
  *     post:
- *       summary: Search product by key
- *       tags: [Products]
+ *       summary: Create product
+ *       tags: [Product]
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: Product info
  *           contents:
  *             application/json
  */
 router.post('', productController.createProduct)
+
 /**
  * @swagger
- *   /v1/api/product/publish/{id}:
+ *   /api/v1/product/{productId}:
+ *     patch:
+ *       summary: Update product
+ *       tags: [Product]
+ *       parameters:
+ *         - in: path
+ *           name: productId
+ *           schema:
+ *             type: string
+ *           required: true
+ *           description: productId value
+ *       responses:
+ *         "400":
+ *           $ref: '#/components/responses/400'
+ *         "401":
+ *           $ref: '#/components/responses/401'
+ *         "200":
+ *           description: Product info
+ *           contents:
+ *             application/json
+ */
+router.patch('/:productId', productController.updateProduct)
+
+/**
+ * @swagger
+ *   /api/v1/product/publish/{id}:
  *     put:
  *       summary: Update publish product
- *       tags: [Products]
+ *       tags: [Product]
  *       parameters:
  *         - in: path
  *           name: id
@@ -121,7 +159,7 @@ router.post('', productController.createProduct)
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: Product info after update
  *           contents:
  *             application/json
  */
@@ -130,34 +168,34 @@ router.put('/publish/:id', productController.publishProductByShop)
 // query
 /**
  * @swagger
- *   /v1/api/product/drafts/all:
+ *   /api/v1/product/drafts/all:
  *     post:
- *       summary: Search product by key
- *       tags: [Products]
+ *       summary: Search product drafts by key
+ *       tags: [Product]
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: List product draft contains key search
  *           contents:
  *             application/json
  */
 router.get('/drafts/all', productController.getAllDraftsForShop)
 /**
  * @swagger
- *   /v1/api/product/published/all:
+ *   /api/v1/product/published/all:
  *     post:
- *       summary: Search product by key
- *       tags: [Products]
+ *       summary: Search product published by key
+ *       tags: [Product]
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: List product publish contains key search
  *           contents:
  *             application/json
  */

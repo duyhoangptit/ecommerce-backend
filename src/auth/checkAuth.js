@@ -4,9 +4,11 @@ const HEADER = {
 }
 
 const {findById} = require('../services/apiKey.service')
+const {Api403Error} = require("../core/error.response");
 const URL_WHITELIST = [
     "/api-docs",
-    "/healthcheck"
+    "/healthcheck",
+    "/api/v1/auth/register"
 ]
 
 const apiKey = async (req, res, next) => {
@@ -15,23 +17,19 @@ const apiKey = async (req, res, next) => {
 
         const key = req.headers[HEADER.API_KEY]?.toString();
         if (!key) {
-            return res.status(403).json({
-                message: 'Forbidden Error'
-            });
+            return returnForbiddenError(res);
         }
         // check objKey
         const objKey = await findById(key)
         if (!objKey) {
-            return res.status(403).json({
-                message: 'Forbidden Error'
-            });
+            return returnForbiddenError(res);
         }
 
         req.objKey = objKey
 
         return next()
     } catch (error) {
-
+        return returnForbiddenError(res);
     }
 }
 
@@ -40,30 +38,40 @@ const permission = (permissions) => {
         if (ignoreWhiteList(req)) return next()
 
         if (!req.objKey.permissions) {
-            return res.status(403).json({
-                message: 'Permission denied'
-            });
+            return returnPermissionDenied(res);
         }
 
         console.log("permissions::", req.objKey.permissions)
         const validPermission = req.objKey.permissions.includes(permissions)
 
         if (!validPermission) {
-            return res.status(403).json({
-                message: 'Permission denied'
-            });
+            return returnPermissionDenied(res);
         }
 
         return next()
     }
 }
 
-const ignoreWhiteList = (request) => {
-    if (URL_WHITELIST.includes(request.url)) {
-        return true;
+const throwApi403Error = message => {
+    return {
+        message: message
     }
+}
 
-    return false;
+const returnApi403Error = (res, message) => {
+    return res.status(403).json(throwApi403Error(message))
+}
+
+const returnForbiddenError = res => {
+    return returnApi403Error(res, 'Forbidden Error')
+}
+
+const returnPermissionDenied = res => {
+    return returnApi403Error(res, 'Permission denied')
+}
+
+const ignoreWhiteList = (request) => {
+	return URL_WHITELIST.includes(request.url);
 }
 
 module.exports = {

@@ -8,6 +8,7 @@ const {Api403Error, BusinessLogicError, Api401Error} = require("../core/error.re
 const {findByEmail} = require('./shop.service')
 const apiKeyModel = require('../models/apikey.model')
 const i18n = require('../configs/config.i18n')
+const {AccessValidator} = require("../validators/access.validator");
 
 const RoleShop = {
     SHOP: 'SHOP',
@@ -90,6 +91,9 @@ class AccessService {
      * @returns {Promise<void>}
      */
     singIn = async ({email, password}) => {
+        // validate input
+        AccessValidator.validateLoginRequest({email, password})
+
         // 1.
         const foundShop = await findByEmail({email})
         if (!foundShop) throw new Api403Error(i18n.translate('messages.error002'))
@@ -139,6 +143,9 @@ class AccessService {
     }
 
     signUp = async ({name, email, password, msisdn}) => {
+        // validate input
+        AccessValidator.validateRegister({name, email, password, msisdn})
+
         // step1: check email exists?
         const holderShop = await shopModel.findOne({email}).lean()
         console.log('locale:::', i18n.getLocale())

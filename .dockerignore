@@ -1,0 +1,12 @@
+# Ignore file IDE setting
+.idea
+
+# Ignore folder node_modules
+node_modules/
+
+# Ignore file build
+dist/
+
+# Ignore file folder other
+npm-debug.log
+test/
