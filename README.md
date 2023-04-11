@@ -1,5 +1,23 @@
 ## Learning with https://www.youtube.com/@anonystick
 
+## Todo list
+
+- [x] Swagger or OpenApi
+- [x] Logger
+- [x] Mongodb
+- [x] Caching with redis
+- [x] Unit test
+- [x] RabbitMq
+- [x] Email
+- [x] Cron job
+- [x] Unit test
+- [x] Security with public key, private key, token jwt
+- [ ] Notify with firebase or socketIo
+- [ ] Upload file with S3 or MinIO
+- [ ] Dockerfile, docker-compose for dev and test
+- [ ] Deployment with jenkins or circleCI
+
+
 ## Setup lib project
     - express
     - helmet
@@ -102,19 +120,22 @@
 [chedule-cron-job-in-node](https://reflectoring.io/schedule-cron-job-in-node/)
 
 ### Send notify - Firebase
+    ----
 
 ### Deployment docker + nginx + kubernetes
+    ----
 
 ### S3
+    ----
 
 ### Caching with redis
     npm i redis@3.1.1 --save
 
 ### Message broker - ActiveMQ
 
+
 ### Logger
     npm i winston express-winston winston-mongodb
-
 
 ### Unit test with chai + mocha
     npm i chai chai-http mocha mocha-suppress-logs --save
