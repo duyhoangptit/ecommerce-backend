@@ -4,6 +4,7 @@
 
 - [x] Swagger or OpenApi
 - [x] Logger
+- [x] I18n
 - [x] Mongodb
 - [x] Caching with redis
 - [x] Unit test
