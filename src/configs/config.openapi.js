@@ -118,10 +118,7 @@ const options = {
 
     },
     apis: [
-        "./src/routes/index.js",
-        "./src/routes/auth/index.js",
-        "./src/routes/product/index.js",
-        "./src/routes/shop/index.js",
+        "./src/routes/*/*.js",
     ],
     swaggerOptions: {
         urls: [

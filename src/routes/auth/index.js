@@ -5,7 +5,7 @@ const {authenticationV2} = require("../../auth/authUtils");
 
 /**
  * @swagger
- *   /v1/api/auth/login:
+ *   /api/v1/auth/login:
  *     post:
  *       summary: Shop login
  *       tags: [Auth]
@@ -23,7 +23,7 @@ const {authenticationV2} = require("../../auth/authUtils");
 router.post('/login', accessController.login)
 /**
  * @swagger
- *   /v1/api/auth/register:
+ *   /api/v1/auth/register:
  *     post:
  *       summary: Register shop
  *       tags: [Auth]
@@ -45,7 +45,7 @@ router.use(authenticationV2)
 
 /**
  * @swagger
- *   /v1/api/auth/logout:
+ *   /api/v1/auth/logout:
  *     post:
  *       summary: Shop logout
  *       tags: [Auth]
@@ -62,7 +62,7 @@ router.use(authenticationV2)
 router.post('/logout', accessController.logout)
 /**
  * @swagger
- *   /v1/api/auth/refresh-token:
+ *   /api/v1/auth/refresh-token:
  *     post:
  *       summary: Register shop
  *       tags: [Auth]

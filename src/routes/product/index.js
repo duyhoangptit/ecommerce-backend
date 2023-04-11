@@ -5,7 +5,7 @@ const {authenticationV2} = require("../../auth/authUtils");
 
 /**
  * @swagger
- *   /v1/api/product/search/{keySearch}:
+ *   /api/v1/product/search/{keySearch}:
  *     get:
  *       summary: Search product by key
  *       tags: [Products]
@@ -30,7 +30,7 @@ const {authenticationV2} = require("../../auth/authUtils");
 router.get('/search/:keySearch', productController.searchProducts)
 /**
  * @swagger
- *   /v1/api/product/:
+ *   /api/v1/product/:
  *     get:
  *       summary: Search product by key
  *       tags: [Products]
@@ -55,7 +55,7 @@ router.get('/search/:keySearch', productController.searchProducts)
 router.get('/', productController.findAllProducts)
 /**
  * @swagger
- *   /v1/api/product/{product_id}:
+ *   /api/v1/product/{product_id}:
  *     get:
  *       summary: Search product by product_id
  *       tags: [Products]
@@ -87,7 +87,7 @@ router.use(authenticationV2)
 // product
 /**
  * @swagger
- *   /v1/api/product:
+ *   /api/v1/product:
  *     post:
  *       summary: Search product by key
  *       tags: [Products]
@@ -104,7 +104,7 @@ router.use(authenticationV2)
 router.post('', productController.createProduct)
 /**
  * @swagger
- *   /v1/api/product/publish/{id}:
+ *   /api/v1/product/publish/{id}:
  *     put:
  *       summary: Update publish product
  *       tags: [Products]
@@ -130,7 +130,7 @@ router.put('/publish/:id', productController.publishProductByShop)
 // query
 /**
  * @swagger
- *   /v1/api/product/drafts/all:
+ *   /api/v1/product/drafts/all:
  *     post:
  *       summary: Search product by key
  *       tags: [Products]
@@ -147,7 +147,7 @@ router.put('/publish/:id', productController.publishProductByShop)
 router.get('/drafts/all', productController.getAllDraftsForShop)
 /**
  * @swagger
- *   /v1/api/product/published/all:
+ *   /api/v1/product/published/all:
  *     post:
  *       summary: Search product by key
  *       tags: [Products]
