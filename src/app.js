@@ -54,6 +54,9 @@ require('./dbs/init.mongodb.lv0');
 const {checkOverload} = require('./helpers/check.connect');
 checkOverload();
 
+// init redis
+require('./configs/config.redis')
+
 // init swagger
 const {openApi, configSwagger} = require('./configs/config.swagger')
 openApi(app)

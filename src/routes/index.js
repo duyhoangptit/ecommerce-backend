@@ -3,6 +3,7 @@ const {apiKey, permission} = require("../auth/checkAuth");
 const router = express.Router()
 
 router.use('/healthcheck', require('./health'))
+router.use('/redis', require('./redis'))
 
 // check apiKey
 router.use(apiKey)

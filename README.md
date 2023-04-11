@@ -21,6 +21,7 @@
     - yaml": "^2.2.1": config swagger
     - chai
     - nodemon
+    - redis: using cache redis
 
 ## Mongodb
     - Nhược điểm của cách connect cũ
@@ -96,7 +97,7 @@
     });
 
 ### Send mail
-    npm install node-mailer
+    npm install node-mailer pug html-to-text'
 
 [chedule-cron-job-in-node](https://reflectoring.io/schedule-cron-job-in-node/)
 
@@ -105,6 +106,9 @@
 ### Deployment docker + nginx + kubernetes
 
 ### S3
+
+### Caching with redis
+    npm i redis@3.1.1 --save
 
 ### Message broker - ActiveMQ
 
