@@ -137,6 +137,8 @@
 
 ### Logger
     npm i winston express-winston winston-mongodb
+    npm i winston-daily-rotate-file --save
+[Logger Nodejs](https://anonystick.com/blog-developer/logger-nodejs-la-gi-su-dung-winston-la-phai-chuyen-nghiep-nhu-the-nay-202010099590776)
 
 ### Unit test with chai + mocha
     npm i chai chai-http mocha mocha-suppress-logs --save
