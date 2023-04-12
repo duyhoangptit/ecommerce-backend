@@ -107,7 +107,7 @@
 
 ### Cron job
     npm install node-cron --save
-![img.png](img.png)
+![img.png](guides/img.png)
 
     const cron = require("node-cron");
     cron.schedule("*/15 * * * * *", function () {
