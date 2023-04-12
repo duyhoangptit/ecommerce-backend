@@ -42,7 +42,13 @@ app.use(helmet.referrerPolicy({
 }))
 
 // downsize response
-app.use(compression());
+app.use(compression({
+    level: 6,// level compress
+    threshold: 100 * 1024, // > 100kb threshold to compress
+    filter: (req) => {
+        return !req.headers['x-no-compress'];
+    }
+}));
 
 // setting body parser, cookie parser
 app.use(express.json({limit: '10kb'}));
