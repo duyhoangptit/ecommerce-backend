@@ -124,7 +124,23 @@
     ----
 
 ### Deployment docker + nginx + kubernetes
-    ----
+    step 1: Create Dockerfile
+``` docker build -t [name image]:[tag version] . ```
+        - Để bu Docker image ta dùng command docker build
+        - Option -t để chỉ là đặt tên Image
+        - Dấu . ể ch cho docker hãy build image với context ở folder hiện tại này cho tôi. Docker sẽ tìm ở folder hiện tại Dockerfile và build
+    step 2: Create docker-compose    
+        - Version của docker-compose
+        - Tiếp theo services, bên trong services ta sẽ định nghĩa các thành phần cần thiết cho project của bạn
+        - Ở trong service app ta có trường restart là 'unless-stopped', ý bảo là tự động chạy service này trong mọi trường hợp,
+            nhưng nếu service này bị dừng bằng tay, hoặc đang chạy m gặp lỗi bị dừng thì đừng restart nó.
+        - ports: mapping port môi trươn docker ra môi tr ngoài, bên trái l môi trường gốc bên ngoài, bên phải là port container
+``` docker-compose up -d ```
+``` docker-compose down ```
+    step 3: Check console
+        - Đầu tiên một network mặc định (default) sẽ được tạo ra, và tất cả các services sẽ đợc join vào chung 1 network ngày, vả chỉ các service ở trong network mới giao tiếp được với nhau.
+        - Tiếp theo một container tên xxx được tạo từ image. Tên container được tự động chọn để không bị trung lặp
+        - Cuối cùng container được chạy thì dòng code CMD ở cuối file Dockerfile sẽ được chạy.
 
 ### S3
     ----

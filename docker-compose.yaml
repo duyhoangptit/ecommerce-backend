@@ -1,40 +1,53 @@
-version: "3.4"
+version: "3.7"
 
 services:
   app:
-    image: ecommerce-core-service:deploy-node
-    volumes:
-      - ./public/images:/app/public/images
-    environment:
-      - DB_HOST:${DB_HOST}
-      - DB_PORT:${DB_PORT}
-      - REDIS_HOST:${REDIS_HOST}
-      - REDIS_PORT:${REDIS_PORT}
-      - RABBIT_URI:${RABBIT_URI}
+    image: ecommerce:1.0.0
     ports:
-      - "${PORT}:${PORT}"
-    restart: unless-stopped
-    depends_on:
-      - redis
-      - db
-
-  db:
-    image: mongo
-    volumes:
-      - .docker/guide/db:/guide/db
+      - "3056:3056"
     restart: unless-stopped
 
-  rabbit:
-    image: rabbitmq
-    volumes:
-      - .docker/guide/rabbit:/guide/rabbit
-    restart: unless-stopped
-    ports:
-      - "5672:5672"
-      - "1936:1936"
 
-  redis:
-    image: bitnami/rabbitmq:latest
-    volumes:
-      - .docker/guide/redis:/guide/redis
-    restart: unless-stopped
+
+
+
+#version: "3.4"
+#
+#services:
+#  app:
+#    image: ecommerce:deploy-node
+#    volumes:
+#      - ./public/images:/app/public/images
+#    environment:
+#      - DB_HOST:${DB_HOST}
+#      - DB_PORT:${DB_PORT}
+#      - REDIS_HOST:${REDIS_HOST}
+#      - REDIS_PORT:${REDIS_PORT}
+#      - RABBIT_URI:${RABBIT_URI}
+#    ports:
+#      - "${PORT}:${PORT}"
+#    restart: unless-stopped
+#    depends_on:
+#      - redis
+#      - db
+#
+#  db:
+#    image: mongo
+#    volumes:
+#      - .docker/guide/db:/guide/db
+#    restart: unless-stopped
+#
+#  rabbit:
+#    image: rabbitmq
+#    volumes:
+#      - .docker/guide/rabbit:/guide/rabbit
+#    restart: unless-stopped
+#    ports:
+#      - "5672:5672"
+#      - "1936:1936"
+#
+#  redis:
+#    image: bitnami/rabbitmq:latest
+#    volumes:
+#      - .docker/guide/redis:/guide/redis
+#    restart: unless-stopped
