@@ -1,4 +1,4 @@
-const { product, electronic, clothing, furniture } = require("../models/product.model")
+const { product } = require("../product.model")
 const {Types} = require("mongoose")
 
 const publishProductByShop = async ({product_shop, product_id}) => {

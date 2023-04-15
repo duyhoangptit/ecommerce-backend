@@ -11,7 +11,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.test
+      dockerfile: Dockerfiletest
     volumes:
       - ./app:/app
       - ./test:/test

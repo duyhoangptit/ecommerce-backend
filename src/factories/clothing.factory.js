@@ -1,7 +1,7 @@
 const {clothing, product} = require("../models/product.model");
 const {BusinessLogicError} = require("../core/error.response");
 const {Product} = require('./product.factory')
-const {updateProductById} = require("../repositories/product.repo");
+const {updateProductById} = require("../models/repositories/product.repo");
 const {removeAttrUndefined, updateNestedObjectParser} = require("../utils");
 
 class Clothing extends Product {

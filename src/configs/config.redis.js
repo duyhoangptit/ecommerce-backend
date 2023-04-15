@@ -9,7 +9,11 @@ const client = redis.createClient({
 });
 
 client.on('connect', () => {
-    console.log(`Redis connected host ${HOST} port ${PORT}!`)
+    console.log(`Connected: Redis connected host ${HOST} port ${PORT}!`)
+});
+
+client.on('error', () => {
+    console.log(`Error: Redis connected host ${HOST} port ${PORT}!`)
 });
 
 module.exports = client;

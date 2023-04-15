@@ -1,5 +1,5 @@
 const {BusinessLogicError} = require("../core/error.response");
-const {findAllDraftsForShop, findAllPublishForShop, publishProductByShop, searchProductByUser, findAllProducts, findById} = require("../repositories/product.repo")
+const {findAllDraftsForShop, findAllPublishForShop, publishProductByShop, searchProductByUser, findAllProducts, findById} = require("../models/repositories/product.repo")
 const {getSelectData, unGetSelectData} = require("../utils");
 const {i18n}= require('../configs/config.i18n')
 

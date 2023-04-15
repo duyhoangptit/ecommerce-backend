@@ -1,4 +1,5 @@
 const {product} = require("../models/product.model");
+const {insertInventory} = require("../models/repositories/inventory.repo");
 
 class Product {
     constructor({
@@ -16,8 +17,19 @@ class Product {
     }
 
     // create new Product
-    async createProduct() {
-        return await product.create(this)
+    async createProduct(product_id) {
+        const newProduct = await product.create({...this, _id: product_id})
+
+        if (newProduct) {
+            // add product_stock in inventory collections
+            await insertInventory({
+                productId: product_id,
+                shopId: this.product_shop,
+                stock: this.product_quality
+            })
+        }
+
+        return newProduct
     }
 
     // update product

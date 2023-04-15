@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3055;
 // start server nodejs
 const app = require('./src/app');
 const server =  app.listen(PORT, () => {
-    console.log(`eCommerce start with ${PORT}`);
+    console.log(`${process.env.SERVICE_NAME} start with ${PORT}`);
 });
 
 process.on('SIGINT', () => {
