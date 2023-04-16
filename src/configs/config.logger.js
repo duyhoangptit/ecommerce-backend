@@ -1,8 +1,10 @@
 const { createLogger, transports, format } = require('winston')
+const {logger: {serviceName}} = require('./config')
+
 
 // format log
 const formatLog = format.combine(
-    format.label({label: `${process.env.SERVICE_NAME}`}),
+    format.label({label: `${serviceName}`}),
     format.json(),
     format.timestamp(), // timestamp log
     format.metadata()
@@ -12,7 +14,7 @@ const formatLog = format.combine(
 // config file log rotate
 require('winston-daily-rotate-file')
 const transport = new transports.DailyRotateFile({
-    filename: `./logs/${process.env.SERVICE_NAME}-%DATE%.log`,
+    filename: `./logs/${serviceName}-%DATE%.log`,
     datePattern: 'YYYY-MM-DD-HH',
     zippedArchive: true,
     maxSize: '20m',
@@ -31,7 +33,7 @@ transport.on('rotate', function(oldFilename, newFilename) {
  */
 require('winston-mongodb');
 
-const {db: {host, name, port, username, password}} = require('./config.mongodb')
+const {db: {host, name, port, username, password}} = require('./config')
 const connectString = `mongodb://${username}:${password}@${host}:${port}/${name}?authSource=admin`;
 const configLogMongoDB = new transports.MongoDB({
     level : "warn",

@@ -1,19 +1,17 @@
 const redis = require('redis');
-
-const HOST = process.env.REDIS_HOST;
-const PORT = process.env.REDIS_PORT;
+const {redis: {host, port, username, password}} = require('./config')
 
 const client = redis.createClient({
-    port: PORT,
-    host: HOST
+    port: port,
+    host: host
 });
 
 client.on('connect', () => {
-    console.log(`Connected: Redis connected host ${HOST} port ${PORT}!`)
+    console.log(`Connected: Redis connected host ${host} port ${port}!`)
 });
 
 client.on('error', () => {
-    console.log(`Error: Redis connected host ${HOST} port ${PORT}!`)
+    console.log(`Error: Redis connected host ${host} port ${port}!`)
 });
 
 module.exports = client;

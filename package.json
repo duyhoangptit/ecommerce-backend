@@ -18,6 +18,7 @@
   "author": "tiger",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1359.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "chai": "^4.3.7",

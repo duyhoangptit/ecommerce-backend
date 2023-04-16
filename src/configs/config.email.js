@@ -1,27 +1,26 @@
 const nodemailer = require('nodemailer')
 const pug  = require('pug')
 const htmlToText = require('html-to-text')
+const {email: {host, port, auth, email_from}, app: {env}} = require('./config')
+
 
 module.exports = class Email {
     constructor(user, url) {
         this.to = user.email,
             this.firstName = user.name.split(' ')[0];
         this.url = url;
-        this.from = `xxx <${process.env.EMAIL_FROM}>`;
+        this.from = `xxx <${email_from}>`;
     }
 
     newTransport() {
-        if (process.env.NODE_ENV === 'production') {
+        if (env === 'production') {
             return 1;
         }
 
         return nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: process.env.EMAIL_PORT,
-            auth: {
-                user: process.env.EMAIL_USERNAME,
-                pass: process.env.EMAIL_PASSWORD,
-            }
+            host: host,
+            port: port,
+            auth: auth
         });
     }
 

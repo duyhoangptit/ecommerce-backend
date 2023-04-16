@@ -56,7 +56,7 @@ app.use(express.urlencoded({extended: true, limit: '10kb'}));
 app.use(cookieParser());
 
 // init db
-require('./dbs/init.mongodb.lv0');
+require('./configs/config.mongose');
 const {checkOverload} = require('./helpers/check.connect');
 checkOverload();
 

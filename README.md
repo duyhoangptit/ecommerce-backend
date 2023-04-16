@@ -18,7 +18,6 @@
 - [ ] Dockerfile, docker-compose for dev and test
 - [ ] Deployment with jenkins or circleCI
 
-
 ## Setup lib project
     - express
     - helmet
@@ -158,3 +157,6 @@
 
 ### Unit test with chai + mocha
     npm i chai chai-http mocha mocha-suppress-logs --save
+
+### Upload file to S3 or MinIO
+    npm i aws-sdk --save

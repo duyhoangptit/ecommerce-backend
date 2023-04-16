@@ -1,10 +1,12 @@
 const {I18n} = require('i18n')
 const path = require("path");
 const anyObject = {}
+const {i18n: {locales, defaultLocale}, app: {env}} = require('./config')
+
 
 const i18n = new I18n({
     // setup some locales - other locales default to en silently
-    locales: ['en', 'vi'],
+    locales: locales,
 
     fallbackLanguage: 'en',
 
@@ -15,7 +17,7 @@ const i18n = new I18n({
     },
 
     // you may alter a site wide default locale
-    // defaultLocale: 'en',
+    defaultLocale: defaultLocale,
 
     // will return translation from defaultLocale in case current locale doesn't provide it
     retryInDefaultLocale: false,
