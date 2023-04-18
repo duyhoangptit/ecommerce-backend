@@ -58,7 +58,7 @@ const apiKeySchema = new Schema({
     },
 
     discount_is_active: {
-        type: Double,
+        type: Boolean,
         required: true,
     },
     discount_applies_to: {
