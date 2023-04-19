@@ -6,7 +6,7 @@ require('dotenv').config({
     path: `.env.${nodeEnv}`
 })
 
-console.log(process.env.PORT)
+console.log('ENV:::', nodeEnv, ' PORT:::', process.env.PORT)
 const PORT = process.env.PORT || 3055;
 
 // start server nodejs

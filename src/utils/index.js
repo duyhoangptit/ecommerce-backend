@@ -12,6 +12,10 @@ const unGetSelectData = (select = []) => {
     return Object.fromEntries(select.map((el => [el, 0])))
 }
 
+const checkEnable = (value) => {
+    return value === 'true'
+}
+
 const removeAttrUndefined = (object) => {
     Object.keys(object).forEach(key => {
         if (object[key] === undefined
@@ -38,6 +42,7 @@ const updateNestedObjectParser = obj => {
 }
 
 module.exports = {
+    checkEnable,
     getInfoData,
     getSelectData,
     unGetSelectData,

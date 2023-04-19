@@ -3,6 +3,8 @@ const morgan = require('morgan');
 const app = express();
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
+const configs = require('./configs/config')
+const {checkEnable} = require("./utils");
 
 // init middlewares
 app.use(morgan('dev'));
@@ -56,12 +58,16 @@ app.use(express.urlencoded({extended: true, limit: '10kb'}));
 app.use(cookieParser());
 
 // init db
-require('./configs/config.mongose');
-const {checkOverload} = require('./helpers/check.connect');
-checkOverload();
+if (checkEnable(configs.db.enable)) {
+    require('./configs/config.mongose');
+    const {checkOverload} = require('./helpers/check.connect');
+    checkOverload();
+}
 
 // init redis
-require('./configs/config.redis')
+if (checkEnable(configs.redis.enable)) {
+    require('./configs/config.redis')
+}
 
 // init swagger
 const {openApi, configSwagger} = require('./configs/config.swagger')
@@ -77,16 +83,16 @@ app.use(expressWinston.logger({
 }))
 
 // config i18n
-const i18n = require('./configs/config.i18n')
-app.use(i18n.init)
-
+if (checkEnable(configs.i18n.enable)) {
+    const i18n = require('./configs/config.i18n')
+    app.use(i18n.init)
+}
 
 // init routes
 app.use('', require('./routes'))
 
 // handling errors
 const {logErrorMiddleware, returnError, is404Handler, isOperationalError} = require("./middleware/errorHandler");
-const {exit} = require("./middleware/common");
 app.use(is404Handler)
 app.use(logErrorMiddleware)
 app.use(returnError)
@@ -96,38 +102,13 @@ const configFactories = require('./factories')
 console.log(configFactories)
 
 // init cron job
-const task = require('./tasks/collect-issue.task')
-task.execute().start();
+if (checkEnable(configs.task.enable)) {
+    const task = require('./tasks/collect-issue.task')
+    task.execute().start();
+}
 
-// if the Promise is rejected this will catch it
-process.on('SIGINT', () => {
-    console.log('Ctrl + C:: Service stop!!!')
-    exit()
-});
+// process handler
+require('./middleware/processHandler')
 
-// CTRL+C
-process.on('SIGQUIT', () => {
-    console.log('Keyboard quit:: Service stop!!!')
-    exit()
-});
-// Keyboard quit
-process.on('SIGTERM', () => {
-    console.log('Kill command:: Service stop!!!')
-    exit()
-});
-// `kill` command
-
-// catch all uncaught exceptions
-process.on('unhandledRejection', error => {
-    logger.error(error)
-    throw error
-})
-
-process.on('uncaughtException', error => {
-    // if isOperational is false -> exit service
-    if (!isOperationalError(error)) {
-        exit()
-    }
-})
-
+// export
 module.exports = app;
