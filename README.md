@@ -13,6 +13,7 @@
 - [x] Cron job
 - [x] Unit test
 - [x] Security with public key, private key, token jwt
+- [ ] Test benchmark with autocannon
 - [ ] Notify with firebase or socketIo
 - [ ] Upload file with S3 or MinIO
 - [ ] Dockerfile, docker-compose for dev and test
@@ -160,3 +161,6 @@
 
 ### Upload file to S3 or MinIO
     npm i aws-sdk --save
+
+### Test benchmark with auto cannon
+[Auto Cannon](https://www.youtube.com/watch?v=_tBWQ8JaFOs)
