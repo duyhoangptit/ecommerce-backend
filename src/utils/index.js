@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const {Types} = require("mongoose")
 
 const getInfoData = ({fields = [], object = {}}) => {
     return _.pick(object, fields)
@@ -14,6 +15,10 @@ const unGetSelectData = (select = []) => {
 
 const checkEnable = (value) => {
     return value === 'true'
+}
+
+const convert2ObjectId = id => {
+    return new Types.ObjectId(id)
 }
 
 const removeAttrUndefined = (object) => {
@@ -47,5 +52,6 @@ module.exports = {
     getSelectData,
     unGetSelectData,
     removeAttrUndefined,
-    updateNestedObjectParser
+    updateNestedObjectParser,
+    convert2ObjectId
 }
