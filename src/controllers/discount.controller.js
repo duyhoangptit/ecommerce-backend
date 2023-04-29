@@ -30,10 +30,35 @@ class DiscountController {
     getAllDiscountCodesByShop = catchAsync((req, res) => {
         OK(res,  "Get all discount codes success",
             DiscountService.getAllDiscountCodesByShop({
+                ...req.query,
+                shopId: req.user.userId
+            }));
+    })
+
+    getDiscountAmount = catchAsync((req, res) => {
+        OK(res,  "Get discount amount success",
+            DiscountService.getDiscountAmount({
                 ...req.body,
                 shopId: req.user.userId
             }));
     })
+
+    deleteDiscountCode = catchAsync((req, res) => {
+        OK(res,  "Delete discount success",
+            DiscountService.deleteDiscountCode({
+                ...req.body,
+                shopId: req.user.userId
+            }));
+    })
+
+    cancelDiscountCode = catchAsync((req, res) => {
+        OK(res,  "Cancel discount success",
+            DiscountService.cancelDiscountCode({
+                ...req.body,
+                shopId: req.user.userId
+            }));
+    })
+
 }
 
 module.exports = new DiscountController()

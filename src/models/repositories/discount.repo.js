@@ -25,7 +25,11 @@ const findAllDiscountCodesSelect = async ({
         .lean();
 }
 
+const checkDiscountExists =  async (model, filter) => {
+}
+
 module.exports = {
     findAllDiscountCodesUnSelect,
-    findAllDiscountCodesSelect
+    findAllDiscountCodesSelect,
+    checkDiscountExists
 }

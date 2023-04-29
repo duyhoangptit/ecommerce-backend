@@ -3,8 +3,7 @@ const router = express.Router()
 const discountController = require('../../controllers/discount.controller')
 const {authenticationV2} = require("../../auth/authUtils");
 
-// authentication
-router.use(authenticationV2)
+
 
 /**
  * 1. Generator discount code [Shop | Admin]
@@ -14,7 +13,17 @@ router.use(authenticationV2)
  * 5. Delete discount Code [Admin | Shop]
  * 6. Cancel discount Code [Code]
  */
-router.get('/search/:keySearch', discountController.searchProducts)
+
+router.post('/amount', discountController.getDiscountAmount)
+router.get('/list-product-code', discountController.getAllDiscountCodeWithProduct)
+
+// authentication
+router.use(authenticationV2)
+
+router.get('', discountController.createDiscountCode)
+router.get('', discountController.getAllDiscountCodesByShop)
+router.get('/search/:keySearch', discountController.cancelDiscountCode)
+router.get('/search/:keySearch', discountController.cancelDiscountCode)
 
 // router
 module.exports = router

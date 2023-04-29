@@ -3,7 +3,8 @@ const {convert2ObjectId} = require("../utils");
 const {i18n}= require('../configs/config.i18n')
 const discountModel = require('../models/discount.model')
 const {findAllProducts} = require("../models/repositories/product.repo");
-const {findAllDiscountCodesUnSelect} = require("../models/repositories/discount.repo");
+const {findAllDiscountCodesUnSelect, checkDiscountExists} = require("../models/repositories/discount.repo");
+const {model} = require("mongoose");
 
 class DiscountService {
 
@@ -121,6 +122,102 @@ class DiscountService {
         )
     }
 
+    static async getDiscountAmount({codeId, userId, shopId, products}) {
+        const foundDiscount = await checkDiscountExists({
+            model: discountModel,
+            filter: {
+                discount_code: code,
+                discount_shop_id: convert2ObjectId(shopId)
+            }
+        })
+
+        if (!foundDiscount) {
+            throw new BusinessLogicError('Discount not exists')
+        }
+
+        const {
+            discount_is_active,
+            discount_max_uses,
+            discount_start_date,
+            discount_end_date,
+            discount_min_order_value,
+            discount_max_order_value,
+            discount_users_used,
+            discount_type,
+            discount_value
+        } = foundDiscount
+        if (!discount_is_active) throw new BusinessLogicError('Discount expired')
+        if (discount_max_uses === 0) throw new BusinessLogicError('Discount are out')
+
+        if (new Date() < new Date(discount_start_date)
+            || new Date() > new Date(discount_end_date)) throw new BusinessLogicError('Discount code has expired')
+
+        // check xem cos et gia tri toi thieu hay k
+        let totalOrder = 0
+        if (discount_min_order_value > 0) {
+            // get total
+            totalOrder = products.reduce((acc, product) => {
+                return acc + (product.quantity * product.price)
+            }, 0)
+
+            if (totalOrder < discount_min_order_value) {
+                throw new BusinessLogicError(`Discount requires a minium order value of ${discount_min_order_value}`)
+            }
+        }
+
+        if (discount_max_order_value > 0) {
+            const userDiscount = discount_users_used.find(user => user.userId === userId)
+            if (userDiscount) {
+                // ..
+            }
+        }
+
+        // check xem discount nay la fixed amount
+        const amount = discount_type  === 'fixed_amount' ? discount_value : (totalOrder * (discount_value / 100))
+
+        return {
+            totalOrder,
+            discount: amount,
+            totalPrice: totalOrder - amount
+        }
+    }
+
+    // delete voucher
+    static async deleteDiscountCode({
+        shopId, codeId
+                                    }) {
+        // kiem tra xem co dk su dung o dau khong, neu k co thi xoa
+        return await discountModel.findOneAndDelete({
+            discount_code: codeId,
+            discount_shop_id: convert2ObjectId(shopId)
+        })
+    }
+
+    //
+    static async cancelDiscountCode({
+        codeId, shopId, userId
+                                    }) {
+        // check exists
+        const  foundDiscount = await checkDiscountExists({
+            model: discountModel,
+            filter: {
+                discount_code: codeId,
+                discount_shop_id: convert2ObjectId(shopId)
+            }
+        })
+
+        if (!discountModel) throw new BusinessLogicError('Discount not exists')
+
+        return await discountModel.findByIdAndUpdate(foundDiscount._id, {
+            $pull: {
+                discount_users_used: userId,
+            },
+            $inc: {
+                discount_max_users: 1,
+                discount_uses_count: -1
+            }
+        })
+    }
 
 }
 
