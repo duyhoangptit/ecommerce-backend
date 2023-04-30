@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive --exit",
-    "start": "SET NODE_ENV=local node server.js",
+    "start": "node server.js",
     "start:dev": "nodemon --legacy-watch server.js",
     "start:local": "SET NODE_ENV=local nodemon --legacy-watch server.js"
   },
