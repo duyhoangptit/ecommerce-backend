@@ -6,7 +6,8 @@ const HEADER = {
 const {findById} = require('../services/apiKey.service')
 const URL_WHITELIST = [
     "/api-docs",
-    "/healthcheck"
+    "/healthcheck",
+    "/api/v1/auth/register"
 ]
 
 const apiKey = async (req, res, next) => {

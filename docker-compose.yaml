@@ -5,7 +5,7 @@ services:
     image: ecommerce-service:1.0
     container_name: ecommerce-service
     volumes:
-      - ./public/images:/app/public/images
+      - .docker/data/app:/app/logs
       # - ./:/app # mount từ môi trường gốc vào trong để nếu các bạn thay đổi code thì bên trong sẽ tự động cập nhật
 #    environment: # phần này ta định nghĩa ở file .env nhé
 #      - DB_HOST=${DB_HOST}
