@@ -89,6 +89,21 @@ const options = {
                     },
                     example: {}
                 },
+                Discount: {
+                    type: 'object',
+                    required: ['discount_code', 'discount_amount'],
+                    properties: {
+                        discount_code: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+                        discount_amount: {
+                            type: 'string',
+                            description: 'The email of the shop'
+                        }
+                    },
+                    example: {}
+                },
             },
             responses : {
                 400: {
