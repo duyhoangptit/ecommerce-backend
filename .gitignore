@@ -1,3 +1,5 @@
 /node_modules/
 /logs/*
 /.docker/
+/.docker/data/db/*
+/.docker/data/redis/*

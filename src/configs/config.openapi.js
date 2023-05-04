@@ -123,7 +123,7 @@ const options = {
                 ApiKeyAuth: {
                     type: 'apiKey',
                     in: 'header',
-                    name: 'Authorization'
+                    name: 'authorization'
                 }
             }
         },
