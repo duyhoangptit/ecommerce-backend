@@ -126,6 +126,7 @@
 ### Deployment docker + nginx + kubernetes
     step 1: Create Dockerfile
 ``` docker build -t [name image]:[tag version] . ```
+``` docker build -t ecommerce-service:1.0 . ```
         - Để bu Docker image ta dùng command docker build
         - Option -t để chỉ là đặt tên Image
         - Dấu . ể ch cho docker hãy build image với context ở folder hiện tại này cho tôi. Docker sẽ tìm ở folder hiện tại Dockerfile và build
