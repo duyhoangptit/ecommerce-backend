@@ -20,7 +20,7 @@ const returnError = (err, req, res, next) => {
 
 const isOperationalError = (error) => {
     if (error instanceof BaseError) {
-        return error.isOperational
+        return error.metadata.isOperational
     }
     return false
 }

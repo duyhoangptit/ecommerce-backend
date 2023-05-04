@@ -15,7 +15,7 @@ class DiscountService {
         } = payload
 
         // validate
-        if (new Date() < new Date(start_date) || new Date() > new Date(end_date)) {
+        if (new Date() > new Date(start_date) || new Date() > new Date(end_date)) {
             throw new BusinessLogicError('Discount code has expired')
         }
 
@@ -41,8 +41,8 @@ class DiscountService {
             discount_value: value,
             discount_min_order_value: min_order_value || 0,
             discount_max_value: max_value,
-            discount_start_date: new Date(start_date),
-            discount_end_date: new Date(end_date),
+            discount_start_day: new Date(start_date),
+            discount_end_day: new Date(end_date),
             discount_max_uses: max_users,
             discount_uses_count: users_count,
             discount_users_used: users_used,
