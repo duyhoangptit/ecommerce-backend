@@ -1,4 +1,6 @@
 const cartModel = require('../models/cart.model')
+const {getProductById} = require("../models/repositories/product.repo");
+const {Api404Error} = require("../core/error.response");
 
 /**
  * - Add product to cart - user
@@ -10,14 +12,14 @@ const cartModel = require('../models/cart.model')
  */
 class CartService {
 
-    static async createUserCart({userId, products}) {
+    static async createUserCart({userId, product}) {
         const query = {
             cart_user_id: userId, cart_state: 'active'
         }
 
         const updateOrInsert = {
             $addToSet: {
-                cart_products: products
+                cart_products: product
             }
         }, options = {upsert: true, new: true}
 
@@ -35,7 +37,7 @@ class CartService {
                 'cart_products.$.quantity': quantity
             }
         }, options = {upsert: true, new: true}
-        return await cartModel.findOneAndUpdate(query, updateOrInsert, options)
+        return await cartModel.findOneAndUpdate(query, updateSet, options)
     }
 
     static async addToCart({
@@ -58,6 +60,68 @@ class CartService {
 
         // gio hang ton tai, va co san pham nay thi update quantity
         return await CartService.updateUserCartQuantity({userId, product})
+    }
+
+    // update cart
+    /**
+     * shop_order_ids: [
+     *  {
+     *      shopId,
+     *      item_products: [
+     *          {
+     *              quantity,
+     *              price,
+     *              shopId,
+     *              old_quantity,
+     *              productId
+     *          }
+     *      ],
+     *      version
+     *  }
+     * ]
+     */
+    static async addToCartV2({userId, shop_order_ids = []}) {
+        const {productId, quantity, old_quantity} = shop_order_ids[0]?.item_products[0]
+
+        // check product
+        const foundProduct = await getProductById(productId)
+        if (!foundProduct) throw new Api404Error('Product not found')
+
+        // compare
+        if (foundProduct.product_shop.toString() !== shop_order_ids[0]?.shopId) {
+            throw new Api404Error('Product do not belong to the shop')
+        }
+
+        if (quantity === 0) {
+            // todo deleted
+        }
+
+        return await CartService.updateUserCartQuantity({
+            userId,
+            product: {
+                productId,
+                quantity: quantity - old_quantity
+            }
+        })
+    }
+
+    static async deleteItemInCart({userId, productId}) {
+        const query = {cart_user_id: userId, cart_state: 'active'}
+        const updateSet = {
+            $pull: {
+                cart_products: {
+                    productId
+                }
+            }
+        }
+
+        return await cartModel.updateOne(query, updateSet)
+    }
+
+    static async getListUserCart({userId}) {
+        return await cartModel.findOne({
+            cart_user_id: +userId
+        }).lean()
     }
 }
 

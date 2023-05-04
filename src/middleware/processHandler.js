@@ -29,7 +29,7 @@ process.on('unhandledRejection', error => {
 process.on('uncaughtException', error => {
     // if isOperational is false -> exit service
     if (!isOperationalError(error)) {
-        exit()
+        logger.error(error)
     }
 })
 

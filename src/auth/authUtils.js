@@ -6,7 +6,7 @@ const {ignoreWhiteList} = require('./checkAuth')
 
 const HEADER = {
     API_KEY: 'x-api-key',
-    AUTHORIZATION: 'Authorization',
+    AUTHORIZATION: 'authorization',
     REFRESH_TOKEN: 'refresh-token',
     X_CLIENT_ID: 'x-client-id',
     BEARER: 'Bearer '

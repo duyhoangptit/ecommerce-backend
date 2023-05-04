@@ -1,5 +1,6 @@
 const { product } = require("../product.model")
 const {Types} = require("mongoose")
+const {convert2ObjectId} = require("../../utils");
 
 const publishProductByShop = async ({product_shop, product_id}) => {
     // find one
@@ -74,6 +75,10 @@ const updateProductById = async ({
     })
 }
 
+const getProductById = async (productId) => {
+    return await product.findOne({_id: convert2ObjectId(productId)}).lean()
+}
+
 module.exports = {
     findAllDraftsForShop,
     findAllPublishForShop,
@@ -81,5 +86,6 @@ module.exports = {
     searchProductByUser,
     findAllProducts,
     findById,
-    updateProductById
+    updateProductById,
+    getProductById
 }
