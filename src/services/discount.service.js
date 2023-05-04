@@ -4,7 +4,6 @@ const {i18n}= require('../configs/config.i18n')
 const discountModel = require('../models/discount.model')
 const {findAllProducts} = require("../models/repositories/product.repo");
 const {findAllDiscountCodesUnSelect, checkDiscountExists} = require("../models/repositories/discount.repo");
-const {model} = require("mongoose");
 
 class DiscountService {
 

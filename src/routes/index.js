@@ -12,6 +12,7 @@ router.use(apiKey)
 router.use(permission('0000'))
 
 // init routes
+router.use('/api/v1/cart', require('./cart'))
 router.use('/api/v1/discount', require('./discount'))
 router.use('/api/v1/product', require('./product'))
 router.use('/api/v1/auth', require('./auth'))
