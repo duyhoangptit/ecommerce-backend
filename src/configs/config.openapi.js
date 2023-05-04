@@ -23,6 +23,52 @@ const options = {
         ],
         components: {
             schemas: {
+                RequestRegister: {
+                    type: 'object',
+                    required: ['name', 'email', 'password', 'msisdn'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+                        email: {
+                            type: 'string',
+                            description: 'The email of the shop'
+                        },
+                        password: {
+                            type: 'string',
+                            description: 'The password of the shop'
+                        },
+                        msisdn: {
+                            type: 'string',
+                            description: 'The msisdn of the shop'
+                        }
+                    },
+                    example: {
+                        "name": "Ta Duy Hoang",
+                        "email": "duyhoangaws@gmail.com",
+                        "password": "123123a@",
+                        "msisdn": "0948291994"
+                    }
+                },
+                RequestLogin: {
+                    type: 'object',
+                    required: ['email', 'password'],
+                    properties: {
+                        email: {
+                            type: 'string',
+                            description: 'The email of the shop'
+                        },
+                        password: {
+                            type: 'string',
+                            description: 'The password of the shop'
+                        },
+                    },
+                    example: {
+                        "email": "duyhoangaws@gmail.com",
+                        "password": "123123a@"
+                    }
+                },
                 Product: {
                     type: 'object',
                     required: ['product_name', 'product_thumb', 'product_price', 'product_quality', 'product_type', 'product_attributes'],
@@ -120,16 +166,27 @@ const options = {
                 }
             },
             securitySchemes: {
-                ApiKeyAuth: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+                apiKey: {
                     type: 'apiKey',
                     in: 'header',
-                    name: 'Authorization'
+                    name: 'x-api-key'
                 }
             }
         },
-        security: [{
-            ApiKeyAuth: []
-        }]
+        security: [
+            {
+                "apiKey": [],
+                "bearerAuth": [],
+            },
+            {
+                "apiKey": [],
+            }
+        ]
 
     },
     apis: [

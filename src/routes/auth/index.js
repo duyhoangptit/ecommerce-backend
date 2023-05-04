@@ -9,7 +9,18 @@ const {authenticationV2} = require("../../auth/authUtils");
  *     post:
  *       summary: Shop login
  *       tags: [Auth]
- *       security: []
+ *       security: [{apiKey: []}]
+ *       consumes:
+ *       - application/json
+ *       produces:
+ *       - application/json
+ *       parameters:
+ *       - in: "body"
+ *         name: "body"
+ *         required: true
+ *         description: The request login
+ *         schema:
+ *            $ref: '#/components/schemas/RequestLogin'
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
@@ -27,6 +38,17 @@ router.post('/login', accessController.login)
  *     post:
  *       summary: Register shop
  *       tags: [Auth]
+ *       consumes:
+ *       - application/json
+ *       produces:
+ *       - application/json
+ *       parameters:
+ *       - in: "body"
+ *         name: "body"
+ *         required: true
+ *         description: The request register
+ *         schema:
+ *            $ref: '#/components/schemas/RequestRegister'
  *       security: []
  *       responses:
  *         "400":
