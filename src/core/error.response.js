@@ -3,11 +3,11 @@ const { StatusCodes, ReasonPhrases } = require("./httpStatusCode");
 class BaseError extends Error {
     constructor(message, status, errors, isOperational) {
         super(message)
-        Object.setPrototypeOf(this, new.target.prototype)
+        // Object.setPrototypeOf(this, new.target.prototype)
         this.status = status
         this.errors = errors
         this.isOperational = isOperational
-        Error.captureStackTrace(this, this.constructor)
+        // Error.captureStackTrace(this, this.constructor)
     }
 }
 

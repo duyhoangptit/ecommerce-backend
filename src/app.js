@@ -91,6 +91,9 @@ if (checkEnable(configs.i18n.enable)) {
 // init routes
 app.use('', require('./routes'))
 
+// process handler
+require('./middleware/processHandler')
+
 // handling errors
 const {logErrorMiddleware, returnError, is404Handler, isOperationalError} = require("./middleware/errorHandler");
 app.use(is404Handler)
@@ -106,9 +109,6 @@ if (checkEnable(configs.task.enable)) {
     const task = require('./tasks/collect-issue.task')
     task.execute().start();
 }
-
-// process handler
-require('./middleware/processHandler')
 
 // export
 module.exports = app;
