@@ -23,6 +23,48 @@ const options = {
         ],
         components: {
             schemas: {
+                RequestCreateCart: {
+                    type: 'object',
+                    required: ['name'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+
+                    },
+                    example: {
+                        "name": "Ta Duy Hoang",
+                    }
+                },
+                RequestUpdateCart: {
+                    type: 'object',
+                    required: ['name'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+
+                    },
+                    example: {
+                        "name": "Ta Duy Hoang",
+                    }
+                },
+                RequestDeleteCart: {
+                    type: 'object',
+                    required: ['name'],
+                    properties: {
+                        name: {
+                            type: 'string',
+                            description: 'The name of the shop'
+                        },
+
+                    },
+                    example: {
+                        "name": "Ta Duy Hoang",
+                    }
+                },
                 RequestRegister: {
                     type: 'object',
                     required: ['name', 'email', 'password', 'msisdn'],

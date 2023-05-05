@@ -10,24 +10,19 @@ const {authenticationV2} = require("../../auth/authUtils");
  *       summary: Shop login
  *       tags: [Auth]
  *       security: [{apiKey: []}]
- *       consumes:
- *       - application/json
- *       produces:
- *       - application/json
- *       parameters:
- *       - in: "body"
- *         name: "body"
- *         required: true
- *         description: The request login
- *         schema:
- *            $ref: '#/components/schemas/RequestLogin'
+ *       requestBody:
+ *          description: Request login info
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/RequestLogin'
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: Login response info
  *           contents:
  *             application/json
  */
@@ -38,17 +33,12 @@ router.post('/login', accessController.login)
  *     post:
  *       summary: Register shop
  *       tags: [Auth]
- *       consumes:
- *       - application/json
- *       produces:
- *       - application/json
- *       parameters:
- *       - in: "body"
- *         name: "body"
- *         required: true
- *         description: The request register
- *         schema:
- *            $ref: '#/components/schemas/RequestRegister'
+ *       requestBody:
+ *          description: Request login info
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/RequestRegister'
  *       security: []
  *       responses:
  *         "400":
@@ -94,7 +84,7 @@ router.post('/logout', accessController.logout)
  *         "401":
  *           $ref: '#/components/responses/401'
  *         "200":
- *           description: List product contains key search
+ *           description: Response refresh token info
  *           contents:
  *             application/json
  */

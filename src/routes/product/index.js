@@ -8,7 +8,7 @@ const {authenticationV2} = require("../../auth/authUtils");
  *   /api/v1/product/search/{keySearch}:
  *     get:
  *       summary: Search product by key
- *       tags: [Products]
+ *       tags: [Product]
  *       security: []
  *       parameters:
  *         - in: path
@@ -33,7 +33,7 @@ router.get('/search/:keySearch', productController.searchProducts)
  *   /api/v1/product/:
  *     get:
  *       summary: Search product by key
- *       tags: [Products]
+ *       tags: [Product]
  *       security: []
  *       parameters:
  *         - in: path
@@ -58,7 +58,7 @@ router.get('/', productController.findAllProducts)
  *   /api/v1/product/{product_id}:
  *     get:
  *       summary: Search one product by product_id
- *       tags: [Products]
+ *       tags: [Product]
  *       security: []
  *       parameters:
  *         - in: path
@@ -90,7 +90,7 @@ router.use(authenticationV2)
  *   /api/v1/product:
  *     post:
  *       summary: Create product
- *       tags: [Products]
+ *       tags: [Product]
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
@@ -108,7 +108,7 @@ router.post('', productController.createProduct)
  *   /api/v1/product/{productId}:
  *     patch:
  *       summary: Update product
- *       tags: [Products]
+ *       tags: [Product]
  *       parameters:
  *         - in: path
  *           name: productId
@@ -133,7 +133,7 @@ router.patch('/:productId', productController.updateProduct)
  *   /api/v1/product/publish/{id}:
  *     put:
  *       summary: Update publish product
- *       tags: [Products]
+ *       tags: [Product]
  *       parameters:
  *         - in: path
  *           name: id
@@ -159,7 +159,7 @@ router.put('/publish/:id', productController.publishProductByShop)
  *   /api/v1/product/drafts/all:
  *     post:
  *       summary: Search product drafts by key
- *       tags: [Products]
+ *       tags: [Product]
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
@@ -176,7 +176,7 @@ router.get('/drafts/all', productController.getAllDraftsForShop)
  *   /api/v1/product/published/all:
  *     post:
  *       summary: Search product published by key
- *       tags: [Products]
+ *       tags: [Product]
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
