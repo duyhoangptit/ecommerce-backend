@@ -8,6 +8,7 @@ const healthController = require('../../controllers/heath.controller')
  *     get:
  *       summary: API check health of service
  *       tags: [Health]
+ *       security: []
  *       responses:
  *         "400":
  *           $ref: '#/components/responses/400'
