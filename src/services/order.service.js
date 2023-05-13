@@ -1,7 +1,6 @@
 const {findCartById} = require("../models/repositories/cart.repo");
 const {Api404Error, BusinessLogicError} = require("../core/error.response");
 const {checkProductByServer} = require("../models/repositories/product.repo");
-const {product} = require("../models/product.model");
 const {DiscountService} = require("./discount.service");
 
 class OrderService  {
@@ -94,6 +93,48 @@ class OrderService  {
             shop_order_ids_new,
             checkout_order
         }
+    }
+
+    static async orderByUser({
+                                 shop_order_ids_new,
+        cartId,
+        userId,
+        user_address = {},
+        user_payment = {}
+    }) {
+        const { shop_order_ids_new, checkout_order } = await OrderService.checkoutReview({
+            cartId,
+            userId,
+            shop_order_ids
+        })
+
+        // check lai mot lan nua xem ton kho hay k
+        // get new array products
+        const products = shop_order_ids_new.flatMap( order => order.item_products)
+        console.log('[1]::', products)
+
+        for (let i = 0; i < products.length; i++) {
+            const {productId, quantity} = products[i];
+        }
+
+        return {
+        }
+    }
+
+    static async getOrderByUser() {
+
+    }
+
+    static async getOneOrderByUser() {
+
+    }
+
+    static async cancelOrderByUser() {
+
+    }
+
+    static async updateOrderStatusByShop() {
+
     }
 }
 
