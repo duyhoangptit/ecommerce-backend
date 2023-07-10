@@ -3,3 +3,5 @@
 /.docker/
 /.docker/data/db/*
 /.docker/data/redis/*
+.idea
+.docker/data/*
