@@ -24,8 +24,8 @@ services:
   mongodb:
     image: mongo:latest
     container_name: ec-mongodb
-    ports:
-      - 27017:27017
+#    ports:
+#      - 27017:27017
     environment:
 #      - MONGO_INITDB_DATABASE=test
       - MONGO_INITDB_ROOT_USERNAME=admin

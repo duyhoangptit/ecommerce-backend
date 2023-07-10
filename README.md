@@ -163,5 +163,8 @@
 ### Upload file to S3 or MinIO
     npm i aws-sdk --save
 
+### Push error to discord
+    npm install discord.js
+
 ### Test benchmark with auto cannon
 [Auto Cannon](https://www.youtube.com/watch?v=_tBWQ8JaFOs)

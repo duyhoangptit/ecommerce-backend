@@ -15,7 +15,7 @@ const {authenticationV2} = require("../../auth/authUtils");
 
 router.post('review', orderController.checkoutReview)
 
-router.post('order', orderController.checkoutReview)
+router.post('', orderController.order)
 
 // router
 module.exports = router

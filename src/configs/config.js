@@ -56,6 +56,14 @@ const config = {
     },
     task: {
         enable: process.env.TASK_ENABLE
+    },
+    notification: {
+        discord: {
+            token: process.env.DISCORD_TOKEN,
+            channelId: process.env.DISCORD_CHANNEL
+        },
+        telegram: {
+        }
     }
 }
 

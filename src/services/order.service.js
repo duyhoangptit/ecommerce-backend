@@ -96,16 +96,17 @@ class OrderService  {
     }
 
     static async orderByUser({
-                                 shop_order_ids_new,
+        shop_order_ids_new,
         cartId,
         userId,
         user_address = {},
         user_payment = {}
     }) {
-        const { shop_order_ids_new, checkout_order } = await OrderService.checkoutReview({
+        const { checkout_order }
+            = await OrderService.checkoutReview({
             cartId,
             userId,
-            shop_order_ids
+            shop_order_ids_new
         })
 
         // check lai mot lan nua xem ton kho hay k
