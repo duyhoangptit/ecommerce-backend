@@ -2,7 +2,7 @@ const {notification: {discord}} = require('./config')
 
 const { Client, GatewayIntentBits } = require('discord.js');
 
-class DiscordLogService {
+class DiscordLogConfig {
     constructor() {
         this.connect();
     }
@@ -28,11 +28,11 @@ class DiscordLogService {
     }
 
     static getInstance() {
-        if (!DiscordLogService.instance) {
-            DiscordLogService.instance = new DiscordLogService();
+        if (!DiscordLogConfig.instance) {
+            DiscordLogConfig.instance = new DiscordLogConfig();
         }
 
-        return DiscordLogService.instance;
+        return DiscordLogConfig.instance;
     }
 
      sendMessage(msg) {
@@ -63,5 +63,5 @@ class DiscordLogService {
     }
 }
 
-const instanceDiscord = DiscordLogService.getInstance();
+const instanceDiscord = DiscordLogConfig.getInstance();
 module.exports = instanceDiscord;
