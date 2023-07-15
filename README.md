@@ -18,7 +18,7 @@
 - [ ] Upload file with S3 or MinIO
 - [ ] Dockerfile, docker-compose for dev and test
 - [ ] Deployment with jenkins or circleCI
-
+- [ ] Add discord push notify
 ## Setup lib project
     - express
     - helmet
@@ -41,6 +41,7 @@
     - chai
     - nodemon
     - redis: using cache redis
+    - discord.js: using discord push notify
 
 ## Mongodb
     - Nhược điểm của cách connect cũ
