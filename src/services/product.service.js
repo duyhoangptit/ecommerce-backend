@@ -1,5 +1,5 @@
 const {BusinessLogicError} = require("../core/error.response");
-const {findAllDraftsForShop, findAllPublishForShop, publishProductByShop, searchProductByUser, findAllProducts, findById} = require("../models/repositories/product.repo")
+const {findAllDraftsForShop, findAllPublishForShop, publishProductByShop, searchProductByUser, findAllProducts, findById, getProductById} = require("../models/repositories/product.repo")
 const {getSelectData, unGetSelectData} = require("../utils");
 const {i18n}= require('../configs/config.i18n')
 
@@ -54,6 +54,9 @@ class ProductService {
         return await findById({product_id, unSelect: unGetSelectData(['__v', 'variations'])})
     }
 
+    static async findProductById(product_id) {
+        return await getProductById(product_id);
+    }
 }
 
 module.exports = {

@@ -1,6 +1,7 @@
 const Comment = require('../models/comment.model')
 const {convert2ObjectId} = require("../utils");
 const {Api404Error} = require("../core/error.response");
+const {ProductService} = require("./product.service");
 
 /**
  * key features: Comment service
@@ -12,6 +13,8 @@ class CommentService {
     static async createComment({
         productId, userId, content, parentCommentId = null
                                }) {
+        await this.validateProductExists(productId)
+
         const comment = new Comment({
             comment_product_id: productId,
             comment_user_id: userId,
@@ -97,6 +100,53 @@ class CommentService {
         }).sort({
             comment_left: 1
         });
+    }
+
+    static async validateProductExists(productId) {
+        // check product exists in the database
+        const foundProduct = await ProductService.findProductById(productId)
+        if (!foundProduct) throw Api404Error('Product not found')
+    }
+
+    static async deleteComment({
+                                   productId,
+                                   commentId
+                               }) {
+        await this.validateProductExists(productId)
+
+        // detect left and right of commentId
+        const comment  = await Comment.findById(commentId);
+        if (!comment) throw Api404Error('Comment not found')
+
+        // get left, right
+        const leftValue = comment.comment_left
+        const rightValue = comment.comment_right
+
+        // cal width
+        const width = rightValue - leftValue + 1
+
+        // remove all comment id children
+        await Comment.deleteMany({
+            comment_product_id: convert2ObjectId(productId),
+            comment_left: {$gte: leftValue, $lte: rightValue}
+        })
+
+        // update value left and right
+        await Comment.updateMany({
+            comment_product_id: convert2ObjectId(productId),
+            comment_right: {$gt: rightValue}
+        }, {
+            $inc: {comment_right: -width}
+        })
+
+        await Comment.updateMany({
+            comment_product_id: convert2ObjectId(productId),
+            comment_left: {$gt: leftValue}
+        }, {
+            $inc: {comment_left: -width}
+        })
+
+        return true
     }
 }
 

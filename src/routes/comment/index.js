@@ -9,5 +9,6 @@ router.use(authenticationV2)
 
 router.post('', commentController.createComment)
 router.get('', commentController.getCommentsByParentId)
+router.delete('', commentController.deleteComment)
 
 module.exports = router
