@@ -1,0 +1,18 @@
+{
+   "compilerOptions": {
+      "module": "NodeNext",
+      "outDir": "build",
+      "allowJs": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "skipLibCheck": true,
+      "noImplicitAny": false,
+      // "declaration": true,
+      // "typeRoots": ["node_modules/@types", "config/typings.d.ts"]
+   },
+   "include": [
+      "**/*.ts",
+   ],
+   "exclude": ["node_modules", "dist", "build"]
+}

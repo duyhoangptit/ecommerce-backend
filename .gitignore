@@ -1,7 +1,4 @@
-/node_modules/
-/logs/*
-/.docker/
-/.docker/data/db/*
-/.docker/data/redis/*
-.idea
-.docker/data/*
+/node_modules
+/dist
+/build
+.env
