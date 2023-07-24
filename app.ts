@@ -16,6 +16,9 @@ expressConfig(app);
 // server configuration and start (using Terminus for health check)
 serverConfig(app, mongoose, server).startServer();
 
+// Connect database
+import'./frameworks/database/mongodb/connection';
+
 // Init routes
 routes(app, express);
 
