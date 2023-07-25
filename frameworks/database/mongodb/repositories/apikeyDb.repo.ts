@@ -1,6 +1,6 @@
 import ApikeyModel from '../models/apikey.model';
 
-export default function apikeyRepositoryDb() {
+export default function apikeyDbReposImpl() {
    const findById = (key) => {
       return ApikeyModel.findOne({ key, status: true }).lean();
    };

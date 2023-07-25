@@ -7,8 +7,8 @@ const HEADERS = {
    API_KEY: 'x-api-key',
    AUTHORIZATION: 'authorization',
 };
-export default function apikeyAuth(apikeyRepository, apikeyRepositoryDb) {
-   const apiKeyDb = apikeyRepository(apikeyRepositoryDb());
+export default function apikeyAuth(apikeyDbRepo, apikeyDbRepoImpl) {
+   const apiKeyDb = apikeyDbRepo(apikeyDbRepoImpl());
 
    const checkApiKey = async (
       req: IApikeyRequest,
