@@ -1,5 +1,11 @@
 'use strict';
 
+import {
+   Api401Error,
+   Api403Error,
+} from '../../../frameworks/webserver/middlewares/error.response';
+import { filterData } from '../../../frameworks/webserver/utils/filterData';
+
 const RolesShop = {
    SHOP: '000',
    WRITER: '001',
@@ -11,18 +17,14 @@ export default async function signup(
    payload,
    shopDb,
    keyTokenDb,
-   authService,
-   lodashUtils
+   authService
 ) {
-   const { name, email, password } = payload;
+   const { name, email, password, msisdn } = payload;
 
    const holderShop = await shopDb.findShop(email).lean(); // lean() returns a original object JavaScript
    if (holderShop) {
       console.log(holderShop);
-      return {
-         code: '',
-         message: 'Shop already registered!',
-      };
+      throw new Api401Error('Shop already registered');
    }
 
    const hashPassword = await authService.hashPassword(password);
@@ -30,6 +32,7 @@ export default async function signup(
       name,
       email,
       password: hashPassword,
+      msisdn,
       roles: [RolesShop.SHOP],
    });
 
@@ -41,13 +44,9 @@ export default async function signup(
       const publicKeyDb = await keyTokenDb.createKeyToken({
          userId: newShop._id,
          publicKey,
+         privateKey,
       });
-      if (!publicKeyDb) {
-         return {
-            code: '',
-            message: 'publicKeyDb error!',
-         };
-      }
+      if (!publicKeyDb) throw new Api401Error('Create key token failed');
       // Create token pair
       const tokens = await authService.createTokenPair(
          { userId: newShop._id, email },
@@ -79,19 +78,13 @@ export default async function signup(
       // );
 
       return {
-         code: 201,
-         metadata: {
-            shop: lodashUtils.filterData({
-               data: newShop,
-               fields: ['_id', 'name', 'email'],
-            }),
-            tokens,
-         },
+         shop: filterData({
+            data: newShop,
+            fields: ['_id', 'name', 'email'],
+         }),
+         tokens,
       };
    }
 
-   return {
-      code: 200,
-      metadata: null,
-   };
+   return null;
 }

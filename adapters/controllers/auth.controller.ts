@@ -3,6 +3,7 @@
 import { NextFunction, Request, Response } from 'express';
 
 import signup from '../../application/use_cases/auth/signup';
+import { CREATED } from '../../frameworks/webserver/middlewares/success.response';
 
 export default function authController(
    shopDbRepo,
@@ -10,17 +11,18 @@ export default function authController(
    keyTokenDbRepo,
    keyTokenDbRepoImpl,
    authServiceInterface,
-   authServiceImpl,
-   lodashUtils
+   authServiceImpl
 ) {
    const shopDb = shopDbRepo(shopDbRepoImpl());
    const keyTokenDb = keyTokenDbRepo(keyTokenDbRepoImpl());
    const authService = authServiceInterface(authServiceImpl());
 
    const register = async (req: Request, res: Response, next: NextFunction) => {
-      signup(req.body, shopDb, keyTokenDb, authService, lodashUtils)
-         .then((tokens) => res.json(tokens))
-         .catch((err) => next(err));
+      new CREATED({
+         res,
+         message: 'Register successfully',
+         data: await signup(req.body, shopDb, keyTokenDb, authService),
+      });
    };
 
    return { register };

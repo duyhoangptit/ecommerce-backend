@@ -15,15 +15,18 @@ let keyTokenSchema = new Schema(
          type: String,
          required: true,
       },
-      refreshToken: {
+      refreshTokensUsed: {
          type: Array,
          default: [],
       },
-      //* Level 0, 1, 2
-      // privateKey: {
-      //    type: String,
-      //    required: true,
-      // },
+      refreshToken: {
+         type: String,
+         required: true,
+      },
+      privateKey: {
+         type: String,
+         required: true,
+      },
    },
    {
       timestamps: true,

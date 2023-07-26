@@ -17,9 +17,17 @@ expressConfig(app);
 serverConfig(app, mongoose, server).startServer();
 
 // Connect database
-import'./frameworks/database/mongodb/connection';
+import './frameworks/database/mongodb/connection';
 
 // Init routes
 routes(app, express);
+
+// Handle error middleware
+import {
+   is404Handler,
+   returnError,
+} from './frameworks/webserver/middlewares/errorHandler.middleware';
+app.use(is404Handler);
+app.use(returnError);
 
 export default app;
