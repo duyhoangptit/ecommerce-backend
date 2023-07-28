@@ -22,7 +22,8 @@ export default function authRouter(express) {
       authServiceImpl
    );
 
-   router.route('/signup').post(asyncHandler(controller.register));
+   router.route('/signup').post(asyncHandler(controller.signupUser));
+   router.route('/login').post(asyncHandler(controller.loginUser));
 
    return router;
 }

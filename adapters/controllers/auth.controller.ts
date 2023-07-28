@@ -2,8 +2,12 @@
 
 import { NextFunction, Request, Response } from 'express';
 
+import {
+   CREATED,
+   OK,
+} from '../../frameworks/webserver/middlewares/success.response';
 import signup from '../../application/use_cases/auth/signup';
-import { CREATED } from '../../frameworks/webserver/middlewares/success.response';
+import login from '../../application/use_cases/auth/login';
 
 export default function authController(
    shopDbRepo,
@@ -17,13 +21,29 @@ export default function authController(
    const keyTokenDb = keyTokenDbRepo(keyTokenDbRepoImpl());
    const authService = authServiceInterface(authServiceImpl());
 
-   const register = async (req: Request, res: Response, next: NextFunction) => {
-      new CREATED({
+   const signupUser = async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+   ) => {
+      CREATED({
          res,
          message: 'Register successfully',
          data: await signup(req.body, shopDb, keyTokenDb, authService),
       });
    };
 
-   return { register };
+   const loginUser = async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+   ) => {
+      OK({
+         res,
+         message: 'Login successfully',
+         data: await login(req.body, shopDb, keyTokenDb, authService),
+      });
+   };
+
+   return { signupUser, loginUser };
 }

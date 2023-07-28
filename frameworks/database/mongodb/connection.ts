@@ -45,11 +45,12 @@ class MongoDBConnect {
       });
    }
 
+   static instance;
    static getInstance() {
-      let instance = new MongoDBConnect();
-      if (!instance) instance = new MongoDBConnect();
-
-      return instance;
+      if (!MongoDBConnect.instance) {
+         MongoDBConnect.instance = new MongoDBConnect();
+      }
+      return MongoDBConnect.instance;
    }
 }
 

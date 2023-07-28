@@ -72,6 +72,17 @@ class Api401Error extends BaseError {
    }
 }
 
+class Api400Error extends BaseError {
+   constructor(
+      message: string = ReasonPhrases.BAD_REQUEST,
+      errors = [],
+      status = StatusCodes.BAD_REQUEST,
+      isOperational = true
+   ) {
+      super(message, status, errors, isOperational);
+   }
+}
+
 class BusinessLogicError extends BaseError {
    constructor(
       message: string = ReasonPhrases.INTERNAL_SERVER_ERROR,
@@ -84,6 +95,7 @@ class BusinessLogicError extends BaseError {
 }
 
 export {
+   Api400Error,
    Api401Error,
    Api403Error,
    Api404Error,

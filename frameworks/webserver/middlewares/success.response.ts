@@ -45,7 +45,7 @@ const CREATED = ({ res, message, data, headers = {} }) => {
    }).send(res, headers);
 };
 
-const OK = (res, message, data, headers = {}) => {
+const OK = ({ res, message, data, headers = {} }) => {
    new Ok({
       message,
       data,

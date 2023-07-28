@@ -5,10 +5,12 @@ import JWT from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 export default function authService() {
-   const hashPassword = async (password) => {
+   const hashPassword = async (password: string) => {
       const salt = await bcrypt.genSalt(10);
       return await bcrypt.hash(password, salt);
    };
+   const comparePassword = async (password: string, hashPassword: string) =>
+      await bcrypt.compare(password, hashPassword);
 
    const generateKeyPair = () => {
       const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
@@ -55,5 +57,5 @@ export default function authService() {
       }
    };
 
-   return { hashPassword, createTokenPair, generateKeyPair };
+   return { hashPassword, comparePassword, createTokenPair, generateKeyPair };
 }
