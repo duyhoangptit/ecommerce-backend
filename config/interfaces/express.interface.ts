@@ -2,10 +2,11 @@
 
 import { Request, Response } from 'express';
 
-export interface IApikeyRequest extends Request {
+export interface IRequest extends Request {
    apikey: {
       key: string;
       status: boolean;
       permissions: Array<string>;
    };
+   keyStore: object;
 }

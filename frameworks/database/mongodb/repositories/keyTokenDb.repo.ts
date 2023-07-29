@@ -1,5 +1,6 @@
 'use strict';
 
+import { Types } from 'mongoose';
 import KeyTokenModel from '../models/keyToken.model';
 
 export default function keyTokenDbRepoImpl() {
@@ -20,5 +21,11 @@ export default function keyTokenDbRepoImpl() {
       return tokens ? tokens.publicKey : null;
    };
 
-   return { createKeyToken };
+   const findByUserId = async (userId) =>
+      await KeyTokenModel.findOne({ user: new Types.ObjectId(userId) }).lean();
+
+   const deleteKeyById = async (id) =>
+      await KeyTokenModel.findByIdAndDelete(id).lean();
+
+   return { createKeyToken, findByUserId, deleteKeyById };
 }

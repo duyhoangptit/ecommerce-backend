@@ -1,22 +1,19 @@
 'use strict';
 
 import { NextFunction, Request, Response } from 'express';
-import { IApikeyRequest } from '../../../config/interfaces/express.interface';
+import { IRequest } from '../../../config/interfaces/express.interface';
+import { Headers } from '../utils';
 
-const HEADERS = {
-   API_KEY: 'x-api-key',
-   AUTHORIZATION: 'authorization',
-};
 export default function apikeyAuth(apikeyDbRepo, apikeyDbRepoImpl) {
    const apiKeyDb = apikeyDbRepo(apikeyDbRepoImpl());
 
    const checkApiKey = async (
-      req: IApikeyRequest,
+      req: IRequest,
       res: Response,
       next: NextFunction
    ) => {
       try {
-         const key = req.headers[HEADERS.API_KEY];
+         const key = req.headers[Headers.API_KEY];
 
          if (!key) {
             return res.status(403).json({
@@ -44,7 +41,7 @@ export default function apikeyAuth(apikeyDbRepo, apikeyDbRepoImpl) {
 
    const permission = (permission) => {
       // Trả về 1 cái hàm mà hàm đó có thể sử dụng các biến của hàm cha
-      return (req: IApikeyRequest, res: Response, next: NextFunction) => {
+      return (req: IRequest, res: Response, next: NextFunction) => {
          try {
             if (!req.apikey.permissions) {
                return res.status(403).json({

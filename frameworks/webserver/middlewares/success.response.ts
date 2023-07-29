@@ -10,15 +10,15 @@ interface ISuccessResponse {
 class SuccessResponse implements ISuccessResponse {
    private message: string;
    private status: number;
-   private data: object | any;
+   private metadata: object | any;
    constructor({
       message = ReasonPhrases.OK,
       status = StatusCodes.OK,
-      data = {},
+      metadata = {},
    }) {
       this.message = message || ReasonPhrases.OK;
       this.status = status;
-      this.data = data;
+      this.metadata = metadata;
    }
 
    send(res: Response, headers: object) {
@@ -27,28 +27,28 @@ class SuccessResponse implements ISuccessResponse {
 }
 
 class Ok extends SuccessResponse {
-   constructor({ message, data = {} }) {
-      super({ message, data });
+   constructor({ message, metadata = {} }) {
+      super({ message, metadata });
    }
 }
 
 class Create extends SuccessResponse {
-   constructor({ message, data = {} }) {
-      super({ message, status: StatusCodes.CREATED, data });
+   constructor({ message, metadata = {} }) {
+      super({ message, status: StatusCodes.CREATED, metadata });
    }
 }
 
-const CREATED = ({ res, message, data, headers = {} }) => {
+const CREATED = ({ res, message, metadata, headers = {} }) => {
    new Create({
       message,
-      data,
+      metadata,
    }).send(res, headers);
 };
 
-const OK = ({ res, message, data, headers = {} }) => {
+const OK = ({ res, message, metadata, headers = {} }) => {
    new Ok({
       message,
-      data,
+      metadata,
    }).send(res, headers);
 };
 

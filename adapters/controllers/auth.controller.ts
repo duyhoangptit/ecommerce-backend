@@ -8,6 +8,8 @@ import {
 } from '../../frameworks/webserver/middlewares/success.response';
 import signup from '../../application/use_cases/auth/signup';
 import login from '../../application/use_cases/auth/login';
+import logout from '../../application/use_cases/auth/logout';
+import { IRequest } from '../../config/interfaces/express.interface';
 
 export default function authController(
    shopDbRepo,
@@ -22,28 +24,40 @@ export default function authController(
    const authService = authServiceInterface(authServiceImpl());
 
    const signupUser = async (
-      req: Request,
+      req: IRequest,
       res: Response,
       next: NextFunction
    ) => {
       CREATED({
          res,
          message: 'Register successfully',
-         data: await signup(req.body, shopDb, keyTokenDb, authService),
+         metadata: await signup(req.body, shopDb, keyTokenDb, authService),
       });
    };
 
    const loginUser = async (
-      req: Request,
+      req: IRequest,
       res: Response,
       next: NextFunction
    ) => {
       OK({
          res,
          message: 'Login successfully',
-         data: await login(req.body, shopDb, keyTokenDb, authService),
+         metadata: await login(req.body, shopDb, keyTokenDb, authService),
       });
    };
 
-   return { signupUser, loginUser };
+   const logoutUser = async (
+      req: IRequest,
+      res: Response,
+      next: NextFunction
+   ) => {
+      OK({
+         res,
+         message: 'Logout successfully',
+         metadata: await logout(req.keyStore, keyTokenDb),
+      });
+   };
+
+   return { signupUser, loginUser, logoutUser };
 }

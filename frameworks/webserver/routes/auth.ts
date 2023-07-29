@@ -9,6 +9,7 @@ import keyTokenDbRepo from '../../../application/repositories/IKeyTokenDb.repo';
 import keyTokenDbRepoImpl from '../../database/mongodb/repositories/keyTokenDb.repo';
 import authServiceInterface from '../../../application/services/auth.service';
 import authServiceImpl from '../../services/auth.service';
+import authMiddleware from '../middlewares/auth.middleware';
 
 export default function authRouter(express) {
    const router = express.Router();
@@ -24,6 +25,10 @@ export default function authRouter(express) {
 
    router.route('/signup').post(asyncHandler(controller.signupUser));
    router.route('/login').post(asyncHandler(controller.loginUser));
+
+   // authentication
+   const auth = authMiddleware();
+   router.use(asyncHandler(auth.authentication));
 
    return router;
 }
