@@ -30,5 +30,10 @@ export default function authRouter(express) {
    const auth = authMiddleware();
    router.use(asyncHandler(auth.authentication));
 
+   router.route('/logout').post(asyncHandler(controller.logoutUser));
+   router
+      .route('/handle-refresh-token')
+      .post(asyncHandler(controller.handleRefreshTokenUser));
+
    return router;
 }

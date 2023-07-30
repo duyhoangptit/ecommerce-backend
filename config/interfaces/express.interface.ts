@@ -9,4 +9,6 @@ export interface IRequest extends Request {
       permissions: Array<string>;
    };
    keyStore: object;
+   user: object;
+   refreshToken: string | string[];
 }

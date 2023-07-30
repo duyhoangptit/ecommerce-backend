@@ -1,15 +1,16 @@
 'use strict';
 
 import { NextFunction, Request, Response } from 'express';
-
+import { IRequest } from '../../config/interfaces/express.interface';
 import {
    CREATED,
    OK,
 } from '../../frameworks/webserver/middlewares/success.response';
+
 import signup from '../../application/use_cases/auth/signup';
 import login from '../../application/use_cases/auth/login';
 import logout from '../../application/use_cases/auth/logout';
-import { IRequest } from '../../config/interfaces/express.interface';
+import handleRefreshToken from '../../application/use_cases/auth/handleRefreshToken';
 
 export default function authController(
    shopDbRepo,
@@ -59,5 +60,26 @@ export default function authController(
       });
    };
 
-   return { signupUser, loginUser, logoutUser };
+   const handleRefreshTokenUser = async (
+      req: IRequest,
+      res: Response,
+      next: NextFunction
+   ) => {
+      OK({
+         res,
+         message: 'Get new token successfully',
+         metadata: await handleRefreshToken(
+            {
+               refreshToken: req.refreshToken,
+               user: req.user,
+               keyStore: req.keyStore,
+            },
+            shopDb,
+            keyTokenDb,
+            authService
+         ),
+      });
+   };
+
+   return { signupUser, loginUser, logoutUser, handleRefreshTokenUser };
 }

@@ -57,5 +57,16 @@ export default function authService() {
       }
    };
 
-   return { hashPassword, comparePassword, createTokenPair, generateKeyPair };
+   const verifyJWT = async (token, keySecret) => {
+      console.log('token:: ', token, keySecret);
+      return await JWT.verify(token, keySecret);
+   };
+
+   return {
+      hashPassword,
+      comparePassword,
+      createTokenPair,
+      generateKeyPair,
+      verifyJWT,
+   };
 }

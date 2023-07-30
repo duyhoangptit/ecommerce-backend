@@ -20,9 +20,6 @@ const returnError = (
 ) => {
    const statusCode = err.status || 500;
    let error;
-   console.log(err instanceof BaseError);
-   console.log(typeof err);
-   console.log({ ...err }, err.message);
    if (err instanceof BaseError) {
       error = { ...err };
       error.message = err.message;
@@ -36,12 +33,11 @@ const returnError = (
       if (err.name === 'TokenExpiredError') error = handleJWTExpiredError(err);
    }
 
-   console.log(error);
    return res.status(statusCode).json({
       status: statusCode,
       message: error.message ? error.message : 'Internal Server Error',
       errors: error.errors,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : '',
+      stack: process.env.NODE_ENV === 'development' ? err.stack : '',
    });
 };
 

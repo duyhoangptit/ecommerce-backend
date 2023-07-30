@@ -5,6 +5,13 @@ export default function authService(service) {
    const generateKeyPair = () => service.generateKeyPair();
    const createTokenPair = (payload, publicKey, privateKey) =>
       service.createTokenPair(payload, publicKey, privateKey);
+   const verifyJWT = (token, keySecret) => service.verifyJWT(token, keySecret);
 
-   return { hashPassword, comparePassword, createTokenPair, generateKeyPair };
+   return {
+      hashPassword,
+      comparePassword,
+      createTokenPair,
+      generateKeyPair,
+      verifyJWT,
+   };
 }

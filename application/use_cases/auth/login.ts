@@ -3,6 +3,13 @@
 import { Api401Error } from '../../../frameworks/webserver/middlewares/error.response';
 import { filterData } from '../../../frameworks/webserver/utils/filterData';
 
+/**
+ * 1 - check email
+ * 2 - match password
+ * 3 - create AT & RT and save
+ * 4 - generate tokens
+ * 5 - get data return login
+ */
 export default async function login(payload, shopDb, keyTokenDb, authService) {
    const { email, password } = payload;
 
@@ -23,7 +30,12 @@ export default async function login(payload, shopDb, keyTokenDb, authService) {
       privateKey
    );
 
-   await keyTokenDb.createKeyToken({ userId, publicKey, privateKey });
+   await keyTokenDb.createKeyToken({
+      refreshToken: tokens.refreshToken,
+      userId,
+      publicKey,
+      privateKey,
+   });
    return {
       shop: filterData({ data: foundShop, fields: ['_id', 'email', 'name'] }),
       tokens,

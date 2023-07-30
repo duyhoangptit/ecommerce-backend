@@ -2,8 +2,16 @@
 
 import ShopModel from '../models/shop.model';
 
+type ItemType = {
+   name: string;
+   email: string;
+   password: string;
+   msisdn: string;
+   roles: string[];
+};
+
 export default function shopDbRepoImpl() {
-   const createShop = (payload) => {
+   const createShop = (payload: ItemType) => {
       const { name, email, password, roles, msisdn } = payload;
       return ShopModel.create({
          name,
@@ -14,7 +22,7 @@ export default function shopDbRepoImpl() {
       });
    };
 
-   const findShop = (email) =>
+   const findShop = (email: string) =>
       ShopModel.findOne({ email })
          .select({
             email: 1,
