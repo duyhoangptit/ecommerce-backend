@@ -41,6 +41,7 @@ export default function authMiddleware() {
                throw new Api400Error('Invalid UserId');
             req.keyStore = keyStore;
             req.user = decodeUser;
+            console.log('req.user:: ', req.user);
             req.refreshToken = refreshToken;
             return next();
          } catch (err) {
@@ -53,7 +54,7 @@ export default function authMiddleware() {
       if (!accessToken) throw new Api401Error('Invalid Request');
 
       try {
-         const decodeUser = JWT.verify(accessToken, keyStore.publicKey);
+         const decodeUser = JWT.verify(accessToken, keyStore.privateKey);
          if (userId !== decodeUser.userId)
             throw new Api401Error('Invalid UserId');
          req.keyStore = keyStore;

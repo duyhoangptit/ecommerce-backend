@@ -1,6 +1,6 @@
 'use strict';
 
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import { IRequest } from '../../config/interfaces/express.interface';
 import {
    CREATED,

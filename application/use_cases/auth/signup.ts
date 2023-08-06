@@ -1,10 +1,7 @@
 'use strict';
 
-import {
-   Api401Error,
-   Api403Error,
-} from '../../../frameworks/webserver/middlewares/error.response';
-import { filterData } from '../../../frameworks/webserver/utils/filterData';
+import { Api401Error } from '../../../frameworks/webserver/middlewares/error.response';
+import { filterData } from '../../../frameworks/webserver/utils';
 
 const RolesShop = {
    SHOP: '000',
@@ -13,12 +10,7 @@ const RolesShop = {
    ADMIN: '003',
 };
 
-export default async function signup(
-   payload,
-   shopDb,
-   keyTokenDb,
-   authService
-) {
+export default async function signup(payload, shopDb, keyTokenDb, authService) {
    const { name, email, password, msisdn } = payload;
 
    const holderShop = await shopDb.findShop(email).lean(); // lean() returns a original object JavaScript

@@ -38,6 +38,7 @@
     "jsonwebtoken": "^9.0.1",
     "lodash": "^4.17.21",
     "mongoose": "^7.4.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "slugify": "^1.6.6"
   }
 }

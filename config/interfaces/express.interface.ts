@@ -1,6 +1,6 @@
 'use strict';
 
-import { Request, Response } from 'express';
+import { Request } from 'express';
 
 export interface IRequest extends Request {
    apikey: {
@@ -9,6 +9,8 @@ export interface IRequest extends Request {
       permissions: Array<string>;
    };
    keyStore: object;
-   user: object;
+   user: {
+      userId: string;
+   };
    refreshToken: string | string[];
 }

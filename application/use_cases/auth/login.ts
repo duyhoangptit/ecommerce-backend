@@ -1,7 +1,7 @@
 'use strict';
 
 import { Api401Error } from '../../../frameworks/webserver/middlewares/error.response';
-import { filterData } from '../../../frameworks/webserver/utils/filterData';
+import { filterData } from '../../../frameworks/webserver/utils';
 
 /**
  * 1 - check email
