@@ -7,6 +7,7 @@ import findAllDraftsForShop from '../use_cases/product/findAllDraftsForShop';
 import findAllPublishForShop from '../use_cases/product/findAllPublishForShop';
 import searchProducts from '../use_cases/product/searchProducts';
 import findOneProduct from '../use_cases/product/findOneProduct';
+import advancedSearch from '../use_cases/product/advancedSearch';
 
 const {
    selectDataObject,
@@ -86,9 +87,9 @@ class ProductService {
       });
    }
 
-   // static async advancedSearch(query) {
-   //    return await advancedSearch(query);
-   // }
+   static async advancedSearch(productDb, query) {
+      return await advancedSearch(productDb, query);
+   }
 }
 
 export default ProductService;

@@ -131,7 +131,13 @@ export default function productController(productDbRepo, productDbRepoImpl) {
       req: IRequest,
       res: Response,
       next: NextFunction
-   ) => {};
+   ) => {
+      OK({
+         res,
+         message: 'Advanced search product successfully',
+         metadata: await ProductService.advancedSearch(productDb, req.query),
+      });
+   };
 
    return {
       createProduct,
@@ -142,5 +148,6 @@ export default function productController(productDbRepo, productDbRepoImpl) {
       searchProducts,
       findAllProducts,
       findProduct,
+      advancedSearch,
    };
 }

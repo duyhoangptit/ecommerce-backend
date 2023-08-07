@@ -4,6 +4,7 @@ import { SortOrder, Types } from 'mongoose';
 import { ProductModel } from '../models/product.model';
 import { selectDataObject, unSelectDataObject } from '../../../webserver/utils';
 import { IProduct } from '../../../../src/entities/product';
+import ApiFeatures from '../../../webserver/utils/api-feature.util';
 
 export default function productDbRepoImpl() {
    // utils
@@ -122,6 +123,21 @@ export default function productDbRepoImpl() {
          })
       );
    };
+   /**
+    * ?productPrice[gte]=2&productQuantity[gt]=3&...[lte]=5&...[lt]=6&keySearch=abc
+    *
+    * @param queryInput
+    * @return {Promise<void>}
+    */
+   const advancedSearch = async (queryInput) => {
+      const features = new ApiFeatures(ProductModel.find(), queryInput)
+         .filter()
+         .sort()
+         .limitFields()
+         .paging();
+
+      return await features.query;
+   };
 
    return {
       findAllDraftsForShop,
@@ -133,5 +149,6 @@ export default function productDbRepoImpl() {
       updateProductById,
       createProduct,
       checkProductByServer,
+      advancedSearch,
    };
 }

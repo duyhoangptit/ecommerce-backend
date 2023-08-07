@@ -46,6 +46,9 @@ export default function productDbRepo(repo) {
    const checkProductByServer = (products) =>
       repo.checkProductByServer(products);
 
+   //11.
+   const advancedSearch = (queryInput) => repo.advancedSearch(queryInput);
+
    return {
       findAllDraftsForShop,
       publishProductByShop,
@@ -57,5 +60,6 @@ export default function productDbRepo(repo) {
       updateProductById,
       createProduct,
       checkProductByServer,
+      advancedSearch,
    };
 }

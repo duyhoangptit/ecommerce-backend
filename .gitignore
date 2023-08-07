@@ -2,3 +2,6 @@
 /dist
 /build
 .env
+.idea/sonarlint
+.idea/inspectionProfiles
+.idea/jsLinters

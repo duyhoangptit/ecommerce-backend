@@ -1,8 +1,5 @@
 'use strict';
 
-export default function advancedSearch(
-   productDb,
-   { limit, sort, filter, page, select }
-) {
-   return productDb.findAllProducts({ limit, sort, filter, page, select });
+export default function advancedSearch(productDb, queryInput) {
+   return productDb.advancedSearch(queryInput);
 }
