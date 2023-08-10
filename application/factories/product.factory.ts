@@ -4,7 +4,6 @@ import productDbRepo from '../repositories/IProductDb.repo';
 import productDbRepoImpl from '../../frameworks/database/mongodb/repositories/productDb.repo';
 import { ProductModel } from '../../frameworks/database/mongodb/models/product.model';
 
-
 class Product {
    public productDb = productDbRepo(productDbRepoImpl());
    public productName: string;
@@ -45,7 +44,7 @@ class Product {
       });
 
       if (newProduct) {
-         // add productNtock in inventory collections
+         // add productStock in inventory collections
          // await insertInventory({
          //    productId: productNd,
          //    shopId: this.productShop,
@@ -66,6 +65,4 @@ class Product {
    }
 }
 
-export {
-   Product,
-};
+export { Product };

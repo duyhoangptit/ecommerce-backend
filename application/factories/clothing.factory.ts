@@ -27,11 +27,11 @@ class Clothing extends Product {
       const objectParams = removeAttrUndefined(this);
 
       // 2. check update where?
-      if (objectParams.product_attributes) {
+      if (objectParams.productAttributes) {
          // update child
          await this.productDb.updateProductById({
             productId,
-            payload: updateNestedObjectParser(objectParams.product_attributes),
+            payload: updateNestedObjectParser(objectParams.productAttributes),
             model: ClothingModel,
          });
       }

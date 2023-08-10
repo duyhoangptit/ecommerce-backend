@@ -29,6 +29,7 @@ export default function productRouter(express) {
    router.use(asyncHandler(auth.authentication));
 
    router.post('/', asyncHandler(controller.createProduct));
+   router.post('/publish/:productId', controller.publishProductByShop);
    router.patch('/:productId', asyncHandler(controller.updateProduct));
    router.get('/drafts/all', asyncHandler(controller.getAllDraftsForShop));
    router.get(
