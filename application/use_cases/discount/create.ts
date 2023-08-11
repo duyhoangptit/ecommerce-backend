@@ -38,7 +38,7 @@ export default async function createDiscount(discountDb, payload) {
    if (foundDiscount?.discountIsActive)
       throw new Api400Error('Discount code already exists!');
 
-   const newDiscountEntity = discount(
+   const newDiscountEntity = discount({
       code,
       startDate,
       endDate,
@@ -55,8 +55,8 @@ export default async function createDiscount(discountDb, payload) {
       maxUses,
       usesCount,
       maxUsesPerUser,
-      usersUsed
-   );
+      usersUsed,
+   });
 
    const newDiscount = await discountDb.createDiscount(newDiscountEntity);
 

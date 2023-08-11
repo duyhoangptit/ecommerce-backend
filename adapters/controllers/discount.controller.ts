@@ -12,6 +12,7 @@ export default function discountController(discountDbRepo, discountDbRepoImpl) {
       res: Response,
       next: NextFunction
    ) => {
+      console.log('req.body', req.body);
       CREATED({
          res,
          message: 'Create discount successfully',

@@ -78,7 +78,7 @@ export interface IDiscount {
    };
 }
 
-export default function discount(
+export default function discount({
    name,
    description,
    type,
@@ -100,8 +100,8 @@ export default function discount(
    appliesTo,
    // So san pham duoc ap dung
    productIds,
-   maxValue
-) {
+   maxValue,
+}) {
    return {
       getName: () => name,
       getDescription: () => description,
@@ -117,7 +117,7 @@ export default function discount(
       getMinOrderValue: () => minOrderValue,
       getShopId: () => shopId,
       getIsActive: () => isActive,
-      getApplies: () => appliesTo,
+      getAppliesTo: () => appliesTo,
       getProductIds: () => productIds,
       getMaxValue: () => maxValue,
    };

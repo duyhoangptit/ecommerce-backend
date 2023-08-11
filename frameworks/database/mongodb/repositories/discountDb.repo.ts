@@ -4,43 +4,28 @@ import DiscountModel from '../models/discount.model';
 import { convertToObjectIdMongo } from '../../../webserver/utils';
 
 export default function discountDbRepoImpl() {
-   const createDiscount = ({
-      code,
-      startDate,
-      endDate,
-      isActive,
-      shopId,
-      minOrderValue,
-      productIds,
-      appliesTo,
-      name,
-      description,
-      type,
-      value,
-      maxValue,
-      maxUses,
-      usesCount,
-      maxUsesPerUser,
-      usersUsed,
-   }) =>
+   const createDiscount = (discountEntity) =>
       DiscountModel.create({
-         discountCode: code,
-         discountStartDate: new Date(startDate),
-         discountEndDate: new Date(endDate),
-         discountIsActive: isActive,
-         discountShopId: convertToObjectIdMongo(shopId),
-         discountMinOrderValue: minOrderValue || 0,
-         discountProductIds: appliesTo === 'all' ? [] : productIds,
-         discountAppliesTo: appliesTo,
-         discountName: name,
-         discountDescription: description,
-         discountType: type,
-         discountValue: value,
-         discountMaxValue: maxValue,
-         discountMaxUses: maxUses,
-         discountUsesCount: usesCount,
-         discountMaxUsesPerUser: maxUsesPerUser,
-         discountUsersUsed: usersUsed,
+         discountCode: discountEntity.getCode(),
+         discountStartDate: new Date(discountEntity.getStartDate()),
+         discountEndDate: new Date(discountEntity.getEndDate()),
+         discountIsActive: discountEntity.getIsActive(),
+         discountShopId: convertToObjectIdMongo(discountEntity.getShopId()),
+         discountMinOrderValue: discountEntity.getMinOrderValue() || 0,
+         discountProductIds:
+            discountEntity.getAppliesTo() === 'all'
+               ? []
+               : discountEntity.getProductIds(),
+         discountAppliesTo: discountEntity.getAppliesTo(),
+         discountName: discountEntity.getName(),
+         discountDescription: discountEntity.getDescription(),
+         discountType: discountEntity.getType(),
+         discountValue: discountEntity.getValue(),
+         discountMaxValue: discountEntity.getMaxValue(),
+         discountMaxUses: discountEntity.getMaxUses(),
+         discountUsesCount: discountEntity.getUsesCount(),
+         discountMaxUsesPerUser: discountEntity.getMaxUsesPerUser(),
+         discountUsersUsed: discountEntity.getUsersUsed(),
       });
 
    const findOneDiscount = (filter) => DiscountModel.findOne(filter);
