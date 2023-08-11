@@ -26,21 +26,21 @@ layers is with the _Dependency Rule_.
 -  [x] Handle refresh token
 -  [x] API product using Polymorphic Pattern, Factory Pattern
 -  [ ] Write API discount
-   -  Create inventory, discount model ❌
-   -  Get discount amount ❌
-   -  Get all discounts with product ❌
-   -  Create discount ❌
-   -  Get all discounts ❌
+    - Create inventory, discount model ✅
+    - Get discount amount ❌
+    - Get all discounts with product ❌
+    - Create discount ✅
+    - Get all discounts ❌
 -  [ ] Write API cart
-   -  Add to cart ❌
-   -  Delete user item cart ❌
-   -  Get list user cart ❌
-   -  Update quantity item cart ❌
+    - Add to cart ❌
+    - Delete user item cart ❌
+    - Get list user cart ❌
+    - Update quantity item cart ❌
 -  [ ] Write API order
-   -  Using optimistic with Redis ❌
-   -  Checkout review ❌
+    - Using optimistic with Redis ❌
+    - Checkout review ❌
 -  [ ] Write API inventory
-   -  Add stock to inventory ❌
+    - Add stock to inventory ❌
 -  [ ] Logging API using discord
 
 ---

@@ -14,7 +14,12 @@ class Electronic extends Product {
          throw new Api400Error('Create new electronic error');
       }
 
-      const newProduct = await super.createProduct(newElectronic._id);
+      const newProduct = await super
+         .createProduct(newElectronic._id)
+         .catch(async (err) => {
+            await newElectronic.deleteOne({ _id: newElectronic._id });
+            throw err;
+         });
       if (!newProduct) {
          throw new Api400Error('Create new product error');
       }

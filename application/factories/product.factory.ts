@@ -2,10 +2,14 @@
 
 import productDbRepo from '../repositories/IProductDb.repo';
 import productDbRepoImpl from '../../frameworks/database/mongodb/repositories/productDb.repo';
+import inventoryDbRepo from '../repositories/IInventoryDb.repo';
+import inventoryDbRepoImpl from '../../frameworks/database/mongodb/repositories/inventoryDb.repo';
 import { ProductModel } from '../../frameworks/database/mongodb/models/product.model';
 
 class Product {
    public productDb = productDbRepo(productDbRepoImpl());
+   public inventoryDb = inventoryDbRepo(inventoryDbRepoImpl());
+
    public productName: string;
    public productThumb: string;
    public productDescription: string;
@@ -45,11 +49,12 @@ class Product {
 
       if (newProduct) {
          // add productStock in inventory collections
-         // await insertInventory({
-         //    productId: productNd,
-         //    shopId: this.productShop,
-         //    stock: this.productQuality,
-         // });
+         await this.inventoryDb.insertInventory({
+            productId,
+            shopId: this.productShop,
+            stock: this.productQuality,
+            location,
+         });
       }
 
       return newProduct;

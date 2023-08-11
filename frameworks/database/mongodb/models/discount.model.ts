@@ -1,3 +1,5 @@
+'use strict';
+
 import { model, Schema } from 'mongoose';
 import { IDiscount } from '../../../../src/entities/discount';
 
@@ -22,6 +24,9 @@ const discountSchema = new Schema<IDiscount>(
       discountValue: {
          type: Number,
          required: true,
+      },
+      discountMaxValue: {
+         type: Number,
       },
       discountCode: {
          type: String,
@@ -68,7 +73,7 @@ const discountSchema = new Schema<IDiscount>(
          type: Boolean,
          default: true,
       },
-      discountApplies: {
+      discountAppliesTo: {
          type: String,
          required: true,
          enum: ['all', 'specific'],

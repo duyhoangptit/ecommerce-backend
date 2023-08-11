@@ -1,3 +1,5 @@
+'use strict';
+
 import { model, Schema } from 'mongoose';
 
 const COLLECTION_NAME = 'Inventories';

@@ -15,7 +15,12 @@ class Clothing extends Product {
          throw new Api400Error('Create new clothing error');
       }
 
-      const newProduct = await super.createProduct(newClothing._id);
+      const newProduct = await super
+         .createProduct(newClothing._id)
+         .catch(async (err) => {
+            await newClothing.deleteOne({ _id: newClothing._id });
+            throw err;
+         });
       if (!newProduct) {
          throw new Api400Error('Create new product error');
       }

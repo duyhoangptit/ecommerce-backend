@@ -18,6 +18,9 @@ export interface IDiscount {
       type: number;
       required: true;
    };
+   discountMaxValue: {
+      type: number;
+   };
    discountCode: {
       type: string;
       required: true;
@@ -63,7 +66,7 @@ export interface IDiscount {
       type: boolean;
       default: true;
    };
-   discountApplies: {
+   discountAppliesTo: {
       type: string;
       required: true;
       enum: ['all', 'specific'];
@@ -76,44 +79,46 @@ export interface IDiscount {
 }
 
 export default function discount(
-   discountName,
-   discountDescription,
-   discountType,
-   discountValue,
-   discountCode,
-   discountStartDate,
-   discountEndDate,
+   name,
+   description,
+   type,
+   value,
+   code,
+   startDate,
+   endDate,
    // So luong discount duoc dung
-   discountMaxUses,
+   maxUses,
    // So discount da su dung
-   discountUsesCount,
+   usesCount,
    // Ai da dung
-   discountUsersUsed,
+   usersUsed,
    // So luong cho phep toi da dc su dung cua moi user
-   discountMaxUsesPerUser,
-   discountMinOrderValue,
-   discountShopId,
-   discountIsActive,
-   discountApplies,
+   maxUsesPerUser,
+   minOrderValue,
+   shopId,
+   isActive,
+   appliesTo,
    // So san pham duoc ap dung
-   discountProductIds
+   productIds,
+   maxValue
 ) {
    return {
-      getName: () => discountName,
-      getDescription: () => discountDescription,
-      getType: () => discountType,
-      getValue: () => discountValue,
-      getCode: () => discountCode,
-      getStartDate: () => discountStartDate,
-      getEndDate: () => discountEndDate,
-      getMaxUses: () => discountMaxUses,
-      getUsesCount: () => discountUsesCount,
-      getUsersUsed: () => discountUsersUsed,
-      getMaxUsesPerUser: () => discountMaxUsesPerUser,
-      getMinOrderValue: () => discountMinOrderValue,
-      getShopId: () => discountShopId,
-      getIsActive: () => discountIsActive,
-      getApplies: () => discountApplies,
-      getProductIds: () => discountProductIds,
+      getName: () => name,
+      getDescription: () => description,
+      getType: () => type,
+      getValue: () => value,
+      getCode: () => code,
+      getStartDate: () => startDate,
+      getEndDate: () => endDate,
+      getMaxUses: () => maxUses,
+      getUsesCount: () => usesCount,
+      getUsersUsed: () => usersUsed,
+      getMaxUsesPerUser: () => maxUsesPerUser,
+      getMinOrderValue: () => minOrderValue,
+      getShopId: () => shopId,
+      getIsActive: () => isActive,
+      getApplies: () => appliesTo,
+      getProductIds: () => productIds,
+      getMaxValue: () => maxValue,
    };
 }

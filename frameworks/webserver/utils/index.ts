@@ -1,6 +1,7 @@
 'use strict';
 
 import _ from 'lodash';
+import { Types } from 'mongoose';
 
 export const Headers = {
    API_KEY: 'x-api-key',
@@ -50,3 +51,5 @@ export const updateNestedObjectParser = (obj) => {
 
    return final;
 };
+
+export const convertToObjectIdMongo = (id) => new Types.ObjectId(id);
