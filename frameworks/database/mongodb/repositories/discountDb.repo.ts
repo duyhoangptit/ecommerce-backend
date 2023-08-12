@@ -1,7 +1,11 @@
 'use strict';
 
 import DiscountModel from '../models/discount.model';
-import { convertToObjectIdMongo } from '../../../webserver/utils';
+import {
+   convertToObjectIdMongo,
+   selectDataObject,
+   unSelectDataObject,
+} from '../../../webserver/utils';
 
 export default function discountDbRepoImpl() {
    const createDiscount = (discountEntity) =>
@@ -30,8 +34,59 @@ export default function discountDbRepoImpl() {
 
    const findOneDiscount = (filter) => DiscountModel.findOne(filter);
 
+   const findAllDiscountUnSelect = async ({
+      limit = 50,
+      page = 1,
+      sort = 'ctime',
+      filter,
+      unSelect,
+      model,
+   }: {
+      page: string | number;
+      limit: string | number;
+      sort: string;
+      filter: any;
+      unSelect: string[];
+      model: any;
+   }) => {
+      const skip = (+page - 1) * +limit;
+      const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 };
+      const discounts = await model
+         .find(filter)
+         .sort(sortBy)
+         .skip(skip)
+         .limit(limit)
+         .select(unSelectDataObject(unSelect))
+         .lean();
+
+      return discounts;
+   };
+
+   const findAllDiscountSelect = async ({
+      limit = 50,
+      page = 1,
+      sort = 'ctime',
+      filter,
+      select,
+      model,
+   }) => {
+      const skip = (page - 1) * limit;
+      const sortBy = sort === 'ctime' ? { _id: -1 } : { _id: 1 };
+      const discounts = await model
+         .find(filter)
+         .sort(sortBy)
+         .skip(skip)
+         .limit(limit)
+         .select(selectDataObject(select))
+         .lean();
+
+      return discounts;
+   };
+
    return {
       createDiscount,
       findOneDiscount,
+      findAllDiscountUnSelect,
+      findAllDiscountSelect,
    };
 }

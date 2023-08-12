@@ -28,7 +28,7 @@ layers is with the _Dependency Rule_.
 -  [ ] Write API discount
     - Create inventory, discount model ✅
     - Get discount amount ❌
-    - Get all discounts with product ❌
+    - Get all discounts with product ✅
     - Create discount ✅
     - Get all discounts ❌
 -  [ ] Write API cart
