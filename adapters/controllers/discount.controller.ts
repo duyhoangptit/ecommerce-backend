@@ -5,6 +5,10 @@ import { NextFunction, Response } from 'express';
 import { CREATED } from '../../frameworks/webserver/middlewares/success.response';
 import createDiscount from '../../application/use_cases/discount/create';
 import getAllProductsFromDiscount from '../../application/use_cases/discount/getAllProductsFromDiscount';
+import getAllDiscountsByShopId from '../../application/use_cases/discount/getAllDiscountsByShopId';
+import destroy from '../../application/use_cases/discount/destroy';
+import cancel from '../../application/use_cases/discount/cancel';
+import getDiscountAmountByCode from '../../application/use_cases/discount/getDiscountAmount';
 
 export default function discountController(
    discountDbRepo,
@@ -48,8 +52,72 @@ export default function discountController(
       });
    };
 
+   const getAllDiscounts = async (
+      req: IRequest,
+      res: Response,
+      next: NextFunction
+   ) => {
+      CREATED({
+         res,
+         message: 'Get all discounts successfully',
+         metadata: await getAllDiscountsByShopId(discountDb, {
+            ...req.query,
+            shopId: req.user.userId,
+         }),
+      });
+   };
+
+   const getDiscountAmount = async (
+      req: IRequest,
+      res: Response,
+      next: NextFunction
+   ) => {
+      CREATED({
+         res,
+         message: 'Get discount amount successfully',
+         metadata: await getDiscountAmountByCode(discountDb, {
+            ...req.body,
+            shopId: req.user.userId,
+         }),
+      });
+   };
+
+   const deleteDiscount = async (
+      req: IRequest,
+      res: Response,
+      next: NextFunction
+   ) => {
+      CREATED({
+         res,
+         message: 'Delete discount successfully',
+         metadata: await destroy(discountDb, {
+            ...req.body,
+            shopId: req.user.userId || req.body.shopId,
+         }),
+      });
+   };
+
+   const cancelDiscount = async (
+      req: IRequest,
+      res: Response,
+      next: NextFunction
+   ) => {
+      CREATED({
+         res,
+         message: 'Cancel discount successfully',
+         metadata: await cancel(discountDb, {
+            ...req.body,
+            shopId: req.user.userId,
+         }),
+      });
+   };
+
    return {
       createNewDiscount,
       listAllProductsFromDiscount,
+      getAllDiscounts,
+      getDiscountAmount,
+      deleteDiscount,
+      cancelDiscount,
    };
 }

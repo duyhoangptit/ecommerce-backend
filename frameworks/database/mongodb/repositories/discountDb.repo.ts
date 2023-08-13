@@ -83,10 +83,16 @@ export default function discountDbRepoImpl() {
       return discounts;
    };
 
+   const findOneAndDelete = (filter) => DiscountModel.findOneAndDelete(filter);
+   const findByIdAndUpdate = (id, filter) =>
+      DiscountModel.findByIdAndUpdate(id, filter);
+
    return {
       createDiscount,
       findOneDiscount,
       findAllDiscountUnSelect,
       findAllDiscountSelect,
+      findOneAndDelete,
+      findByIdAndUpdate,
    };
 }

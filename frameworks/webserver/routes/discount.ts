@@ -19,6 +19,8 @@ export default function discountRouter(express) {
       productDbRepoImpl
    );
 
+   // Get amount a discount
+   router.route('/amount').post(asyncHandler(controller.getDiscountAmount));
    router
       .route('/list_product_code')
       .get(asyncHandler(controller.listAllProductsFromDiscount));
@@ -27,7 +29,10 @@ export default function discountRouter(express) {
    const auth = authMiddleware();
    router.use(asyncHandler(auth.authentication));
 
-   router.route('/').post(asyncHandler(controller.createNewDiscount));
+   router
+      .route('/')
+      .post(asyncHandler(controller.createNewDiscount))
+      .get(asyncHandler(controller.getAllDiscounts));
 
    return router;
 }
