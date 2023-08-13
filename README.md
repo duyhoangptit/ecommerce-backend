@@ -25,12 +25,12 @@ layers is with the _Dependency Rule_.
 -  [x] Write API logout
 -  [x] Handle refresh token
 -  [x] API product using Polymorphic Pattern, Factory Pattern
--  [ ] Write API discount
+-  [x] Write API discount
     - Create inventory, discount model ✅
-    - Get discount amount ❌
+    - Get discount amount ✅
     - Get all discounts with product ✅
     - Create discount ✅
-    - Get all discounts ❌
+    - Get all discounts ✅
 -  [ ] Write API cart
     - Add to cart ❌
     - Delete user item cart ❌
