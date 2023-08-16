@@ -4,7 +4,7 @@
   "description": "project about ecommerce",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --recursive --exit",
+    "test": "jest",
     "start": "node server.js",
     "start:dev": "nodemon --legacy-watch server.js",
     "start:local": "SET NODE_ENV=local nodemon --legacy-watch server.js"
@@ -52,6 +52,7 @@
     "yaml": "^2.2.1"
   },
   "devDependencies": {
-    "amqplib": "^0.10.3"
+    "amqplib": "^0.10.3",
+    "jest": "^29.6.2"
   }
 }

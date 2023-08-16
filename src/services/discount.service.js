@@ -186,10 +186,10 @@ class DiscountService {
         shopId, codeId
                                     }) {
         // kiem tra xem co dk su dung o dau khong, neu k co thi xoa
-        return await discountModel.findOneAndDelete({
+        return discountModel.findOneAndDelete({
             discount_code: codeId,
             discount_shop_id: convert2ObjectId(shopId)
-        })
+        });
     }
 
     //
@@ -207,7 +207,7 @@ class DiscountService {
 
         if (!discountModel) throw new BusinessLogicError('Discount not exists')
 
-        return await discountModel.findByIdAndUpdate(foundDiscount._id, {
+        return discountModel.findByIdAndUpdate(foundDiscount._id, {
             $pull: {
                 discount_users_used: userId,
             },
@@ -215,7 +215,7 @@ class DiscountService {
                 discount_max_users: 1,
                 discount_uses_count: -1
             }
-        })
+        });
     }
 
 }

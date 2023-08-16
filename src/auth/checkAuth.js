@@ -4,7 +4,6 @@ const HEADER = {
 }
 
 const {findById} = require('../services/apiKey.service')
-const {Api403Error} = require("../core/error.response");
 const URL_WHITELIST = [
     "/api-docs",
     "/healthcheck",
