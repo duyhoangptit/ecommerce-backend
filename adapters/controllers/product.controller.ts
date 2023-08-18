@@ -62,7 +62,6 @@ export default function productController(productDbRepo, productDbRepoImpl) {
       res: Response,
       next: NextFunction
    ) => {
-      console.log(req.user);
       OK({
          res,
          message: 'Get list draft product successfully',

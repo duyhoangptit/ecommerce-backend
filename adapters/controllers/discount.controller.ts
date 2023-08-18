@@ -2,7 +2,7 @@
 
 import { IRequest } from '../../config/interfaces/express.interface';
 import { NextFunction, Response } from 'express';
-import { CREATED } from '../../frameworks/webserver/middlewares/success.response';
+import { CREATED, OK } from '../../frameworks/webserver/middlewares/success.response';
 import createDiscount from '../../application/use_cases/discount/create';
 import getAllProductsFromDiscount from '../../application/use_cases/discount/getAllProductsFromDiscount';
 import getAllDiscountsByShopId from '../../application/use_cases/discount/getAllDiscountsByShopId';
@@ -39,7 +39,7 @@ export default function discountController(
       res: Response,
       next: NextFunction
    ) => {
-      CREATED({
+      OK({
          res,
          message: 'List all discounts with products successfully',
          metadata: await getAllProductsFromDiscount(discountDb, productDb, {
@@ -57,7 +57,7 @@ export default function discountController(
       res: Response,
       next: NextFunction
    ) => {
-      CREATED({
+      OK({
          res,
          message: 'Get all discounts successfully',
          metadata: await getAllDiscountsByShopId(discountDb, {
@@ -72,7 +72,7 @@ export default function discountController(
       res: Response,
       next: NextFunction
    ) => {
-      CREATED({
+      OK({
          res,
          message: 'Get discount amount successfully',
          metadata: await getDiscountAmountByCode(discountDb, {
