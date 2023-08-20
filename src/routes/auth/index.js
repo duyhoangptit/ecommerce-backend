@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const accessController = require('../../controllers/access.controller')
 const {authenticationV2} = require("../../auth/authUtils");
+const validation = require('../../middleware/validators/access.validator')
 
 /**
  * @swagger
@@ -26,7 +27,7 @@ const {authenticationV2} = require("../../auth/authUtils");
  *           contents:
  *             application/json
  */
-router.post('/login', accessController.login)
+router.post('/login', validation.validateLoginRequest, accessController.login)
 /**
  * @swagger
  *   /api/v1/auth/register:
@@ -50,7 +51,7 @@ router.post('/login', accessController.login)
  *           contents:
  *             application/json
  */
-router.post('/register', accessController.signUp)
+router.post('/register', validation.validateRegister, accessController.signUp)
 
 // authentication
 router.use(authenticationV2)
