@@ -83,7 +83,7 @@ class ProductService {
    static async findOneProduct(productDb, productId) {
       return await findOneProduct(productDb, {
          productId,
-         unSelect: unSelectDataObject(['__v', 'variations']),
+         unSelect: ['__v', 'productVariations'],
       });
    }
 

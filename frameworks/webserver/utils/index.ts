@@ -11,7 +11,8 @@ export const Headers = {
 };
 
 export const unSelectDataObject = (select = []) => {
-   return Object.fromEntries(select.map((i) => [i, 0]));
+   // return Object.fromEntries(select.map((i) => [i, 0]));
+   return _.zipObject(select, Array(select.length).fill(0));
 };
 export const selectDataObject = (select = []) => {
    return Object.fromEntries(select.map((i) => [i, 1]));

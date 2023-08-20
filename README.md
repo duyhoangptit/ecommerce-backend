@@ -31,11 +31,11 @@ layers is with the _Dependency Rule_.
     - Get all discounts with product ✅
     - Create discount ✅
     - Get all discounts ✅
--  [ ] Write API cart
-    - Add to cart ❌
-    - Delete user item cart ❌
-    - Get list user cart ❌
-    - Update quantity item cart ❌
+-  [x] Write API cart
+    - Add to cart ✅
+    - Delete user item cart ✅
+    - Get list user cart ✅
+    - Update quantity item cart ✅
 -  [ ] Write API order
     - Using optimistic with Redis ❌
     - Checkout review ❌

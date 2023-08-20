@@ -150,5 +150,6 @@ export default function productDbRepoImpl() {
       createProduct,
       checkProductByServer,
       advancedSearch,
+      findProduct,
    };
 }
