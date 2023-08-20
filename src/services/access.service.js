@@ -8,7 +8,6 @@ const {Api403Error, BusinessLogicError, Api401Error} = require("../core/error.re
 const {findByEmail} = require('./shop.service')
 const apiKeyModel = require('../models/apikey.model')
 const i18n = require('../configs/config.i18n')
-const {AccessValidator} = require("../validators/access.validator");
 
 const RoleShop = {
     SHOP: 'SHOP',
