@@ -113,6 +113,6 @@ const i18n = new I18n({
     directory: path.join(__dirname, "locales")
 })
 
-i18n.translate = (text, ...parameters) => i18n.__(text, ...parameters)
+i18n.translate = (text, ...parameters) => i18n.translate(text, ...parameters)
 
 module.exports = i18n

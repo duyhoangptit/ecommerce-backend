@@ -12,7 +12,7 @@ class NotificationService {
 
     static async getContent(type, payload) {
         const notifyClassFactory = NotificationService.notifyTypeRegistry[type]
-        if (!notifyClassFactory) throw new BusinessLogicError(i18n.__('messages.error006', type))
+        if (!notifyClassFactory) throw new BusinessLogicError(i18n.translate('messages.error006', type))
 
         return new notifyClassFactory(payload).buildContent()
     }
