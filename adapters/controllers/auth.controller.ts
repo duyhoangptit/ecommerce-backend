@@ -1,16 +1,16 @@
 'use strict';
 
 import { NextFunction, Response } from 'express';
-import { IRequest } from '../../config/interfaces/express.interface';
+import { IRequest } from '@config/interfaces/express.interface';
 import {
    CREATED,
    OK,
-} from '../../frameworks/webserver/middlewares/success.response';
+} from '@frameworks/webserver/middlewares/success.response';
 
-import signup from '../../application/use_cases/auth/signup';
-import login from '../../application/use_cases/auth/login';
-import logout from '../../application/use_cases/auth/logout';
-import handleRefreshToken from '../../application/use_cases/auth/handleRefreshToken';
+import signup from '@application/use_cases/auth/signup';
+import login from '@application/use_cases/auth/login';
+import logout from '@application/use_cases/auth/logout';
+import handleRefreshToken from '@application/use_cases/auth/handleRefreshToken';
 
 export default function authController(
    shopDbRepo,

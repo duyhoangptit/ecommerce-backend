@@ -1,10 +1,10 @@
 import authMiddleware from '../middlewares/auth.middleware';
 import { asyncHandler } from '../middlewares/async.catch';
 
-import productController from '../../../adapters/controllers/product.controller';
-import productDbRepo from '../../../application/repositories/IProductDb.repo';
+import productController from '@adapters/controllers/product.controller';
+import productDbRepo from '@application/repositories/IProductDb.repo';
 import productDbRepoImpl from '../../database/mongodb/repositories/productDb.repo';
-import { IRequest } from '../../../config/interfaces/express.interface';
+import { IRequest } from '@config/interfaces/express.interface';
 import { NextFunction, Response } from 'express';
 
 export default function productRouter(express) {

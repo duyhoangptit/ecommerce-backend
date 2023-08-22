@@ -1,6 +1,6 @@
 'use strict';
 
-import { Api400Error } from '../../frameworks/webserver/middlewares/error.response';
+import { Api400Error } from '@frameworks/webserver/middlewares/error.response';
 import findAllProducts from '../use_cases/product/findAllProducts';
 import publishProductByShop from '../use_cases/product/publishProductByShop';
 import findAllDraftsForShop from '../use_cases/product/findAllDraftsForShop';
@@ -11,8 +11,7 @@ import advancedSearch from '../use_cases/product/advancedSearch';
 
 const {
    selectDataObject,
-   unSelectDataObject,
-} = require('../../frameworks/webserver/utils');
+} = require('@frameworks/webserver/utils');
 
 class ProductService {
    static productRegistry = {};

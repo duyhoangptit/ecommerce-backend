@@ -1,10 +1,10 @@
 'use strict';
 
 import productDbRepo from '../repositories/IProductDb.repo';
-import productDbRepoImpl from '../../frameworks/database/mongodb/repositories/productDb.repo';
+import productDbRepoImpl from '@frameworks/database/mongodb/repositories/productDb.repo';
 import inventoryDbRepo from '../repositories/IInventoryDb.repo';
-import inventoryDbRepoImpl from '../../frameworks/database/mongodb/repositories/inventoryDb.repo';
-import { ProductModel } from '../../frameworks/database/mongodb/models/product.model';
+import inventoryDbRepoImpl from '@frameworks/database/mongodb/repositories/inventoryDb.repo';
+import { ProductModel } from '@frameworks/database/mongodb/models/product.model';
 
 class Product {
    public productDb = productDbRepo(productDbRepoImpl());

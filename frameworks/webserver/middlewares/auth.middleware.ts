@@ -1,12 +1,13 @@
 'use strict';
 
 import JWT from 'jsonwebtoken';
-import keyTokenDbRepo from '../../../application/repositories/IKeyTokenDb.repo';
-import keyTokenDbRepoImpl from '../../database/mongodb/repositories/keyTokenDb.repo';
+import keyTokenDbRepo from '@application/repositories/IKeyTokenDb.repo';
+import keyTokenDbRepoImpl
+   from '../../database/mongodb/repositories/keyTokenDb.repo';
 import { Api400Error, Api401Error, Api404Error } from './error.response';
 import { Headers } from '../utils';
 import { NextFunction, Response } from 'express';
-import { IRequest } from '../../../config/interfaces/express.interface';
+import { IRequest } from '@config/interfaces/express.interface';
 
 const keyTokenDb = keyTokenDbRepo(keyTokenDbRepoImpl());
 export default function authMiddleware() {

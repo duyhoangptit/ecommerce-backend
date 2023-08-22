@@ -1,7 +1,7 @@
 'use strict';
 
-import { ElectronicModel } from '../../frameworks/database/mongodb/models/product.model';
-import { Api400Error } from '../../frameworks/webserver/middlewares/error.response';
+import { ElectronicModel } from '@frameworks/database/mongodb/models/product.model';
+import { Api400Error } from '@frameworks/webserver/middlewares/error.response';
 import { Product } from './product.factory';
 
 class Electronic extends Product {

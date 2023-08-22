@@ -1,14 +1,14 @@
 'use strict';
 
-import { IRequest } from '../../config/interfaces/express.interface';
+import { IRequest } from '@config/interfaces/express.interface';
 import { NextFunction, Response } from 'express';
-import { CREATED, OK } from '../../frameworks/webserver/middlewares/success.response';
-import createDiscount from '../../application/use_cases/discount/create';
-import getAllProductsFromDiscount from '../../application/use_cases/discount/getAllProductsFromDiscount';
-import getAllDiscountsByShopId from '../../application/use_cases/discount/getAllDiscountsByShopId';
-import destroy from '../../application/use_cases/discount/destroy';
-import cancel from '../../application/use_cases/discount/cancel';
-import getDiscountAmountByCode from '../../application/use_cases/discount/getDiscountAmount';
+import { CREATED, OK } from '@frameworks/webserver/middlewares/success.response';
+import createDiscount from '@application/use_cases/discount/create';
+import getAllProductsFromDiscount from '@application/use_cases/discount/getAllProductsFromDiscount';
+import getAllDiscountsByShopId from '@application/use_cases/discount/getAllDiscountsByShopId';
+import destroy from '@application/use_cases/discount/destroy';
+import cancel from '@application/use_cases/discount/cancel';
+import getDiscountAmountByCode from '@application/use_cases/discount/getDiscountAmount';
 
 export default function discountController(
    discountDbRepo,

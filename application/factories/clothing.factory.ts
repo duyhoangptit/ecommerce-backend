@@ -1,11 +1,11 @@
 'use strict';
 
-import { Api400Error } from '../../frameworks/webserver/middlewares/error.response';
+import { Api400Error } from '@frameworks/webserver/middlewares/error.response';
 import {
    removeAttrUndefined,
    updateNestedObjectParser,
-} from '../../frameworks/webserver/utils';
-import { ClothingModel } from './../../frameworks/database/mongodb/models/product.model';
+} from '@frameworks/webserver/utils';
+import { ClothingModel } from '@frameworks/database/mongodb/models/product.model';
 import { Product } from './product.factory';
 
 class Clothing extends Product {

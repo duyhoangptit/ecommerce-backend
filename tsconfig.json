@@ -10,6 +10,24 @@
       "noImplicitAny": false,
       "declaration": true,
       "typeRoots": ["node_modules/@types"],
+      "baseUrl": "./",
+      "paths": {
+         "@adapters/*": [
+            "adapters/*"
+         ],
+         "@application/*": [
+            "application/*"
+         ],
+         "@config/*": [
+            "config/*"
+         ],
+         "@frameworks/*": [
+            "frameworks/*"
+         ],
+         "@src/*": [
+            "src/*"
+         ]
+      }
       // "strict": true
    },
    "include": ["**/*.ts"],

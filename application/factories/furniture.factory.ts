@@ -1,7 +1,7 @@
 'use strict';
 
-import { FurnitureModel } from '../../frameworks/database/mongodb/models/product.model';
-import { Api400Error } from '../../frameworks/webserver/middlewares/error.response';
+import { FurnitureModel } from '@frameworks/database/mongodb/models/product.model';
+import { Api400Error } from '@frameworks/webserver/middlewares/error.response';
 import { Product } from './product.factory';
 
 class Furniture extends Product {

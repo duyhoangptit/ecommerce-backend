@@ -1,10 +1,10 @@
 'use strict';
 
 import { asyncHandler } from '../middlewares/async.catch';
-import cartController from '../../../adapters/controllers/cart.controller';
-import cartDbRepo from '../../../application/repositories/ICartDb.repo';
+import cartController from '@adapters/controllers/cart.controller';
+import cartDbRepo from '@application/repositories/ICartDb.repo';
 import cartDbRepoImpl from '../../database/mongodb/repositories/cartDb.repo';
-import productDbRepo from '../../../application/repositories/IProductDb.repo';
+import productDbRepo from '@application/repositories/IProductDb.repo';
 import productDbRepoImpl from '../../database/mongodb/repositories/productDb.repo';
 
 export default function cartRouter(express) {

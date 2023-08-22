@@ -1,7 +1,7 @@
 'use strict';
 
-import { NextFunction, Request, Response } from 'express';
-import { IRequest } from '../../../config/interfaces/express.interface';
+import { NextFunction, Response } from 'express';
+import { IRequest } from '@config/interfaces/express.interface';
 import { Headers } from '../utils';
 
 export default function apikeyAuth(apikeyDbRepo, apikeyDbRepoImpl) {

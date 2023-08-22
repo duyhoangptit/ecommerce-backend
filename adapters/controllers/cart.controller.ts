@@ -1,15 +1,15 @@
 'use strict';
 
 import { NextFunction, Response } from 'express';
-import { IRequest } from '../../config/interfaces/express.interface';
+import { IRequest } from '@config/interfaces/express.interface';
 import {
    CREATED,
    OK,
-} from '../../frameworks/webserver/middlewares/success.response';
-import addOrCreate from '../../application/use_cases/cart/addOrCreate';
-import updateQuantity from '../../application/use_cases/cart/updateQuantity';
-import deleteItem from '../../application/use_cases/cart/deleteItem';
-import getUserCart from '../../application/use_cases/cart/getUserCart';
+} from '@frameworks/webserver/middlewares/success.response';
+import addOrCreate from '@application/use_cases/cart/addOrCreate';
+import updateQuantity from '@application/use_cases/cart/updateQuantity';
+import deleteItem from '@application/use_cases/cart/deleteItem';
+import getUserCart from '@application/use_cases/cart/getUserCart';
 
 /**
  * Cart Service

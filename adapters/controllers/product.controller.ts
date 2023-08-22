@@ -1,12 +1,12 @@
 'use strict';
 
-import { IRequest } from '../../config/interfaces/express.interface';
+import { IRequest } from '@config/interfaces/express.interface';
 import { NextFunction, Response } from 'express';
 import {
    CREATED,
    OK,
-} from '../../frameworks/webserver/middlewares/success.response';
-import ProductService from '../../application/services/product.service';
+} from '@frameworks/webserver/middlewares/success.response';
+import ProductService from '@application/services/product.service';
 
 export default function productController(productDbRepo, productDbRepoImpl) {
    const productDb = productDbRepo(productDbRepoImpl());

@@ -2,10 +2,10 @@
 
 import { asyncHandler } from '../middlewares/async.catch';
 
-import discountController from '../../../adapters/controllers/discount.controller';
-import discountDbRepo from '../../../application/repositories/IDiscountDb.repo';
+import discountController from '@adapters/controllers/discount.controller';
+import discountDbRepo from '@application/repositories/IDiscountDb.repo';
 import discountDbRepoImpl from '../../database/mongodb/repositories/discountDb.repo';
-import productDbRepo from '../../../application/repositories/IProductDb.repo';
+import productDbRepo from '@application/repositories/IProductDb.repo';
 import productDbRepoImpl from '../../database/mongodb/repositories/productDb.repo';
 import authMiddleware from '../middlewares/auth.middleware';
 
