@@ -2,7 +2,10 @@
 
 import { IRequest } from '@config/interfaces/express.interface';
 import { NextFunction, Response } from 'express';
-import { CREATED, OK } from '@frameworks/webserver/middlewares/success.response';
+import {
+   CREATED,
+   OK,
+} from '@frameworks/webserver/middlewares/success.response';
 import createDiscount from '@application/use_cases/discount/create';
 import getAllProductsFromDiscount from '@application/use_cases/discount/getAllProductsFromDiscount';
 import getAllDiscountsByShopId from '@application/use_cases/discount/getAllDiscountsByShopId';
@@ -18,12 +21,12 @@ export default function discountController(
 ) {
    const discountDb = discountDbRepo(discountDbRepoImpl());
    const productDb = productDbRepo(productDbRepoImpl());
+
    const createNewDiscount = async (
       req: IRequest,
       res: Response,
       next: NextFunction
    ) => {
-      console.log('req.body', req.body);
       CREATED({
          res,
          message: 'Create discount successfully',

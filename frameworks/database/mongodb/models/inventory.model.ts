@@ -33,4 +33,4 @@ const inventorySchema = new Schema(
    }
 );
 
-export default model(DOCUMENT_NAME, inventorySchema);
+export const InventoryModel = model(DOCUMENT_NAME, inventorySchema);

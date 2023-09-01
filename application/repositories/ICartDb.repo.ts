@@ -12,10 +12,13 @@ export default function cartDbRepo(repo) {
    const deleteUserItemCart = ({ userId, productId }) =>
       repo.deleteUserItemCart({ userId, productId });
 
+   const findCartById = (userId) => repo.findCartById(userId);
+
    return {
       createUserCart,
       updateUserCartQuantity,
       findCartByUserId,
       deleteUserItemCart,
+      findCartById,
    };
 }

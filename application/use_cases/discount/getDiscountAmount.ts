@@ -1,9 +1,7 @@
 'use strict';
 
 //* Apply discount
-import {
-   Api400Error,
-} from '../../../frameworks/webserver/middlewares/error.response';
+import { Api400Error } from '../../../frameworks/webserver/middlewares/error.response';
 
 /**
  * products = [
@@ -44,6 +42,7 @@ export default async function getDiscountAmountByCode(
       discountUsersUsed,
       discountType,
       discountValue,
+      discountProductIds,
    } = foundDiscount;
 
    if (!discountIsActive) throw new Api400Error('Discount code has expired');
@@ -55,7 +54,9 @@ export default async function getDiscountAmountByCode(
    let totalOrder;
    if (discountMinOrderValue > 0) {
       totalOrder = products.reduce((acc, product) => {
-         return acc + product.quantity * product.price;
+         if (discountProductIds.includes(product.productId))
+            return acc + product.price * product.quantity;
+         return acc + 0;
       }, 0);
 
       if (totalOrder < discountMinOrderValue)

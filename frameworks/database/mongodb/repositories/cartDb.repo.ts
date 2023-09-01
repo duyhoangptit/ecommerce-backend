@@ -1,5 +1,6 @@
 'use strict';
 
+import { convertToObjectIdMongo } from '@frameworks/webserver/utils';
 import { CartModel } from '../models/cart.model';
 
 export default function cartDbRepoImpl() {
@@ -53,10 +54,18 @@ export default function cartDbRepoImpl() {
       return CartModel.updateOne(query, updateSet);
    };
 
+   const findCartById = (cartId) => {
+      return CartModel.findOne({
+         _id: convertToObjectIdMongo(cartId),
+         cartState: 'active',
+      }).lean();
+   };
+
    return {
       createUserCart,
       updateUserCartQuantity,
       findCartByUserId,
       deleteUserItemCart,
+      findCartById,
    };
 }
